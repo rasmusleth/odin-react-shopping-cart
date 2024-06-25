@@ -1,7 +1,14 @@
+import Home from "./components/Home/Home";
+import Navigation from "./components/Navigation/Navigation";
 import "./App.css";
 
 function App() {
-  return <p>React app up and running</p>;
+  return (
+    <>
+      <Navigation />
+      <Home />
+    </>
+  );
 }
 
 export default App;
