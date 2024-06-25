@@ -1,17 +1,20 @@
+import { Link } from "react-router-dom";
 import styles from "./navigation.module.css";
 
 const Navigation = () => {
   return (
     <header>
       <nav className={styles.navBar}>
-        <button className={styles.menuIcon}>
-          <div className={styles.menuIconBar}></div>
-          <div className={styles.menuIconBar}></div>
-          <div className={styles.menuIconBar}></div>
-        </button>
-        <a href="">
-          <h3>Logo</h3>
-        </a>
+        <Link to={"/menu"}>
+          <button className={styles.menuIcon}>
+            <div className={styles.menuIconBar}></div>
+            <div className={styles.menuIconBar}></div>
+            <div className={styles.menuIconBar}></div>
+          </button>
+        </Link>
+        <Link to={"/"}>
+          <div className={styles.logo}>Logo</div>
+        </Link>
         <button className={styles.cartButton}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
