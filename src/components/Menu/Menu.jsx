@@ -16,7 +16,7 @@ const MenuItem = ({ item }) => {
           </div>
           <img
             className={styles.menuItemImage}
-            src="/public/images/menu-items/luksus-smoerrebroed-cover.jpeg"
+            src="/images/menu-items/smoerrebroed-aeg.jpeg"
             alt={item.name}
           />
           <div className={styles.menuItemAddedQuantity}>
@@ -32,7 +32,7 @@ const MenuItem = ({ item }) => {
           </div>
           <img
             className={styles.menuItemImage}
-            src="/public/images/menu-items/luksus-smoerrebroed-cover.jpeg"
+            src="/images/menu-items/smoerrebroed-aeg.jpeg"
             alt={item.name}
           />
         </a>
@@ -40,6 +40,10 @@ const MenuItem = ({ item }) => {
       <hr />
     </>
   );
+};
+
+MenuItem.propTypes = {
+  item: PropTypes.object.isRequired,
 };
 
 const CategorySection = ({ category }) => {
@@ -57,7 +61,7 @@ const CategorySection = ({ category }) => {
           >
             <img
               className={styles.menuCategoryTitleImage}
-              src="/public/images/menu-items/smoerrebroed-aeg.jpeg"
+              src="/images/menu-items/smoerrebroed-aeg.jpeg"
               alt=""
             />
             <h2 className={styles.menuCategoryTitle}>{category.title}</h2>
@@ -74,6 +78,10 @@ const CategorySection = ({ category }) => {
   );
 };
 
+CategorySection.propTypes = {
+  category: PropTypes.object.isRequired,
+};
+
 const MenuCategorySliderItem = ({ category }) => {
   return (
     <a
@@ -83,6 +91,10 @@ const MenuCategorySliderItem = ({ category }) => {
       {category.title}
     </a> // old class name: menu_categories-item
   );
+};
+
+MenuCategorySliderItem.propTypes = {
+  category: PropTypes.object.isRequired,
 };
 
 const Menu = ({ categories }) => {
