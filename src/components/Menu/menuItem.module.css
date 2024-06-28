@@ -1,0 +1,206 @@
+.menuItemContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.menuItemHeader {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.menuItemCoverImage {
+  width: 100%;
+  object-fit: cover;
+}
+
+.menuItemCloseButton {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  background-color: var(--color-neutral-200);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+}
+
+.menuItemCloseButton:hover {
+  opacity: 0.6;
+}
+
+.menuItemContentWrapper {
+  flex-grow: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: start;
+  overflow: scroll;
+}
+
+.menuItemForm {
+  width: 100%;
+  padding-bottom: 2.6rem;
+}
+
+.menuItemCategory {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-neutral);
+  border-radius: 1rem;
+}
+
+.menuItemPrice {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.menuItemIngredientContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.menu_item-ingredient_wrapper {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.menu_item-ingredient_wrapper > label {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding-left: 2rem;
+  cursor: pointer;
+}
+
+.menu_item-ingredient_price {
+  color: var(--color-primary);
+}
+
+.menu_item-ingredient_wrapper input {
+  position: absolute;
+  width: 0rem;
+  height: 0rem;
+  opacity: 0;
+  border-radius: 100%;
+}
+
+.menu_item-ingredient_wrapper .checkmark {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 100%;
+}
+
+.menu_item-ingredient_wrapper .checkmark:hover {
+  opacity: 0.8;
+}
+
+.menu_item-ingredient_wrapper input:checked ~ .checkmark {
+  background-color: var(--color-primary);
+}
+
+/* Add checkmark icon */
+.menu_item-ingredient_wrapper .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-neutral);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.menu_item-ingredient_wrapper input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.menuItemFooter {
+  position: fixed;
+  bottom: 1rem;
+  display: flex;
+  width: 600px;
+  margin-left: -1rem;
+  padding: 0 1rem;
+  justify-content: space-between;
+}
+
+.menuItemQuantityButton {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-neutral);
+  border-radius: 0.5rem;
+}
+
+.quantityValue::-webkit-inner-spin-button,
+.quantityValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.quantityValue {
+  width: 1.25rem;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  color: var(--color-neutral);
+  font-weight: bold;
+  outline: none;
+  border: 1px solid transparent;
+}
+
+.quantityValue:focus {
+  border: 1px solid var(--color-neutral);
+  border-radius: 0.5rem;
+}
+
+.quantityDecrease,
+.quantityIncrease {
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-neutral);
+  color: var(--color-primary);
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.quantityDecrease:hover,
+.quantityIncrease:hover {
+  opacity: 0.7;
+}
+
+.menuItemBuyButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}

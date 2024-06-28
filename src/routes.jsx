@@ -9,24 +9,30 @@ const categoriesData = [
     title: "Category 0",
     items: [
       {
-        id: 1000,
+        _id: 1000,
+        category: "Category 0",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 1001,
+        category: "Category 0",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 1002,
+        category: "Category 0",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -37,24 +43,30 @@ const categoriesData = [
     title: "Category 1",
     items: [
       {
-        id: 1000,
+        _id: 2000,
+        category: "Category 1",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 2001,
+        category: "Category 1",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 2002,
+        category: "Category 1",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -65,24 +77,30 @@ const categoriesData = [
     title: "Category 2",
     items: [
       {
-        id: 1000,
+        _id: 3000,
+        category: "Category 2",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 3001,
+        category: "Category 2",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 3002,
+        category: "Category 2",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -93,24 +111,30 @@ const categoriesData = [
     title: "Category 3",
     items: [
       {
-        id: 1000,
+        _id: 4000,
+        category: "Category 3",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 4001,
+        category: "Category 3",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 4002,
+        category: "Category 3",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -121,24 +145,30 @@ const categoriesData = [
     title: "Category 4",
     items: [
       {
-        id: 1000,
+        _id: 5000,
+        category: "Category 4",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 5001,
+        category: "Category 4",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 5002,
+        category: "Category 4",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -149,24 +179,30 @@ const categoriesData = [
     title: "Category 5",
     items: [
       {
-        id: 1000,
+        _id: 6000,
+        category: "Category 5",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 6001,
+        category: "Category 5",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 6002,
+        category: "Category 5",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -177,24 +213,30 @@ const categoriesData = [
     title: "Category 6",
     items: [
       {
-        id: 1000,
+        _id: 7000,
+        category: "Category 6",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 7001,
+        category: "Category 6",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 7002,
+        category: "Category 6",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],
@@ -205,24 +247,30 @@ const categoriesData = [
     title: "Category 7",
     items: [
       {
-        id: 1000,
+        _id: 8000,
+        category: "Category 7",
         name: "Food item 0",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1001,
+        _id: 8001,
+        category: "Category 7",
         name: "Food item 1",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
       {
-        id: 1002,
+        _id: 8002,
+        category: "Category 7",
         name: "Food item 2",
         description:
           "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+        price: 85.0,
         priceFormatted: "85,00 DKK",
       },
     ],

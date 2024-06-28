@@ -13,17 +13,17 @@ main {
   box-sizing: border-box;
 }
 
-.spacerXSmall {
+:global(.spacerXSmall) {
   padding-top: 0.5rem;
 }
-.spacerSmall {
+:global(.spacerSmall) {
   padding-top: 1rem;
 }
-.spacerMedium {
+:global(.spacerMedium) {
   padding-top: 2rem;
 }
 
-.btn {
+:global(.btn) {
   text-decoration: none;
   padding: 0.5rem 1.5rem;
   border: none;
@@ -34,11 +34,11 @@ main {
   transition: background-color 0.2s ease-out;
 }
 
-.btnPrimary {
+:global(.btnPrimary) {
   background-color: #ff8410; /* Orange background */
   color: white; /* White text */
 }
 
-.btnPrimary:hover {
+:global(.btnPrimary:hover) {
   background-color: #dfa55e; /* Darker orange background on hover */
 }
