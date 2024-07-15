@@ -1,0 +1,292 @@
+.progressIndicator {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 2rem;
+}
+
+.stepIndicator {
+  width: 70px; /* width of the rectangle */
+  height: 10px; /* height of the rectangle */
+  border-radius: 5px;
+  background-color: #d3d3d3; /* default color for upcoming step */
+}
+
+.cartContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.cartContainer * p {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.cartItem {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  background-color: var(--color-primary-01);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.cartItemQuantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-neutral-200);
+}
+.cartItemLeft {
+  max-width: 20%;
+  display: inline-block;
+}
+.itemQuantityUpdateForm {
+  display: inline-block;
+}
+
+.cartItemIngredients {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.cartItemIngredients > ul {
+  margin: 0;
+  padding: 0;
+  font-size: 0.75rem;
+  list-style-type: none;
+}
+
+.cartItemBody {
+  flex-grow: 1;
+}
+
+.cartItemBody > h3 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.cartItemPrice {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: var(--color-primary);
+}
+
+.cartItemRight {
+  max-width: 20%;
+  overflow: hidden;
+}
+
+.cartItemRight > img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.cartItemOverlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(22, 22, 22, 0);
+}
+
+.cartItemDeleteCard {
+  position: absolute;
+  top: -2rem;
+  right: -2rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-danger);
+  cursor: pointer;
+  /* box-shadow: 0p 0px 1px 5px; */
+}
+
+.cartItemDeleteIcon {
+  color: var(--color-neutral);
+}
+
+.cartItem:hover .cartItemDeleteCard {
+  /* transform: translate(-2rem -2rem); */
+  top: 1rem;
+  right: 1rem;
+}
+
+.cartItemDeleteCard:hover {
+  background-color: var(--color-danger-05);
+}
+
+.cartItemDeleteCard:hover .cartItemOverlay {
+  display: block;
+  background-color: rgba(150, 24, 24, 0.5);
+}
+.cartItemDeleteIcon:hover .cartItemOverlay {
+  display: block;
+  background-color: rgba(22, 22, 22, 0.5);
+}
+
+.cartPaymentForm {
+  position: relative;
+  width: 100%;
+}
+
+.cartPaymentBtn {
+  position: sticky;
+  left: 2rem;
+  right: 2rem;
+  bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary);
+}
+
+.cartPaymentLeft {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cartPaymentQuantity {
+  display: flex;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem 0.5rem;
+  background-color: white;
+  color: orange;
+  font-weight: bold;
+  border-radius: 100%;
+}
+
+.cartComment {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 1rem;
+}
+.cartComment > label {
+  font-size: 0.675rem;
+  text-transform: uppercase;
+}
+.cartCommentInput {
+  flex-grow: 1;
+  border: none;
+  border-bottom: 1px solid var(--color-primary);
+  padding: 0.5rem 1rem;
+}
+
+/* _______________ payment_info.ejs _______________ */
+
+.payment-info_section {
+  text-align: center;
+}
+
+.dining-options_container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.dining-options_button {
+  display: flex;
+  flex-direction: column; /* Stack the img and text vertically */
+  gap: 0.5rem;
+  align-items: center;
+  width: 8rem;
+  padding: 1rem;
+  background-color: #dddddd; /* Neutral color for non-selected state */
+  cursor: pointer;
+  border-radius: 10px;
+  opacity: 0.6;
+  transition: all 100ms ease-out;
+}
+
+.dining-options_button:hover {
+  opacity: 1;
+}
+
+.dining-options_button.selected {
+  background-color: #ff850f;
+  color: white;
+  opacity: 1;
+}
+
+.cartEmptyContainer {
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cartEmptyContainer p {
+  font-size: 1rem;
+}
+
+.payment-info_description {
+  color: #c6c6c6; /* Light grey */
+  font-size: 0.75rem;
+  align-self: start;
+  padding: 0.25rem 0;
+}
+
+.payment-info_form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.payment-info_form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.payment-info_label {
+  color: #565656; /* Light grey */
+  font-size: 1.5rem;
+  font-weight: bold;
+  align-self: start;
+}
+
+.payment-info_form-input {
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #ff850f; /* Or change this color too, if you'd like */
+  padding: 0.5rem;
+}
+.payment-info_form-input:focus {
+  outline: none; /* Remove the default focus outline */
+  border-bottom: 2px solid #4caf50; /* Change the bottom border color on focus, adjust as needed */
+}
+
+#contactInfoForm input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px 0;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid orange; /* Or change this color too, if you'd like */
+}
+
+#contactInfoForm input:focus {
+  outline: none; /* Remove the default focus outline */
+  border-bottom: 2px solid #4caf50; /* Change the bottom border color on focus, adjust as needed */
+}

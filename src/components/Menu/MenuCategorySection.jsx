@@ -16,7 +16,7 @@ const MenuItem = ({ item, onItemClick }) => {
       >
         <div className={styles.menuItemContent}>
           <h3 className={styles.menuItemTitle}>{item.name}</h3>
-          <p className={styles.textStyle2Lines}>{item.description}</p>
+          <p className={`textStyle2Lines`}>{item.description}</p>
           <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
         </div>
         <img
@@ -70,7 +70,7 @@ const MenuCategorySection = ({ category, onItemClick }) => {
           ))}
         </div>
       </section>
-      <div className={styles.spacerMedium}></div>
+      <div className={`spacerMedium`}></div>
     </>
   );
 };

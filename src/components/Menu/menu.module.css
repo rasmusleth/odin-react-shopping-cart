@@ -2,22 +2,10 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Utility */
-.textStyle2Lines {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
 /* Page specific */
 
 .menuPageWrapper {
   position: relative;
-}
-
-.textColorPrimary {
-  color: var(--color-primary);
 }
 
 .menuCategoriesSlider {

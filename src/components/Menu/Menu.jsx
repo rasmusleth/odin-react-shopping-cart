@@ -25,11 +25,10 @@ const Menu = ({ categories }) => {
     <>
       <h1>Menu</h1>
       <p>Browse our collection of delicious meals</p>
-      {/* <div className={styles.spacerMedium}></div> */}
       <div className={styles.menuPageWrapper}>
-        {/* <div class="spacer-small"></div> */}
+        <div className={`spacerSmall`}></div>
         <MenuCategorySlider categories={categories} />
-        <div className={styles.spacerSmall}></div>
+        <div className={`spacerSmall`}></div>
 
         {categories.map((category) => (
           <MenuCategorySection
@@ -40,7 +39,6 @@ const Menu = ({ categories }) => {
         ))}
       </div>
 
-      <div className="dynamic-height-element"></div>
       <MenuItemModal
         item={selectedItem}
         modalIsOpen={modalIsOpen}

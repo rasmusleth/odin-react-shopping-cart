@@ -1,6 +1,7 @@
 import Menu from "./components/Menu/Menu.jsx";
 import Home from "./components/Home/Home.jsx";
 import App from "./App.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 const categoriesData = [
   {
@@ -277,6 +278,43 @@ const categoriesData = [
   },
 ];
 
+const cartMockData = {
+  customerInfo: {
+    name: "Rasmus Leth",
+    emailAddress: "rasmus@rasmusleth.dk",
+  },
+  items: [
+    {
+      _id: 0,
+      item: 1001,
+      name: "Food item 1",
+      ingredients: {
+        added: [
+          {
+            name: "Bacon",
+            price: 10.0,
+          },
+          {
+            name: "Cheese",
+            price: 10.0,
+          },
+        ],
+        removed: [
+          {
+            name: "Rugbrød",
+          },
+        ],
+      },
+      quantity: 1,
+      price: 85.0,
+      priceTotal: 100000,
+    },
+  ],
+  takeAway: false,
+  tableNumber: 7,
+  bill: 1000000.99,
+};
+
 const routes = [
   {
     path: "/",
@@ -289,6 +327,10 @@ const routes = [
       {
         path: "/menu",
         element: <Menu categories={categoriesData} />,
+      },
+      {
+        path: "/cart",
+        element: <Cart cart={cartMockData} />,
       },
     ],
   },
