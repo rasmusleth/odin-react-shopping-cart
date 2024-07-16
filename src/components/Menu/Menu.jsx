@@ -8,6 +8,7 @@ import styles from "./menu.module.css";
 const Menu = ({ categories }) => {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   const handleItemClick = (item, e) => {
     e.preventDefault();
@@ -17,8 +18,11 @@ const Menu = ({ categories }) => {
   };
 
   const handleModalClose = () => {
-    console.log("FIRED!");
     setmodalIsOpen(false);
+  };
+
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
   };
 
   return (
@@ -27,7 +31,11 @@ const Menu = ({ categories }) => {
       <p>Browse our collection of delicious meals</p>
       <div className={styles.menuPageWrapper}>
         <div className={`spacerSmall`}></div>
-        <MenuCategorySlider categories={categories} />
+        <MenuCategorySlider
+          categories={categories}
+          activeCategory={activeCategory}
+          onCategoryClick={handleCategoryClick}
+        />
         <div className={`spacerSmall`}></div>
 
         {categories.map((category) => (
