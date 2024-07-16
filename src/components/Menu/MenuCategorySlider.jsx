@@ -26,13 +26,15 @@ const MenuCategorySlider = ({
   activeCategory,
   onCategoryClick,
 }) => {
+  console.log(activeCategory);
+
   return (
     <div className={styles.menuCategoriesSlider}>
       {categories.map((category) => (
         <MenuCategorySliderItem
           key={`slider-${category.id}`}
           category={category}
-          isActive={activeCategory === category.id ? true : false}
+          isActive={activeCategory == category.id}
           onCategoryClick={onCategoryClick}
         />
       ))}
@@ -42,7 +44,7 @@ const MenuCategorySlider = ({
 
 MenuCategorySlider.propTypes = {
   categories: PropTypes.array.isRequired,
-  activeCategory: PropTypes.string.isRequired,
+  activeCategory: PropTypes.string,
   onCategoryClick: PropTypes.func.isRequired,
 };
 

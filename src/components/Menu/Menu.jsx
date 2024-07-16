@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
@@ -9,6 +9,40 @@ const Menu = ({ categories }) => {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [isObserverActive, setIsObserverActive] = useState(true);
+  const categorySectionRefs = useRef([]);
+
+  useEffect(() => {
+    console.log(categorySectionRefs.current);
+    categorySectionRefs.current = categorySectionRefs.current.slice(
+      0,
+      categories.length
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isObserverActive) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const category = entry.target.getAttribute("data-category-id");
+              setActiveCategory(category);
+            }
+          });
+        }
+      },
+      { threshold: 1 } // Adjust this value as needed
+    );
+
+    categorySectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      categorySectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, [activeCategory, categories, isObserverActive]);
 
   const handleItemClick = (item, e) => {
     e.preventDefault();
@@ -22,7 +56,9 @@ const Menu = ({ categories }) => {
   };
 
   const handleCategoryClick = (category) => {
+    setIsObserverActive(false);
     setActiveCategory(category);
+    setTimeout(() => setIsObserverActive(true), 800);
   };
 
   return (
@@ -38,11 +74,12 @@ const Menu = ({ categories }) => {
         />
         <div className={`spacerSmall`}></div>
 
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <MenuCategorySection
             key={`section-${category.id}`}
             category={category}
             onItemClick={handleItemClick}
+            ref={(el) => (categorySectionRefs.current[index] = el)}
           />
         ))}
       </div>

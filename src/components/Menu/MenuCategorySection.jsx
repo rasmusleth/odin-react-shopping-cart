@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./menu.module.css";
 
@@ -40,12 +41,14 @@ MenuItem.propTypes = {
   onItemClick: PropTypes.func.isRequired,
 };
 
-const MenuCategorySection = ({ category, onItemClick }) => {
+const MenuCategorySection = forwardRef(({ category, onItemClick }, ref) => {
   return (
     <>
       <section
         className={styles.menuCategorySection}
         id={category.slug.slice(1)}
+        ref={ref}
+        data-category-id={category.id}
       >
         <div className={styles.menuCategoryTitleContainer}>
           <a
@@ -73,7 +76,7 @@ const MenuCategorySection = ({ category, onItemClick }) => {
       <div className={`spacerMedium`}></div>
     </>
   );
-};
+});
 
 MenuCategorySection.propTypes = {
   category: PropTypes.object.isRequired,
