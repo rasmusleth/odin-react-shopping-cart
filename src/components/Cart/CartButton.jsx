@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import styles from "../Cart/cart.module.css";
+import styles from "./cart.module.css";
 
 const CartButton = ({ cart }) => {
   console.log(cart);

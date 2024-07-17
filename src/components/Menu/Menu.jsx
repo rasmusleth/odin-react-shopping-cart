@@ -4,7 +4,7 @@ import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
 import MenuItemModal from "./MenuItemModal";
 import styles from "./menu.module.css";
-import CartButton from "./CartButton";
+import CartButton from "../Cart/CartButton";
 
 const Menu = ({ cart }) => {
   const [categories, setCategories] = useState([]);

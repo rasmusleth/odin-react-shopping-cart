@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
+import CartButton from "./CartButton";
 
 const CartItem = ({ item }) => {
   return (
@@ -114,21 +115,6 @@ const Cart = ({ cart }) => {
               name="orderComment"
             ></textarea>
           </div>
-          <form
-            className={styles.cartPaymentForm}
-            action="/cart/order-info"
-            method="get"
-          >
-            <button className={`btn btnPrimary ${styles.cartPaymentBtn}`}>
-              <div className={styles.cartPaymentLeft}>
-                <div className={styles.cartPaymentQuantity}>
-                  {cart.totalItems}
-                </div>
-                <p className={"cartPaymentText"}>Proceed to Payment</p>
-              </div>
-              <div className={"cartPaymentTotal"}>{cart.currentBill}</div>
-            </button>
-          </form>
           {!cart && (
             <div className={styles.cartEmptyContainer}>
               <p>Your cart is empty.</p>
@@ -139,6 +125,7 @@ const Cart = ({ cart }) => {
           )}
         </div>
       </div>
+      <CartButton cart={cart} />
     </>
   );
 };
