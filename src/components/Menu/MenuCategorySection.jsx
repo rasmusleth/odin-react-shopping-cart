@@ -3,31 +3,33 @@ import PropTypes from "prop-types";
 import styles from "./menu.module.css";
 
 const MenuItem = ({ item, onItemClick }) => {
-  const itemsInCart = { 1001: 5, 5000: 2 };
+  const itemsInCart = { 2: 5, 10: 2 };
 
   return (
     <>
       <a
         className={`${
-          item["_id"] in itemsInCart
+          item["id"] in itemsInCart
             ? styles.menuItemWrapperAdded
             : styles.menuItemWrapper
         }`}
         onClick={(e) => onItemClick(item, e)}
       >
         <div className={styles.menuItemContent}>
-          <h3 className={styles.menuItemTitle}>{item.name}</h3>
+          <h3 className={`${styles.menuItemTitle} textStyle2Lines`}>
+            {item.title}
+          </h3>
           <p className={`textStyle2Lines`}>{item.description}</p>
           <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
         </div>
         <img
           className={styles.menuItemImage}
-          src="/images/menu-items/smoerrebroed-aeg.jpeg"
-          alt={item.name}
+          src={item.image} // "/images/menu-items/smoerrebroed-aeg.jpeg"
+          alt={item.title}
         />
-        {item["_id"] in itemsInCart && (
+        {item["id"] in itemsInCart && (
           <div className={styles.menuItemAddedQuantity}>
-            {itemsInCart[item._id]}
+            {itemsInCart[item.id]}
           </div>
         )}
       </a>
@@ -67,7 +69,7 @@ const MenuCategorySection = forwardRef(({ category, onItemClick }, ref) => {
           {category.items.map((item) => (
             <MenuItem
               onItemClick={onItemClick}
-              key={`categoryItem-${item._id}`}
+              key={`categoryItem-${item.id}`}
               item={item}
             />
           ))}
@@ -77,6 +79,8 @@ const MenuCategorySection = forwardRef(({ category, onItemClick }, ref) => {
     </>
   );
 });
+
+MenuCategorySection.displayName = "MenuCategorySection";
 
 MenuCategorySection.propTypes = {
   category: PropTypes.object.isRequired,

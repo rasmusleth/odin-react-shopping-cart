@@ -25,12 +25,12 @@ const MenuItem = ({ item, onClose }) => {
           </div>
           <img
             className={styles.menuItemCoverImage}
-            src="/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
+            src={item.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
             alt="Dish Image"
           />
           <div className={styles.menuItemContentWrapper}>
             <span className={styles.menuItemCategory}>{item.category}</span>
-            <h1 className={styles.menuItemName}>{item.name}</h1>
+            <h1 className={styles.menuItemName}>{item.title}</h1>
             <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
             <p className={styles.menuItemDescription}>{item.description}</p>
             <form
@@ -40,8 +40,8 @@ const MenuItem = ({ item, onClose }) => {
             >
               {/* Hidden Form values */}
               <input type="hidden" name="itemPrice" value={item.price} />
-              <input type="hidden" name="itemName" value={item.name} />
-              <input type="hidden" name="itemId" value={item._id} />
+              <input type="hidden" name="itemName" value={item.title} />
+              <input type="hidden" name="itemId" value={item.id} />
               {/* END */}
               <div className={styles.spacerSmall}></div>
 

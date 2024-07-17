@@ -278,6 +278,8 @@ const categoriesData = [
   },
 ];
 
+console.log(categoriesData);
+
 const cartMockData = {
   customerInfo: {
     name: "Rasmus Leth",
@@ -326,7 +328,7 @@ const routes = [
       },
       {
         path: "/menu",
-        element: <Menu categories={categoriesData} />,
+        element: <Menu />,
       },
       {
         path: "/cart",
