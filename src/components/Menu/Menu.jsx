@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
+import PropTypes from "prop-types";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
 import MenuItemModal from "./MenuItemModal";
 import styles from "./menu.module.css";
+import CartButton from "./CartButton";
 
-const Menu = () => {
+const Menu = ({ cart }) => {
   const [categories, setCategories] = useState([]);
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -84,6 +86,8 @@ const Menu = () => {
             ))}
           </div>
 
+          {cart.items.length > 0 && !modalIsOpen && <CartButton cart={cart} />}
+
           <MenuItemModal
             item={selectedItem}
             modalIsOpen={modalIsOpen}
@@ -97,6 +101,10 @@ const Menu = () => {
       )}
     </>
   );
+};
+
+Menu.propTypes = {
+  cart: PropTypes.object,
 };
 
 export default Menu;

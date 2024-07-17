@@ -280,38 +280,38 @@ const categoriesData = [
 
 console.log(categoriesData);
 
+const cartItems = Array.from({ length: 7 }, (_, i) => ({
+  _id: i,
+  item: 1001 + i,
+  name: `Food item ${i + 1}`,
+  ingredients: {
+    added: [
+      {
+        name: "Bacon",
+        price: 10.0,
+      },
+      {
+        name: "Cheese",
+        price: 10.0,
+      },
+    ],
+    removed: [
+      {
+        name: "Rugbrød",
+      },
+    ],
+  },
+  quantity: 1,
+  price: 85.0,
+  priceTotal: 100000 + i,
+}));
+
 const cartMockData = {
   customerInfo: {
     name: "Rasmus Leth",
     emailAddress: "rasmus@rasmusleth.dk",
   },
-  items: [
-    {
-      _id: 0,
-      item: 1001,
-      name: "Food item 1",
-      ingredients: {
-        added: [
-          {
-            name: "Bacon",
-            price: 10.0,
-          },
-          {
-            name: "Cheese",
-            price: 10.0,
-          },
-        ],
-        removed: [
-          {
-            name: "Rugbrød",
-          },
-        ],
-      },
-      quantity: 1,
-      price: 85.0,
-      priceTotal: 100000,
-    },
-  ],
+  items: cartItems,
   takeAway: false,
   tableNumber: 7,
   bill: 1000000.99,
@@ -328,7 +328,7 @@ const routes = [
       },
       {
         path: "/menu",
-        element: <Menu />,
+        element: <Menu cart={cartMockData} />,
       },
       {
         path: "/cart",
