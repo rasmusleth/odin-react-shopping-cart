@@ -134,6 +134,7 @@ html {
 
 .menuItemPrice {
   color: var(--color-primary);
+  font-weight: bold;
 }
 
 .menuItemImage {
