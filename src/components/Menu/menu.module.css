@@ -120,12 +120,16 @@ html {
 .menuItemContent {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  max-width: 60%;
+  gap: 0.5rem;
+  width: clamp(50%, 60%, 70ch);
 }
 
 .menuItemTitle {
   font-size: 1.25rem;
+}
+
+.menuItemDescription {
+  line-height: 1.25;
 }
 
 .menuItemPrice {
@@ -134,7 +138,8 @@ html {
 
 .menuItemImage {
   width: 20%; /* Existing style */
-  object-fit: cover; /* Ensures the image covers the allotted space without distortion */
+  aspect-ratio: 4 / 3;
+  object-fit: contain; /* Ensures the image covers the allotted space without distortion */
 }
 
 .itemDialog[open] {

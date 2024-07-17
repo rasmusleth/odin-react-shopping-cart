@@ -19,7 +19,9 @@ const MenuItem = ({ item, onItemClick }) => {
           <h3 className={`${styles.menuItemTitle} textStyle2Lines`}>
             {item.title}
           </h3>
-          <p className={`textStyle2Lines`}>{item.description}</p>
+          <p className={`${styles.menuItemDescription} textStyle2Lines`}>
+            {item.description}
+          </p>
           <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
         </div>
         <img
