@@ -149,9 +149,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.675rem 1rem;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-100);
   border-radius: 0.5rem;
-  color: var(--color-neutral);
+  color: var(--color-primary);
   cursor: pointer;
   transition: all 200ms ease-out;
   z-index: 1000;
@@ -159,8 +159,7 @@
 }
 
 .cartPaymentBtn:hover {
-  background-color: var(--color-primary-light);
-  color: var(--color-neutral-08);
+  background-color: var(--color-primary-200);
 }
 
 .cartPaymentBtn:hover .cartPaymentQuantity {

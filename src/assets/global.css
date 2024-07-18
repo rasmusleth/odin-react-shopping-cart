@@ -12,6 +12,9 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-primary: #9e5330;
+  --color-primary-100: hsl(19, 53%, 90%);
+  --color-primary-200: hsl(19, 53%, 85%);
+  --color-primary-300: hsl(19, 53%, 70%);
   --color-primary-light: rgb(171, 103, 72);
   --color-primary-01: rgba(158, 83, 48, 0.1);
   --color-neutral: #ffffff;

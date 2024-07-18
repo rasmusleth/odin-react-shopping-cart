@@ -280,42 +280,53 @@ const categoriesData = [
 
 console.log(categoriesData);
 
-const cartItems = Array.from({ length: 7 }, (_, i) => ({
-  _id: i,
-  item: 1001 + i,
-  name: `Food item ${i + 1}`,
-  ingredients: {
-    added: [
-      {
-        name: "Bacon",
-        price: 10.0,
-      },
-      {
-        name: "Cheese",
-        price: 10.0,
-      },
-    ],
-    removed: [
-      {
-        name: "Rugbrød",
-      },
-    ],
-  },
-  quantity: 1,
-  price: 85.0,
-  priceTotal: 100000 + i,
-}));
+// const cartItems = Array.from({ length: 7 }, (_, i) => ({
+//   _id: i,
+//   item: 1001 + i,
+//   name: `Food item ${i + 1}`,
+//   ingredients: {
+//     added: [
+//       {
+//         name: "Bacon",
+//         price: 10.0,
+//       },
+//       {
+//         name: "Cheese",
+//         price: 10.0,
+//       },
+//     ],
+//     removed: [
+//       {
+//         name: "Rugbrød",
+//       },
+//     ],
+//   },
+//   quantity: 1,
+//   price: 85.0,
+//   priceTotal: 100000 + i,
+// }));
 
-const cartMockData = {
+const cartStarterInfo = {
   customerInfo: {
-    name: "Rasmus Leth",
-    emailAddress: "rasmus@rasmusleth.dk",
+    name: "",
+    emailAddress: "",
   },
-  items: cartItems,
+  items: [],
   takeAway: false,
-  tableNumber: 7,
-  bill: 1000000.99,
+  tableNumber: -1,
+  bill: 0,
 };
+
+// const cartMockData = {
+//   customerInfo: {
+//     name: "Rasmus Leth",
+//     emailAddress: "rasmus@rasmusleth.dk",
+//   },
+//   items: cartItems,
+//   takeAway: false,
+//   tableNumber: 7,
+//   bill: 1000000.99,
+// };
 
 const routes = [
   {
@@ -328,11 +339,11 @@ const routes = [
       },
       {
         path: "/menu",
-        element: <Menu cart={cartMockData} />,
+        element: <Menu cart={cartStarterInfo} />,
       },
       {
         path: "/cart",
-        element: <Cart cart={cartMockData} />,
+        element: <Cart cart={cartStarterInfo} />,
       },
     ],
   },

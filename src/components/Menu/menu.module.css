@@ -74,11 +74,13 @@ html {
   padding-top: 0.5rem;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 0.25rem;
 }
 
 .menuItemWrapper {
   display: flex;
+  max-height: 8.5rem;
   justify-content: space-between;
   gap: 1rem;
   text-decoration: none;
@@ -127,7 +129,6 @@ html {
 
 .menuItemTitle {
   font-size: 1.25rem;
-  line-height: 1.25;
 }
 
 .menuItemDescription {
@@ -140,9 +141,10 @@ html {
 }
 
 .menuItemImage {
-  width: 20%; /* Existing style */
+  max-width: 30%; /* Existing style */
   aspect-ratio: 4 / 3;
   object-fit: contain; /* Ensures the image covers the allotted space without distortion */
+  max-height: 100%;
 }
 
 .itemDialog[open] {
