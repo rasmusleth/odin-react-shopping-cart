@@ -44,6 +44,19 @@ const Menu = ({ cart }) => {
     };
   }, [isObserverActive]);
 
+  // Handle body overflow when modal is open
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [modalIsOpen]);
+
   const handleItemClick = (item, e) => {
     e.preventDefault();
 
@@ -67,7 +80,7 @@ const Menu = ({ cart }) => {
         <>
           <h1>Menu</h1>
           <p>Browse our collection of delicious meals</p>
-          <div className={styles.menuPageWrapper}>
+          <div className={`${styles.menuPageWrapper}`}>
             <div className={`spacerSmall`}></div>
             <MenuCategorySlider
               categories={categories}
@@ -130,6 +143,41 @@ function convertDataToCategories(data) {
       ...data[i],
       category: `Category ${categoryId}`,
       priceFormatted: "85,00 DKK",
+      extraIngredients: [
+        {
+          name: "Bacon",
+          price: 10,
+        },
+        {
+          name: "Cheese",
+          price: 5,
+        },
+        {
+          name: "Æg",
+          price: 10,
+        },
+        {
+          name: "Salami",
+          price: 5,
+        },
+      ],
+      ingredients: [
+        {
+          name: "Rugbrød",
+        },
+        {
+          name: "Smør",
+        },
+        {
+          name: "Ketchup",
+        },
+        {
+          name: "Mayo",
+        },
+        {
+          name: "Agurk",
+        },
+      ],
     });
   }
 

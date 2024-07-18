@@ -1,6 +1,80 @@
 import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 
+const QuantityButton = () => {
+  return (
+    <div className={styles.menuItemQuantityButton}>
+      <button className={styles.quantityDecrease} type="button">
+        -
+      </button>
+      <input
+        className={styles.quantityValue}
+        type="number"
+        name="itemQuantity"
+        defaultValue="1"
+        min="1"
+      />
+      <button className={styles.quantityIncrease} type="button">
+        +
+      </button>
+    </div>
+  );
+};
+
+const MenuItemFooter = ({ item }) => {
+  return (
+    <>
+      <form action="" className={styles.menuItemFooterContainer}>
+        <div className={styles.menuItemFooter}>
+          <QuantityButton />
+          <button
+            type="dialog"
+            className={`btnPrimary ${styles.menuItemBuyButton}`}
+          >
+            <p className="textWeightBold">Tilføj til bestilling</p>
+            <p className={styles.menuItemPriceTotal}>{item.price} kr.</p>
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};
+
+MenuItemFooter.propTypes = {
+  item: PropTypes.object.isRequired,
+};
+
+const IngredientItem = ({ ingredient, isExtra }) => {
+  let ingredientHtmlId = isExtra
+    ? `${ingredient.name}-add`
+    : `${ingredient.name}-remove`;
+
+  return (
+    <div className={styles.menuItemIngredientWrapper}>
+      <label htmlFor={ingredientHtmlId}>
+        <input
+          type="checkbox"
+          id={ingredientHtmlId}
+          name="itemIngredientAdd"
+          value={`${ingredient.name} | ${ingredient.price}`}
+        />
+        <span className={styles.checkmark}></span>
+        <p>{ingredient.name}</p>
+        {isExtra && (
+          <p
+            className={styles.menuItemIngredientPrice}
+          >{`+ ${ingredient.price} kr.`}</p>
+        )}
+      </label>
+    </div>
+  );
+};
+
+IngredientItem.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  isExtra: PropTypes.bool.isRequired,
+};
+
 const MenuItem = ({ item, onClose }) => {
   return (
     <>
@@ -30,67 +104,41 @@ const MenuItem = ({ item, onClose }) => {
           />
           <div className={styles.menuItemContentWrapper}>
             <span className={styles.menuItemCategory}>{item.category}</span>
-            <h1 className={styles.menuItemName}>{item.title}</h1>
+            <h2 className={`heading-style-h4`}>{item.title}</h2>
             <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
             <p className={styles.menuItemDescription}>{item.description}</p>
-            <form
-              className={styles.menuItemForm}
-              action="/cart/add-to-cart"
-              method="post"
-            >
-              {/* Hidden Form values */}
-              <input type="hidden" name="itemPrice" value={item.price} />
-              <input type="hidden" name="itemName" value={item.title} />
-              <input type="hidden" name="itemId" value={item.id} />
-              {/* END */}
-              <div className={styles.spacerSmall}></div>
+            <div className={styles.spacerSmall}></div>
 
-              <h3>Tilføj ingredienser</h3>
-              <div className={styles.spacerSmall}></div>
+            <h3 className="heading-style-h6">Tilføj ingredienser</h3>
+            <div className={styles.menuItemIngredientContainer}>
+              {item.extraIngredients.length > 0 &&
+                item.extraIngredients.map((ingredient) => {
+                  return (
+                    <IngredientItem
+                      key={ingredient.name}
+                      ingredient={ingredient}
+                      isExtra={true}
+                    />
+                  );
+                })}
+            </div>
+            <div className={styles.spacerSmall}></div>
 
-              <div
-                className={(styles.menuItemIngredientContainer, styles.extra)}
-              ></div>
-              <div className={styles.spacerMedium}></div>
-
-              <h3>Fjern ingredienser</h3>
-              <div className={styles.spacerSmall}></div>
-
-              <div
-                className={(styles.menuItemIngredientContainer, styles.remove)}
-              ></div>
-              <div className={styles.spacerMedium}></div>
-
-              <div className={styles.menuItemFooter}>
-                <div className={styles.menuItemQuantityButton}>
-                  <button className={styles.quantityDecrease} type="button">
-                    -
-                  </button>
-                  <input
-                    className={styles.quantityValue}
-                    type="number"
-                    name="itemQuantity"
-                    defaultValue="1"
-                    min="1"
-                  />
-                  <button className={styles.quantityIncrease} type="button">
-                    +
-                  </button>
-                </div>
-                <button
-                  type="dialog"
-                  className={(styles.menuItemBuyButton, styles.buttonPrimary)}
-                >
-                  <p>
-                    <strong>Tilføj til bestilling</strong>
-                  </p>
-                  <p className={styles.menuItemPriceTotal}>
-                    menu_item.priceTotal
-                  </p>
-                </button>
-              </div>
-            </form>
+            <h3 className="heading-style-h6">Fjern ingredienser</h3>
+            <div className={styles.menuItemIngredientContainer}>
+              {item.ingredients.length > 0 &&
+                item.ingredients.map((ingredient) => {
+                  return (
+                    <IngredientItem
+                      key={ingredient.name}
+                      ingredient={ingredient}
+                      isExtra={false}
+                    />
+                  );
+                })}
+            </div>
           </div>
+          <MenuItemFooter item={item} />
         </div>
       )}
     </>
