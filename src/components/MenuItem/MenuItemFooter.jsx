@@ -40,21 +40,22 @@ QuantityButton.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const MenuItemFooter = ({ quantity, priceFormatted, onChange }) => {
+const MenuItemFooter = ({ quantity, priceFormatted, onChange, addToCart }) => {
   return (
     <>
-      <form action="" className={styles.menuItemFooterContainer}>
+      <div className={styles.menuItemFooterContainer}>
         <div className={styles.menuItemFooter}>
           <QuantityButton quantity={quantity} onChange={onChange} />
           <button
-            type="dialog"
+            type="button"
             className={`btnPrimary ${styles.menuItemBuyButton}`}
+            onClick={addToCart}
           >
             <p className="textWeightBold">Tilføj til bestilling</p>
             <p className={styles.menuItemPriceTotal}>{priceFormatted}</p>
           </button>
         </div>
-      </form>
+      </div>
     </>
   );
 };
@@ -64,6 +65,7 @@ MenuItemFooter.propTypes = {
   quantity: PropTypes.number.isRequired,
   priceFormatted: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default MenuItemFooter;

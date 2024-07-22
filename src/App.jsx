@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [cart, setCart] = useState(null);
+  const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {
     // OBS: Fetch cart here ...
@@ -21,11 +22,21 @@ function App() {
     setCart(cartStarterInfo);
   }, []);
 
+  useEffect(() => {
+    if (!cart) return;
+
+    const length = cart.items.reduce((accumulator, item) => {
+      return accumulator + item.quantity;
+    }, 0);
+
+    setCartLength(length);
+  }, [cart]);
+
   return (
     <>
-      <Navigation />
+      <Navigation cartLength={cartLength} />
       <main>
-        <Outlet context={[cart, setCart]} />
+        <Outlet context={[cart, setCart, cartLength]} />
       </main>
     </>
   );

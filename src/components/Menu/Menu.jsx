@@ -8,7 +8,7 @@ import CartButton from "../Cart/CartButton";
 import { useOutletContext } from "react-router-dom";
 
 const Menu = () => {
-  const [cart, setCart] = useOutletContext();
+  const [cart, setCart, cartLength] = useOutletContext();
   const [categories, setCategories] = useState([]);
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -101,12 +101,15 @@ const Menu = () => {
             ))}
           </div>
 
-          {cart.items.length > 0 && !modalIsOpen && <CartButton cart={cart} />}
+          {cart.items.length > 0 && !modalIsOpen && (
+            <CartButton cart={cart} cartLength={cartLength} />
+          )}
 
           <MenuItemModal
             item={selectedItem}
             modalIsOpen={modalIsOpen}
             onClose={handleModalClose}
+            setCart={setCart}
           />
         </>
       ) : (

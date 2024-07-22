@@ -164,7 +164,7 @@ const initialItemState = {
   priceTotal: 0,
 };
 
-const MenuItem = ({ item, onClose, modalIsOpen }) => {
+const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialItemState);
 
   const quantity = itemState.quantity;
@@ -186,6 +186,39 @@ const MenuItem = ({ item, onClose, modalIsOpen }) => {
       });
     }
   }, [modalIsOpen, item]);
+
+  const handleAddToCart = () => {
+    const itemTotal = calculatePriceTotal(
+      itemState.price,
+      itemState.quantity,
+      itemState.ingredientsAdded
+    );
+
+    setCart((prevState) => {
+      return {
+        ...prevState,
+        items: [
+          ...prevState.items,
+          {
+            id: item.id,
+            title: item.title,
+            ingredients: {
+              added: itemState.ingredientsAdded,
+              removed: itemState.ingredientsRemoved,
+            },
+            quantity: itemState.quantity,
+            price: item.price,
+            priceTotal: itemTotal,
+          },
+        ],
+        bill: prevState.items.reduce((accumulator, item) => {
+          return accumulator + item.priceTotal;
+        }, itemTotal),
+      };
+    });
+
+    onClose();
+  };
 
   const handleQuantityChange = (e, method = "typed") => {
     switch (method) {
@@ -316,6 +349,7 @@ const MenuItem = ({ item, onClose, modalIsOpen }) => {
             quantity={quantity}
             priceFormatted={priceFormatted}
             onChange={handleQuantityChange}
+            addToCart={handleAddToCart}
           />
         </div>
       )}
@@ -327,6 +361,7 @@ MenuItem.propTypes = {
   item: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
+  setCart: PropTypes.func.isRequired,
 };
 
 export default MenuItem;

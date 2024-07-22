@@ -89,7 +89,7 @@ CartItem.propTypes = {
 };
 
 const Cart = () => {
-  const [cart, setCart] = useOutletContext();
+  const [cart, setCart, cartLength] = useOutletContext();
 
   console.log(cart);
 
@@ -129,7 +129,7 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {cart && <CartButton cart={cart} />}
+      {cart && <CartButton cart={cart} cartLength={cartLength} />}
     </>
   );
 };
