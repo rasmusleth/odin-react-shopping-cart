@@ -40,7 +40,7 @@ QuantityButton.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const MenuItemFooter = ({ quantity, price, onChange }) => {
+const MenuItemFooter = ({ quantity, priceFormatted, onChange }) => {
   return (
     <>
       <form action="" className={styles.menuItemFooterContainer}>
@@ -51,7 +51,7 @@ const MenuItemFooter = ({ quantity, price, onChange }) => {
             className={`btnPrimary ${styles.menuItemBuyButton}`}
           >
             <p className="textWeightBold">Tilføj til bestilling</p>
-            <p className={styles.menuItemPriceTotal}>{price} kr.</p>
+            <p className={styles.menuItemPriceTotal}>{priceFormatted}</p>
           </button>
         </div>
       </form>
@@ -62,7 +62,7 @@ const MenuItemFooter = ({ quantity, price, onChange }) => {
 MenuItemFooter.propTypes = {
   item: PropTypes.object.isRequired,
   quantity: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
+  priceFormatted: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./menu.module.css";
+import { formatPrice } from "../../assets/javascript/calculationHelper";
 
 const MenuItem = ({ item, onItemClick }) => {
   const itemsInCart = { 2: 5, 10: 2 };
@@ -22,7 +23,7 @@ const MenuItem = ({ item, onItemClick }) => {
           <p className={`${styles.menuItemDescription} textStyle2Lines`}>
             {item.description}
           </p>
-          <p className={styles.menuItemPrice}>{item.priceFormatted}</p>
+          <p className={styles.menuItemPrice}>{formatPrice(item.price)}</p>
         </div>
         <img
           className={styles.menuItemImage}

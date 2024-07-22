@@ -2,6 +2,10 @@ import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 import MenuItemFooter from "./MenuItemFooter";
 import { useEffect, useReducer, useState } from "react";
+import {
+  calculatePriceTotal,
+  formatPrice,
+} from "../../assets/javascript/calculationHelper";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -164,7 +168,7 @@ const MenuItem = ({ item, onClose, modalIsOpen }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialItemState);
 
   const quantity = itemState.quantity;
-  const price = itemState.priceTotal;
+  const priceFormatted = formatPrice(itemState.priceTotal);
   const ingredients = {
     extra: itemState.ingredientsAdded,
     existing: itemState.ingredientsRemoved,
@@ -310,7 +314,7 @@ const MenuItem = ({ item, onClose, modalIsOpen }) => {
           <MenuItemFooter
             item={item}
             quantity={quantity}
-            price={price}
+            priceFormatted={priceFormatted}
             onChange={handleQuantityChange}
           />
         </div>
@@ -326,11 +330,3 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
-
-const calculatePriceTotal = (price, quantity, ingredientsExtra) => {
-  const itemTotal = ingredientsExtra.reduce((accumulator, ingredient) => {
-    return accumulator + ingredient.price;
-  }, price);
-
-  return itemTotal * quantity;
-};
