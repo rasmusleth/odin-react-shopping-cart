@@ -278,8 +278,6 @@ const categoriesData = [
   },
 ];
 
-console.log(categoriesData);
-
 // const cartItems = Array.from({ length: 7 }, (_, i) => ({
 //   _id: i,
 //   item: 1001 + i,
@@ -339,11 +337,11 @@ const routes = [
       },
       {
         path: "/menu",
-        element: <Menu cart={cartStarterInfo} />,
+        element: <Menu />,
       },
       {
         path: "/cart",
-        element: <Cart cart={cartStarterInfo} />,
+        element: <Cart />,
       },
     ],
   },

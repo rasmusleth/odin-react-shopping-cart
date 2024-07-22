@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
+import { useOutletContext } from "react-router-dom";
 
 const CartItem = ({ item }) => {
   return (
@@ -87,7 +88,11 @@ CartItem.propTypes = {
   item: PropTypes.object,
 };
 
-const Cart = ({ cart }) => {
+const Cart = () => {
+  const [cart, setCart] = useOutletContext();
+
+  console.log(cart);
+
   return (
     <>
       <div id="cartSection">
@@ -101,10 +106,9 @@ const Cart = ({ cart }) => {
         </h2>
         <div className={`spacerMedium`}></div>
         <div className={styles.cartContainer}>
-          {cart.items.length > 0 &&
-            cart.items.map((item) => (
-              <CartItem key={item["_id"]} item={item} />
-            ))}
+          {cart &&
+            cart.items.length > 0 &&
+            cart.items.map((item) => <CartItem key={item["id"]} item={item} />)}
 
           <div className={`spacerMedium`}></div>
           <div className={styles.cartComment}>
@@ -125,13 +129,9 @@ const Cart = ({ cart }) => {
           )}
         </div>
       </div>
-      <CartButton cart={cart} />
+      {cart && <CartButton cart={cart} />}
     </>
   );
-};
-
-Cart.propTypes = {
-  cart: PropTypes.object,
 };
 
 export default Cart;

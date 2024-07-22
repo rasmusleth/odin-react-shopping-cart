@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import MenuItem from "./MenuItem";
-import styles from "./menu.module.css";
+import styles from "./menuItem.module.css";
 
 const MenuItemModal = ({ item, modalIsOpen, onClose }) => {
   const modalRef = useRef();
@@ -21,7 +21,7 @@ const MenuItemModal = ({ item, modalIsOpen, onClose }) => {
       onCancel={onClose}
       onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
     >
-      <MenuItem item={item} onClose={onClose} />
+      <MenuItem item={item} onClose={onClose} modalIsOpen={modalIsOpen} />
     </dialog>
   );
 };

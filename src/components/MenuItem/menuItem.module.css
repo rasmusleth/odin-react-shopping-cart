@@ -1,3 +1,46 @@
+.itemDialog[open] {
+  transform: translateY(0);
+}
+
+.itemDialog {
+  position: fixed;
+  margin: 0 auto;
+  margin-top: auto;
+  z-index: 10000;
+  width: 100%;
+  max-width: 600px;
+  border: none;
+  background-color: var(--color-neutral);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  transition: transform 200ms ease-in-out,
+    display 200ms ease-in-out allow-discrete,
+    overlay 200ms ease-in-out allow-discrete;
+  transform: translateY(100%);
+}
+
+@starting-style {
+  .itemDialog[open] {
+    transform: translateY(100%);
+  }
+}
+
+.itemDialog[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.39);
+}
+
+.itemDialog::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  transition: display 200ms ease-in-out allow-discrete,
+    overlay 200ms ease-in-out allow-discrete, background-color 200ms ease-in-out;
+}
+
+@starting-style {
+  .itemDialog[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
 .menuItemContainer {
   display: flex;
   flex-direction: column;
@@ -71,7 +114,10 @@
 .menuItemIngredientWrapper {
   position: relative;
   display: flex;
-  justify-content: start;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding-left: 2rem;
+  cursor: pointer;
   gap: 1rem;
   width: 100%;
   transition: all 200ms ease-out;
@@ -93,15 +139,7 @@
   color: var(--color-primary);
 }
 
-.menuItemIngredientWrapper input {
-  position: absolute;
-  width: 0rem;
-  height: 0rem;
-  opacity: 0;
-  border-radius: 100%;
-}
-
-.menuItemIngredientWrapper .checkmark {
+.checkMark {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -112,12 +150,20 @@
   border-radius: 100%;
 }
 
-.menuItemIngredientWrapper input:checked ~ .checkmark {
+.checkMarkChecked {
   background-color: var(--color-primary);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 100%;
 }
 
 /* Add checkmark icon */
-.menuItemIngredientWrapper .checkmark:after {
+.checkMark:after {
   content: "";
   position: absolute;
   display: none;
@@ -132,8 +178,19 @@
   transform: rotate(45deg);
 }
 
-.menuItemIngredientWrapper input:checked ~ .checkmark:after {
+.checkMarkChecked:after {
+  content: "";
+  position: absolute;
   display: block;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-neutral);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .menuItemFooterContainer {
@@ -199,6 +256,7 @@
   color: var(--color-primary);
   border-radius: 100%;
   cursor: pointer;
+  line-height: 0.875rem;
 }
 
 .quantityDecrease:hover,

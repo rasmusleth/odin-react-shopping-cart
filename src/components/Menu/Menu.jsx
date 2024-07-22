@@ -2,11 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
-import MenuItemModal from "./MenuItemModal";
+import MenuItemModal from "../MenuItem/MenuItemModal";
 import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
+import { useOutletContext } from "react-router-dom";
 
-const Menu = ({ cart }) => {
+const Menu = () => {
+  const [cart, setCart] = useOutletContext();
   const [categories, setCategories] = useState([]);
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
