@@ -6,12 +6,16 @@ import {
   calculatePriceTotal,
   formatPrice,
 } from "../../assets/javascript/calculationHelper";
+import {
+  itemReducer,
+  initialItemState,
+} from "../../assets/javascript/itemReducer";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
 
   useEffect(() => {
-    const isSelected = ingredientsState[isExtra ? "extra" : "existing"].some(
+    const isSelected = ingredientsState[isExtra ? "added" : "removed"].some(
       (ing) => ing.name === ingredient.name
     );
 
@@ -52,170 +56,53 @@ IngredientItem.propTypes = {
   ingredientsState: PropTypes.object,
 };
 
-function itemReducer(itemState, action) {
-  switch (action.type) {
-    case "init_item": {
-      return {
-        ...itemState,
-        price: action.price,
-        priceTotal: action.price,
-        quantity: action.quantity,
-        ingredientsAdded: action.ingredientsAdded,
-        ingredientsRemoved: action.ingredientsRemoved,
-      };
-    }
-    case "quantity_increment": {
-      return {
-        ...itemState,
-        quantity: itemState.quantity + 1,
-        priceTotal: calculatePriceTotal(
-          itemState.price,
-          itemState.quantity + 1,
-          itemState.ingredientsAdded
-        ),
-      };
-    }
-    case "quantity_decrement": {
-      return {
-        ...itemState,
-        quantity: itemState.quantity > 1 ? itemState.quantity - 1 : 1,
-        priceTotal: calculatePriceTotal(
-          itemState.price,
-          itemState.quantity - 1,
-          itemState.ingredientsAdded
-        ),
-      };
-    }
-    case "quantity_input": {
-      return {
-        ...itemState,
-        quantity: action.quantityInput,
-        priceTotal: calculatePriceTotal(
-          itemState.price,
-          action.quantityInput,
-          itemState.ingredientsAdded
-        ),
-      };
-    }
-    case "extraIngredient_add": {
-      const newIngredientsExtra = [
-        ...itemState.ingredientsAdded,
-        {
-          name: action.ingredientName,
-          price: parseFloat(action.ingredientPrice),
-        },
-      ];
+const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
+  const initialState = action === "edit" ? item : initialItemState;
 
-      return {
-        ...itemState,
-        ingredientsAdded: newIngredientsExtra,
-        priceTotal: calculatePriceTotal(
-          itemState.price,
-          itemState.quantity,
-          newIngredientsExtra
-        ),
-      };
-    }
-    case "extraIngredient_remove": {
-      const newIngredientsExtra = itemState.ingredientsAdded.filter(
-        (ingredient) => ingredient.name !== action.ingredientName
-      );
-
-      return {
-        ...itemState,
-        ingredientsAdded: newIngredientsExtra,
-        priceTotal: calculatePriceTotal(
-          itemState.price,
-          itemState.quantity,
-          newIngredientsExtra
-        ),
-      };
-    }
-    case "existingIngredient_add": {
-      return {
-        ...itemState,
-        ingredientsRemoved: [
-          ...itemState.ingredientsRemoved,
-          {
-            name: action.ingredientName,
-          },
-        ],
-      };
-    }
-    case "existingIngredient_remove": {
-      return {
-        ...itemState,
-        ingredientsRemoved: itemState.ingredientsRemoved.filter(
-          (ingredient) => ingredient.name !== action.ingredientName
-        ),
-      };
-    }
-    default: {
-      throw Error("Unknown action: ", action.type);
-    }
-  }
-}
-
-const initialItemState = {
-  quantity: 1,
-  ingredientsAdded: [],
-  ingredientsRemoved: [],
-  price: 0,
-  priceTotal: 0,
-};
-
-const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
-  const [itemState, dispatch] = useReducer(itemReducer, initialItemState);
+  const [itemState, dispatch] = useReducer(itemReducer, initialState);
 
   const quantity = itemState.quantity;
   const priceFormatted = formatPrice(itemState.priceTotal);
-  const ingredients = {
-    extra: itemState.ingredientsAdded,
-    existing: itemState.ingredientsRemoved,
-  };
+  const ingredients = itemState.ingredients;
 
   // Reset quantity, price, & ingredients on modal close
   useEffect(() => {
     if (modalIsOpen) {
-      dispatch({
-        type: "init_item",
-        price: item.price,
-        quantity: 1,
-        ingredientsAdded: [],
-        ingredientsRemoved: [],
-      });
+      if (action === "add") {
+        dispatch({
+          type: "init_item",
+          price: item.price,
+          quantity: 1,
+          ingredients: {
+            added: [],
+            removed: [],
+          },
+        });
+      }
     }
-  }, [modalIsOpen, item]);
+  }, [modalIsOpen, item, action]);
 
   const handleAddToCart = () => {
     const itemTotal = calculatePriceTotal(
       itemState.price,
       itemState.quantity,
-      itemState.ingredientsAdded
+      itemState.ingredients.added
     );
 
-    setCart((prevState) => {
-      return {
-        ...prevState,
-        items: [
-          ...prevState.items,
-          {
-            id: item.id,
-            title: item.title,
-            image: item.image,
-            ingredients: {
-              added: itemState.ingredientsAdded,
-              removed: itemState.ingredientsRemoved,
-            },
-            quantity: itemState.quantity,
-            price: item.price,
-            priceTotal: itemTotal,
-          },
-        ],
-        bill: prevState.items.reduce((accumulator, item) => {
-          return accumulator + item.priceTotal;
-        }, itemTotal),
-      };
+    cartDispatch({
+      type: "add_to_cart",
+      item: {
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        category: item.category,
+        image: item.image,
+        ingredients: itemState.ingredients,
+        allIngredients: item.allIngredients,
+        quantity: itemState.quantity,
+        price: item.price,
+        priceTotal: itemTotal,
+      },
     });
 
     onClose();
@@ -302,15 +189,15 @@ const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
 
             <h3 className="heading-style-h6">Tilføj ingredienser</h3>
             <div className={styles.menuItemIngredientContainer}>
-              {item.extraIngredients.length > 0 &&
-                item.extraIngredients.map((ingredient) => {
+              {item.allIngredients.extra.length > 0 &&
+                item.allIngredients.extra.map((ingredient) => {
                   return (
                     <IngredientItem
                       key={ingredient.name}
                       ingredient={ingredient}
                       isExtra={true}
                       onClick={
-                        itemState.ingredientsAdded.some(
+                        itemState.ingredients.added.some(
                           (value) => value.name === ingredient.name
                         )
                           ? handleIngredientsExtraRemove
@@ -325,15 +212,15 @@ const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
 
             <h3 className="heading-style-h6">Fjern ingredienser</h3>
             <div className={styles.menuItemIngredientContainer}>
-              {item.ingredients.length > 0 &&
-                item.ingredients.map((ingredient) => {
+              {item.allIngredients.existing.length > 0 &&
+                item.allIngredients.existing.map((ingredient) => {
                   return (
                     <IngredientItem
                       key={ingredient.name}
                       ingredient={ingredient}
                       isExtra={false}
                       onClick={
-                        itemState.ingredientsRemoved.some(
+                        itemState.ingredients.removed.some(
                           (value) => value.name === ingredient.name
                         )
                           ? handleIngredientsExistingRemove
@@ -362,7 +249,8 @@ MenuItem.propTypes = {
   item: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  setCart: PropTypes.func.isRequired,
+  cartDispatch: PropTypes.func.isRequired,
+  action: PropTypes.string.isRequired,
 };
 
 export default MenuItem;

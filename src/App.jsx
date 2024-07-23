@@ -1,26 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
+import { cartReducer, initialCartState } from "./assets/javascript/cartReducer";
 
 function App() {
-  const [cart, setCart] = useState(null);
+  const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
   const [cartLength, setCartLength] = useState(0);
-
-  useEffect(() => {
-    // OBS: Fetch cart here ...
-    const cartStarterInfo = {
-      customerInfo: {
-        name: "",
-        emailAddress: "",
-      },
-      items: [],
-      takeAway: false,
-      tableNumber: -1,
-      bill: 0,
-    };
-
-    setCart(cartStarterInfo);
-  }, []);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     if (!cart) return;
@@ -36,7 +23,17 @@ function App() {
     <>
       <Navigation cartLength={cartLength} />
       <main>
-        <Outlet context={[cart, setCart, cartLength]} />
+        <Outlet
+          context={[
+            cart,
+            cartDispatch,
+            cartLength,
+            modalIsOpen,
+            setModalIsOpen,
+            selectedItem,
+            setSelectedItem,
+          ]}
+        />
       </main>
     </>
   );

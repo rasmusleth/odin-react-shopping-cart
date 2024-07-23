@@ -1,17 +1,24 @@
 import { useEffect, useState, useRef } from "react";
-import PropTypes from "prop-types";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
 import MenuItemModal from "../MenuItem/MenuItemModal";
 import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
 import { useOutletContext } from "react-router-dom";
+import { handleBodyOnModalOpen } from "../../assets/javascript/itemModalHelpers";
+import { convertDataToCategories } from "../../assets/javascript/dataHelpers";
 
 const Menu = () => {
-  const [cart, setCart, cartLength] = useOutletContext();
+  const [
+    cart,
+    cartDispatch,
+    cartLength,
+    modalIsOpen,
+    setModalIsOpen,
+    selectedItem,
+    setSelectedItem,
+  ] = useOutletContext();
   const [categories, setCategories] = useState([]);
-  const [modalIsOpen, setmodalIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
   const [isObserverActive, setIsObserverActive] = useState(true);
   const categorySectionRefs = useRef([]);
@@ -48,26 +55,18 @@ const Menu = () => {
 
   // Handle body overflow when modal is open
   useEffect(() => {
-    if (modalIsOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    handleBodyOnModalOpen(modalIsOpen);
   }, [modalIsOpen]);
 
   const handleItemClick = (item, e) => {
     e.preventDefault();
 
     setSelectedItem({ ...item });
-    setmodalIsOpen(true);
+    setModalIsOpen(true);
   };
 
   const handleModalClose = () => {
-    setmodalIsOpen(false);
+    setModalIsOpen(false);
   };
 
   const handleCategoryClick = (category) => {
@@ -114,7 +113,8 @@ const Menu = () => {
             item={selectedItem}
             modalIsOpen={modalIsOpen}
             onClose={handleModalClose}
-            setCart={setCart}
+            cartDispatch={cartDispatch}
+            action="add"
           />
         </>
       ) : (
@@ -126,70 +126,4 @@ const Menu = () => {
   );
 };
 
-Menu.propTypes = {
-  cart: PropTypes.object,
-};
-
 export default Menu;
-
-function convertDataToCategories(data) {
-  let categories = [];
-  let categoryId = 0;
-  for (let i = 0; i < data.length; i++) {
-    if (i % 4 === 0) {
-      if (i > 0) {
-        categoryId++;
-      }
-
-      categories.push({
-        id: categoryId,
-        slug: `/category${categoryId}`,
-        title: `Category ${categoryId}`,
-        items: [],
-      });
-    }
-
-    categories[categoryId]["items"].push({
-      ...data[i],
-      category: `Category ${categoryId}`,
-      priceFormatted: "85,00 DKK",
-      extraIngredients: [
-        {
-          name: "Bacon",
-          price: 10,
-        },
-        {
-          name: "Cheese",
-          price: 5,
-        },
-        {
-          name: "Æg",
-          price: 10,
-        },
-        {
-          name: "Salami",
-          price: 5,
-        },
-      ],
-      ingredients: [
-        {
-          name: "Rugbrød",
-        },
-        {
-          name: "Smør",
-        },
-        {
-          name: "Ketchup",
-        },
-        {
-          name: "Mayo",
-        },
-        {
-          name: "Agurk",
-        },
-      ],
-    });
-  }
-
-  return categories;
-}

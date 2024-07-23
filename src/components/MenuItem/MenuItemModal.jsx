@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import MenuItem from "./MenuItem";
 import styles from "./menuItem.module.css";
 
-const MenuItemModal = ({ item, modalIsOpen, onClose, setCart }) => {
+const MenuItemModal = ({
+  item,
+  modalIsOpen,
+  onClose,
+  cartDispatch,
+  action,
+}) => {
   const modalRef = useRef();
 
   useEffect(() => {
@@ -25,7 +31,8 @@ const MenuItemModal = ({ item, modalIsOpen, onClose, setCart }) => {
         item={item}
         onClose={onClose}
         modalIsOpen={modalIsOpen}
-        setCart={setCart}
+        cartDispatch={cartDispatch}
+        action={action}
       />
     </dialog>
   );
@@ -35,7 +42,8 @@ MenuItemModal.propTypes = {
   item: PropTypes.object,
   modalIsOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  setCart: PropTypes.func,
+  cartDispatch: PropTypes.func,
+  action: PropTypes.string,
 };
 
 export default MenuItemModal;

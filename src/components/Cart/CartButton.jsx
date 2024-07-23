@@ -4,7 +4,6 @@ import styles from "./cart.module.css";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 
 const CartButton = ({ cart, cartLength, text }) => {
-  console.log(cart);
   return (
     <Link to={"/cart"} className={`${styles.cartPaymentBtn}`}>
       <div className={styles.cartPaymentLeft}>

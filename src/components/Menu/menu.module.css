@@ -23,7 +23,7 @@ html {
 .menuCategoriesSliderItem {
   text-decoration: none;
   text-wrap: nowrap;
-  color: var(--color-neutral-600);
+  color: var(--color-neutral-900);
   font-size: 0.875rem;
   padding: 0.5rem 0.675rem;
   border: 1px solid var(--color-primary);
@@ -55,7 +55,7 @@ html {
   gap: 0.5rem;
   background-color: var(--color-primary-01);
   border-radius: 0.5rem;
-  color: var(--color-neutral-600);
+  color: var(--color-neutral-900);
   text-decoration: none;
 }
 
@@ -84,7 +84,7 @@ html {
   justify-content: space-between;
   gap: 1rem;
   text-decoration: none;
-  color: var(--color-neutral-600);
+  color: var(--color-neutral-900);
   transition: opacity 100ms ease-out;
   padding: 0.5rem;
   cursor: pointer;
