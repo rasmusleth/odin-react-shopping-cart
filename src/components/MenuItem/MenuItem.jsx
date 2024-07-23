@@ -37,9 +37,9 @@ const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
         <p>{ingredient.name}</p>
       </span>
       {isExtra && (
-        <p
-          className={styles.menuItemIngredientPrice}
-        >{`+ ${ingredient.price} kr.`}</p>
+        <p className={styles.menuItemIngredientPrice}>
+          + {formatPrice(ingredient.price)}
+        </p>
       )}
     </div>
   );
@@ -296,7 +296,7 @@ const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
           <div className={styles.menuItemContentWrapper}>
             <span className={styles.menuItemCategory}>{item.category}</span>
             <h2 className={`heading-style-h4`}>{item.title}</h2>
-            <p className={styles.menuItemPrice}>{item.price} kr.</p>
+            <p className={styles.menuItemPrice}>{formatPrice(item.price)}</p>
             <p className={styles.menuItemDescription}>{item.description}</p>
             <div className={styles.spacerSmall}></div>
 

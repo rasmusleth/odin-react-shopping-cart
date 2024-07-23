@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
+import { formatPrice } from "../../assets/javascript/calculationHelper";
 
 const CartItem = ({ item }) => {
   return (
@@ -28,7 +29,7 @@ const CartItem = ({ item }) => {
               {item.ingredients.added.map((ingredient) => {
                 return (
                   <li key={ingredient.name}>
-                    `${ingredient.name} ${ingredient.price} kr.`
+                    {ingredient.name} {`(${formatPrice(ingredient.price)})`}
                   </li>
                 );
               })}
@@ -47,7 +48,7 @@ const CartItem = ({ item }) => {
           </div>
         )}
 
-        <div className={styles.cartItemPrice}>{item.price}</div>
+        <div className={styles.cartItemPrice}>{formatPrice(item.price)}</div>
       </div>
       <div className={styles.cartItemRight}>
         <img className={styles.cartItemImage} src={item.image} alt="" />
