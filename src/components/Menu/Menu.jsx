@@ -95,6 +95,7 @@ const Menu = () => {
               <MenuCategorySection
                 key={`section-${category.id}`}
                 category={category}
+                cart={cart}
                 onItemClick={handleItemClick}
                 ref={(el) => (categorySectionRefs.current[index] = el)}
               />
@@ -102,7 +103,11 @@ const Menu = () => {
           </div>
 
           {cart.items.length > 0 && !modalIsOpen && (
-            <CartButton cart={cart} cartLength={cartLength} />
+            <CartButton
+              cart={cart}
+              cartLength={cartLength}
+              text="Items in your cart"
+            />
           )}
 
           <MenuItemModal

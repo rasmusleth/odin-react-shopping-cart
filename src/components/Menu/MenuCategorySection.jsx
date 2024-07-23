@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import styles from "./menu.module.css";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 
-const MenuItem = ({ item, onItemClick }) => {
-  const itemsInCart = { 2: 5, 10: 2 };
+const MenuItem = ({ item, cart, onItemClick }) => {
+  const isInCart = cart.items.some((cartItem) => cartItem.id === item["id"]);
 
   return (
     <>
       <a
         className={`${
-          item["id"] in itemsInCart
-            ? styles.menuItemWrapperAdded
-            : styles.menuItemWrapper
+          isInCart ? styles.menuItemWrapperAdded : styles.menuItemWrapper
         }`}
         onClick={(e) => onItemClick(item, e)}
       >
@@ -30,9 +28,11 @@ const MenuItem = ({ item, onItemClick }) => {
           src={item.image} // "/images/menu-items/smoerrebroed-aeg.jpeg"
           alt={item.title}
         />
-        {item["id"] in itemsInCart && (
+        {isInCart && (
           <div className={styles.menuItemAddedQuantity}>
-            {itemsInCart[item.id]}
+            {cart.items
+              .filter((cartItem) => cartItem.id === item.id)
+              .reduce((acc, item) => acc + item.quantity, 0)}
           </div>
         )}
       </a>
@@ -43,50 +43,55 @@ const MenuItem = ({ item, onItemClick }) => {
 
 MenuItem.propTypes = {
   item: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
   onItemClick: PropTypes.func.isRequired,
 };
 
-const MenuCategorySection = forwardRef(({ category, onItemClick }, ref) => {
-  return (
-    <>
-      <section
-        className={styles.menuCategorySection}
-        id={category.slug.slice(1)}
-        ref={ref}
-        data-category-id={category.id}
-      >
-        <div className={styles.menuCategoryTitleContainer}>
-          <a
-            href={`#${category.slug.slice(1)}`}
-            className={styles.menuCategoryTitleWrapper}
-          >
-            <img
-              className={styles.menuCategoryTitleImage}
-              src="/images/menu-items/smoerrebroed-aeg.jpeg"
-              alt=""
-            />
-            <h2 className={styles.menuCategoryTitle}>{category.title}</h2>
-          </a>
-        </div>
-        <div className={styles.menuItemList}>
-          {category.items.map((item) => (
-            <MenuItem
-              onItemClick={onItemClick}
-              key={`categoryItem-${item.id}`}
-              item={item}
-            />
-          ))}
-        </div>
-      </section>
-      <div className={`spacerMedium`}></div>
-    </>
-  );
-});
+const MenuCategorySection = forwardRef(
+  ({ category, cart, onItemClick }, ref) => {
+    return (
+      <>
+        <section
+          className={styles.menuCategorySection}
+          id={category.slug.slice(1)}
+          ref={ref}
+          data-category-id={category.id}
+        >
+          <div className={styles.menuCategoryTitleContainer}>
+            <a
+              href={`#${category.slug.slice(1)}`}
+              className={styles.menuCategoryTitleWrapper}
+            >
+              <img
+                className={styles.menuCategoryTitleImage}
+                src="/images/menu-items/smoerrebroed-aeg.jpeg"
+                alt=""
+              />
+              <h2 className={styles.menuCategoryTitle}>{category.title}</h2>
+            </a>
+          </div>
+          <div className={styles.menuItemList}>
+            {category.items.map((item) => (
+              <MenuItem
+                onItemClick={onItemClick}
+                key={`categoryItem-${item.id}`}
+                item={item}
+                cart={cart}
+              />
+            ))}
+          </div>
+        </section>
+        <div className={`spacerMedium`}></div>
+      </>
+    );
+  }
+);
 
 MenuCategorySection.displayName = "MenuCategorySection";
 
 MenuCategorySection.propTypes = {
   category: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
   onItemClick: PropTypes.func.isRequired,
 };
 

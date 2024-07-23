@@ -202,6 +202,7 @@ const MenuItem = ({ item, onClose, modalIsOpen, setCart }) => {
           {
             id: item.id,
             title: item.title,
+            image: item.image,
             ingredients: {
               added: itemState.ingredientsAdded,
               removed: itemState.ingredientsRemoved,

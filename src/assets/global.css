@@ -15,6 +15,9 @@
   --color-primary-100: hsl(19, 53%, 90%);
   --color-primary-200: hsl(19, 53%, 85%);
   --color-primary-300: hsl(19, 53%, 70%);
+  --color-primary-600: hsl(19, 53%, 30%);
+  --color-primary-700: hsl(19, 53%, 25%);
+  --color-primary-800: hsl(19, 53%, 20%);
   --color-primary-light: rgb(171, 103, 72);
   --color-primary-01: rgba(158, 83, 48, 0.1);
   --color-neutral: #ffffff;

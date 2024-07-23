@@ -7,12 +7,7 @@ const CartItem = ({ item }) => {
   return (
     <div className={styles.cartItem}>
       <div className={styles.cartItemLeft}>
-        <form
-          className={styles.itemQuantityUpdateForm}
-          action="/cart/update-item"
-          method="post"
-        >
-          <input type="hidden" name="itemId" value={item["_id"]} />
+        <div className={styles.itemQuantityUpdateForm}>
           <input
             className={styles.cartItemQuantity}
             data-item-id={item["_id"]}
@@ -21,12 +16,12 @@ const CartItem = ({ item }) => {
             id=""
             defaultValue={item.quantity}
           />
-        </form>
+        </div>
       </div>
       <div className={styles.cartItemBody}>
-        <h3>{item.name}</h3>
+        <h3>{item.title}</h3>
 
-        {item.ingredients.added && (
+        {item.ingredients.added.length > 0 && (
           <div className={styles.cartItemIngredients}>
             <p>Extras:</p>
             <ul>
@@ -41,7 +36,7 @@ const CartItem = ({ item }) => {
           </div>
         )}
 
-        {item.ingredients.removed && (
+        {item.ingredients.removed.length > 0 && (
           <div className={styles.cartItemIngredients}>
             <p>Removed:</p>
             <ul>
@@ -55,7 +50,7 @@ const CartItem = ({ item }) => {
         <div className={styles.cartItemPrice}>{item.price}</div>
       </div>
       <div className={styles.cartItemRight}>
-        <img src={item.coverImagePath} alt="" />
+        <img className={styles.cartItemImage} src={item.image} alt="" />
       </div>
       <div className={styles.cartItemOverlay}></div>
       <form action="/cart/remove-from-cart" method="post">
@@ -129,7 +124,13 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {cart && <CartButton cart={cart} cartLength={cartLength} />}
+      {cart && (
+        <CartButton
+          cart={cart}
+          cartLength={cartLength}
+          text="Proceed to Payment"
+        />
+      )}
     </>
   );
 };
