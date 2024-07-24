@@ -36,7 +36,7 @@
 }
 
 main {
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 * {
@@ -193,4 +193,10 @@ h6 {
 
 .textWeightBold {
   font-weight: bold;
+}
+
+@media only screen and (min-width: 768px) {
+  main {
+    padding: 0 2rem;
+  }
 }

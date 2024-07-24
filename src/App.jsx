@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import { useEffect, useState, useReducer } from "react";
 import { cartReducer, initialCartState } from "./assets/javascript/cartReducer";
+import "./assets/global.css";
 
 function App() {
   const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
