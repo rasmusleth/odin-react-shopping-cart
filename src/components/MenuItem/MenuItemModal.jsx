@@ -2,6 +2,9 @@ import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import MenuItem from "./MenuItem";
 import styles from "./menuItem.module.css";
+import { createPortal } from "react-dom";
+
+const portalElement = document.getElementById("overlays");
 
 const MenuItemModal = ({
   item,
@@ -21,20 +24,27 @@ const MenuItemModal = ({
   }, [modalIsOpen]);
 
   return (
-    <dialog
-      ref={modalRef}
-      className={styles.itemDialog}
-      onCancel={onClose}
-      onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
-    >
-      <MenuItem
-        item={item}
-        onClose={onClose}
-        modalIsOpen={modalIsOpen}
-        cartDispatch={cartDispatch}
-        action={action}
-      />
-    </dialog>
+    <>
+      {createPortal(
+        <div>
+          <dialog
+            ref={modalRef}
+            className={styles.itemDialog}
+            onCancel={onClose}
+            onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
+          >
+            <MenuItem
+              item={item}
+              onClose={onClose}
+              modalIsOpen={modalIsOpen}
+              cartDispatch={cartDispatch}
+              action={action}
+            />
+          </dialog>
+        </div>,
+        portalElement
+      )}
+    </>
   );
 };
 
