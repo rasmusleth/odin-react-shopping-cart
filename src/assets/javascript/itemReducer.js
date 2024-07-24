@@ -1,24 +1,19 @@
 import { calculatePriceTotal } from "./calculationHelper";
 
-const initialItemState = {
-  quantity: 1,
-  ingredients: {
-    added: [],
-    removed: [],
-  },
-  price: 0,
-  priceTotal: 0,
-};
-
 function itemReducer(itemState, action) {
   switch (action.type) {
     case "init_item": {
       return {
         ...itemState,
-        price: action.price,
-        priceTotal: action.price,
-        quantity: action.quantity,
-        ingredients: action.ingredients,
+        price: action.item.price,
+        priceTotal: action.item.price,
+        customItemPrice: action.item.price,
+        allIngredients: action.item.allIngredients,
+        itemId: action.item.id,
+        title: action.item.title,
+        description: action.item.description,
+        category: action.item.category,
+        image: action.item.image,
       };
     }
     case "quantity_increment": {
@@ -74,6 +69,11 @@ function itemReducer(itemState, action) {
           itemState.quantity,
           newIngredientsExtra
         ),
+        customItemPrice: calculatePriceTotal(
+          itemState.price,
+          1,
+          newIngredientsExtra
+        ),
       };
     }
     case "extraIngredient_remove": {
@@ -90,6 +90,11 @@ function itemReducer(itemState, action) {
         priceTotal: calculatePriceTotal(
           itemState.price,
           itemState.quantity,
+          newIngredientsExtra
+        ),
+        customItemPrice: calculatePriceTotal(
+          itemState.price,
+          1,
           newIngredientsExtra
         ),
       };
@@ -125,4 +130,4 @@ function itemReducer(itemState, action) {
   }
 }
 
-export { itemReducer, initialItemState };
+export { itemReducer };

@@ -159,13 +159,22 @@ h6 {
   transition: opacity 0.2s ease-out;
 }
 
+.btn:hover {
+  opacity: 0.8;
+}
+
 .btnPrimary {
   background-color: var(--color-primary); /* Orange background */
   color: var(--color-neutral); /* White text */
 }
 
-.btn:hover {
-  opacity: 0.8;
+.btnDanger {
+  background-color: var(--color-danger);
+  color: var(--color-neutral);
+}
+
+.btnDanger:hover {
+  background-color: var(--color-danger-600);
 }
 
 /* Utility */

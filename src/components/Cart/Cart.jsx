@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
 import MenuItemModal from "../MenuItem/MenuItemModal";
 import { handleBodyOnModalOpen } from "../../assets/javascript/itemModalHelpers";
 
-const CartItem = ({ item, onClick, onQuantityChange }) => {
+const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
   return (
     <div className={styles.cartItem} onClick={(e) => onClick(item, e)}>
       <div className={styles.cartItemLeft}>
@@ -61,14 +61,19 @@ const CartItem = ({ item, onClick, onQuantityChange }) => {
         )}
 
         <div className={styles.cartItemPrice}>
-          {formatPrice(item.priceTotal)}
+          {formatPrice(item.customItemPrice)}
         </div>
       </div>
       <div className={styles.cartItemRight}>
         <img className={styles.cartItemImage} src={item.image} alt="" />
       </div>
       <div className={styles.cartItemOverlay}></div>
-      <button className={styles.cartItemDeleteCard} type="submit">
+      <button
+        id="cartItemDeleteCard"
+        className={styles.cartItemDeleteCard}
+        type="button"
+        onClick={() => onRemoveClick(item)}
+      >
         <svg
           className={styles.cartItemDeleteIcon}
           fill="currentColor"
@@ -95,22 +100,14 @@ CartItem.propTypes = {
   item: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onQuantityChange: PropTypes.func.isRequired,
+  onRemoveClick: PropTypes.func.isRequired,
 };
 
 const Cart = () => {
-  // const [selectedQuantityInput, setSelectedQuantityInput] = useState(null);
-  const [
-    cart,
-    cartDispatch,
-    cartLength,
-    modalIsOpen,
-    setModalIsOpen,
-    selectedItem,
-    setSelectedItem,
-  ] = useOutletContext();
+  const [cart, cartDispatch, cartLength, modalIsOpen, setModalIsOpen] =
+    useOutletContext();
 
-  // const initialState = cart ? cart : {};
-  // const [cartState, dispatch] = useReducer(cartReducer, cart);
+  const [openItemOriginal, setOpenItemOriginal] = useState(null);
 
   // Handle body overflow when modal is open
   useEffect(() => {
@@ -120,30 +117,54 @@ const Cart = () => {
   const handleItemClick = (item, e) => {
     e.preventDefault();
 
+    // Check if click is on "quantity btn" area
     if (
       e.target.id === "cartItemQuantity" ||
       e.target.parentElement.id === "cartItemQuantity"
     )
       return;
 
-    setSelectedItem({ ...item });
+    // Check if click is on DeleteBtn
+    if (
+      e.target.id === "cartItemDeleteCard" ||
+      e.target.parentElement.id === "cartItemDeleteCard"
+    )
+      return;
+
+    setOpenItemOriginal(item);
     setModalIsOpen(true);
   };
 
   const handleModalClose = () => {
     setModalIsOpen(false);
+    setOpenItemOriginal(null);
+  };
+
+  // # To Do / todo:
+  // ### 1) COPY IN ALL handleIngredient...() functions (refactor later)
+  // ### 2) Make sure to setItemIsEdited = true on all handleIng... actions IF (cart[item][x] !== openItemOriginal)
+  // ### 3) Make sure that the item passed to the ItemModal is the updated item from the "cart" state variable ((2) might be bucky if this is not done )
+
+  const handleRemoveFromCart = (item) => {
+    cartDispatch({
+      type: "remove_from_cart",
+      item: item,
+    });
   };
 
   const handleQuantityChange = (e, method, item) => {
     switch (method) {
       case "increase": {
-        console.log(item);
+        if (item.quantity === 999) return;
         return cartDispatch({ type: "item_quantity_increment", item: item });
       }
       case "decrease": {
+        if (item.quantity === 1) return;
         return cartDispatch({ type: "item_quantity_decrement", item: item });
       }
       default: {
+        const inputNumber = parseInt(e.target.value, 10);
+        if (isNaN(inputNumber) || inputNumber < 1 || inputNumber > 999) return;
         return cartDispatch({
           type: "item_quantity_input",
           quantityInput: parseInt(e.target.value, 10),
@@ -170,10 +191,11 @@ const Cart = () => {
             cart.items.length > 0 &&
             cart.items.map((item) => (
               <CartItem
-                key={item["id"]}
+                key={item.id}
                 item={item}
                 onClick={handleItemClick}
                 onQuantityChange={handleQuantityChange}
+                onRemoveClick={handleRemoveFromCart}
               />
             ))}
 
@@ -203,9 +225,10 @@ const Cart = () => {
           text="Proceed to Payment"
         />
       )}
-      {selectedItem && selectedItem.ingredients && (
+      {openItemOriginal && (
         <MenuItemModal
-          item={selectedItem}
+          // item={cart.items.find((item) => item.id === openItemOriginal.id)}
+          item={openItemOriginal}
           modalIsOpen={modalIsOpen}
           onClose={handleModalClose}
           cartDispatch={cartDispatch}

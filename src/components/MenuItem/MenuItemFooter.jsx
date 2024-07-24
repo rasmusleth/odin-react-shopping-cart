@@ -2,20 +2,49 @@ import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 import ItemQuantityButton from "./ItemQuantityButton";
 
-const MenuItemFooter = ({ quantity, priceFormatted, onChange, addToCart }) => {
+const MenuItemFooter = ({
+  item,
+  onChange,
+  addToCart,
+  editCartItem,
+  removeFromCart,
+  action,
+  isItemChanged,
+}) => {
+  console.log(item);
   return (
     <>
       <div className={styles.menuItemFooterContainer}>
         <div className={styles.menuItemFooter}>
-          <ItemQuantityButton quantity={quantity} onChange={onChange} />
-          <button
-            type="button"
-            className={`btnPrimary ${styles.menuItemBuyButton}`}
-            onClick={addToCart}
-          >
-            <p className="textWeightBold">Tilføj til bestilling</p>
-            <p className={styles.menuItemPriceTotal}>{priceFormatted}</p>
-          </button>
+          <ItemQuantityButton quantity={item.quantity} onChange={onChange} />
+          {action === "edit" && !isItemChanged ? (
+            <button
+              type="button"
+              className={`btnDanger ${styles.menuItemBuyButton}`}
+              onClick={removeFromCart}
+            >
+              <p className={`textWeightBold`}>Fjern</p>
+              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+            </button>
+          ) : action === "edit" ? (
+            <button
+              type="button"
+              className={`btnPrimary ${styles.menuItemBuyButton}`}
+              onClick={editCartItem}
+            >
+              <p className="textWeightBold">Opdater bestillingen</p>
+              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={`btnPrimary ${styles.menuItemBuyButton}`}
+              onClick={addToCart}
+            >
+              <p className="textWeightBold">Tilføj til bestilling</p>
+              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+            </button>
+          )}
         </div>
       </div>
     </>
@@ -24,10 +53,14 @@ const MenuItemFooter = ({ quantity, priceFormatted, onChange, addToCart }) => {
 
 MenuItemFooter.propTypes = {
   item: PropTypes.object.isRequired,
-  quantity: PropTypes.number.isRequired,
-  priceFormatted: PropTypes.string.isRequired,
+  // quantity: PropTypes.number.isRequired,
+  // priceFormatted: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   addToCart: PropTypes.func.isRequired,
+  editCartItem: PropTypes.func.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+  action: PropTypes.string,
+  isItemChanged: PropTypes.bool.isRequired,
 };
 
 export default MenuItemFooter;

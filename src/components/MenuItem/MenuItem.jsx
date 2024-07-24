@@ -6,10 +6,7 @@ import {
   calculatePriceTotal,
   formatPrice,
 } from "../../assets/javascript/calculationHelper";
-import {
-  itemReducer,
-  initialItemState,
-} from "../../assets/javascript/itemReducer";
+import { itemReducer } from "../../assets/javascript/itemReducer";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -57,26 +54,53 @@ IngredientItem.propTypes = {
 };
 
 const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
-  const initialState = action === "edit" ? item : initialItemState;
+  const initialItemState = {
+    quantity: 1,
+    ingredients: {
+      added: [],
+      removed: [],
+    },
+    price: 0,
+    priceTotal: 0,
+    customItemPrice: 0,
+    allIngredients: {
+      extra: [],
+      existing: [],
+    },
+  };
 
-  const [itemState, dispatch] = useReducer(itemReducer, initialState);
+  const [isItemChanged, setIsItemChanged] = useState(false);
 
-  const quantity = itemState.quantity;
-  const priceFormatted = formatPrice(itemState.priceTotal);
-  const ingredients = itemState.ingredients;
+  const [itemState, dispatch] = useReducer(
+    itemReducer,
+    action === "edit" ? item : initialItemState
+  );
 
-  // Reset quantity, price, & ingredients on modal close
+  console.log("item: ", item);
+  console.log("itemState: ", itemState);
+  // Check if updated item is different from original on every update
+  useEffect(() => {
+    // ONLY check in edit mode
+    if (action !== "edit") return;
+
+    if (checkDeepEquality(item, itemState)) {
+      setIsItemChanged(false);
+    } else {
+      setIsItemChanged(true);
+    }
+  }, [itemState, item, action]);
+
+  // const quantity = itemState.quantity;
+  // const priceFormatted = formatPrice(itemState.priceTotal);
+  // const ingredients = itemState.ingredients;
+
+  // init itemState ON modalOpen
   useEffect(() => {
     if (modalIsOpen) {
-      if (action === "add") {
+      if (action !== "edit") {
         dispatch({
           type: "init_item",
-          price: item.price,
-          quantity: 1,
-          ingredients: {
-            added: [],
-            removed: [],
-          },
+          item: item,
         });
       }
     }
@@ -92,17 +116,29 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
     cartDispatch({
       type: "add_to_cart",
       item: {
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        category: item.category,
-        image: item.image,
-        ingredients: itemState.ingredients,
-        allIngredients: item.allIngredients,
-        quantity: itemState.quantity,
-        price: item.price,
+        ...itemState,
+        id: Date.now().toString(36) + Math.random().toString(36).substring(2),
         priceTotal: itemTotal,
+        customItemPrice: itemTotal / itemState.quantity,
       },
+    });
+
+    onClose();
+  };
+
+  const handleEditCartItem = () => {
+    cartDispatch({
+      type: "edit_cart_item",
+      newItem: itemState,
+    });
+
+    onClose();
+  };
+
+  const handleRemoveFromCart = () => {
+    cartDispatch({
+      type: "remove_from_cart",
+      item: itemState,
     });
 
     onClose();
@@ -177,20 +213,26 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
           </div>
           <img
             className={styles.menuItemCoverImage}
-            src={item.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
+            src={itemState.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
             alt="Dish Image"
           />
           <div className={styles.menuItemContentWrapper}>
-            <span className={styles.menuItemCategory}>{item.category}</span>
-            <h2 className={`heading-style-h4`}>{item.title}</h2>
-            <p className={styles.menuItemPrice}>{formatPrice(item.price)}</p>
-            <p className={styles.menuItemDescription}>{item.description}</p>
+            <span className={styles.menuItemCategory}>
+              {itemState.category}
+            </span>
+            <h2 className={`heading-style-h4`}>{itemState.title}</h2>
+            <p className={styles.menuItemPrice}>
+              {formatPrice(itemState.price)}
+            </p>
+            <p className={styles.menuItemDescription}>
+              {itemState.description}
+            </p>
             <div className={styles.spacerSmall}></div>
 
             <h3 className="heading-style-h6">Tilføj ingredienser</h3>
             <div className={styles.menuItemIngredientContainer}>
-              {item.allIngredients.extra.length > 0 &&
-                item.allIngredients.extra.map((ingredient) => {
+              {itemState.allIngredients.extra.length > 0 &&
+                itemState.allIngredients.extra.map((ingredient) => {
                   return (
                     <IngredientItem
                       key={ingredient.name}
@@ -203,7 +245,7 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
                           ? handleIngredientsExtraRemove
                           : handleIngredientsExtraAdd
                       }
-                      ingredientsState={ingredients}
+                      ingredientsState={itemState.ingredients}
                     />
                   );
                 })}
@@ -212,8 +254,8 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
 
             <h3 className="heading-style-h6">Fjern ingredienser</h3>
             <div className={styles.menuItemIngredientContainer}>
-              {item.allIngredients.existing.length > 0 &&
-                item.allIngredients.existing.map((ingredient) => {
+              {itemState.allIngredients.existing.length > 0 &&
+                itemState.allIngredients.existing.map((ingredient) => {
                   return (
                     <IngredientItem
                       key={ingredient.name}
@@ -226,18 +268,23 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
                           ? handleIngredientsExistingRemove
                           : handleIngredientsExistingAdd
                       }
-                      ingredientsState={ingredients}
+                      ingredientsState={itemState.ingredients}
                     />
                   );
                 })}
             </div>
           </div>
           <MenuItemFooter
-            item={item}
-            quantity={quantity}
-            priceFormatted={priceFormatted}
+            item={{
+              ...itemState,
+              priceFormatted: formatPrice(itemState.priceTotal),
+            }}
             onChange={handleQuantityChange}
             addToCart={handleAddToCart}
+            editCartItem={handleEditCartItem}
+            removeFromCart={handleRemoveFromCart}
+            action={action}
+            isItemChanged={isItemChanged}
           />
         </div>
       )}
@@ -254,3 +301,31 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
+
+function checkDeepEquality(obj1, obj2) {
+  if (obj1 === obj2) return true;
+
+  // Check that both are objects and not null
+  if (
+    typeof obj1 !== "object" ||
+    obj1 === null ||
+    typeof obj2 !== "object" ||
+    obj2 === null
+  )
+    return false;
+
+  let keys1 = Object.keys(obj1);
+  let keys2 = Object.keys(obj2);
+
+  // Check for equal number of properties
+  if (keys1.length !== keys2.length) return false;
+
+  // Check if properties are equal and then if corresponding values are equal
+  for (let key of keys1) {
+    if (!keys2.includes(key) || !checkDeepEquality(obj1[key], obj2[key])) {
+      return false;
+    }
+  }
+
+  return true;
+}

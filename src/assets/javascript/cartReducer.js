@@ -30,56 +30,77 @@ function cartReducer(cartState, action) {
       return {
         ...cartState,
         items: cartState.items.map((item) => {
-          if (item.id === action.item.id && item.quantity < 999) {
+          if (item.id === action.item.id) {
             return {
               ...item,
               quantity: item.quantity + 1,
+              priceTotal: item.priceTotal + item.customItemPrice,
             };
           } else {
             return item;
           }
         }),
-        bill:
-          cartState.bill +
-          calculatePriceTotal(
-            action.item.price,
-            action.item.quantity,
-            action.item.ingredients.added
-          ),
+        bill: cartState.bill + action.item.customItemPrice,
       };
     }
     case "item_quantity_decrement": {
       return {
         ...cartState,
         items: cartState.items.map((item) => {
-          if (item.id === action.item.id && item.quantity > 1) {
+          if (item.id === action.item.id) {
             return {
               ...item,
               quantity: item.quantity - 1,
+              priceTotal: item.priceTotal - item.customItemPrice,
             };
           } else {
             return item;
           }
         }),
+        bill: cartState.bill - action.item.customItemPrice,
       };
     }
     case "item_quantity_input": {
       return {
         ...cartState,
         items: cartState.items.map((item) => {
-          if (
-            item.id === action.item.id &&
-            action.quantityInput > 0 &&
-            action.quantityInput < 1000
-          ) {
+          if (item.id === action.item.id) {
             return {
               ...item,
               quantity: action.quantityInput,
+              priceTotal: item.customItemPrice * action.quantityInput,
             };
           } else {
             return item;
           }
         }),
+        bill:
+          cartState.bill + action.item.customItemPrice * action.quantityInput,
+      };
+    }
+    case "edit_cart_item": {
+      let priceDifference = 0;
+
+      return {
+        ...cartState,
+        items: cartState.items.map((item) => {
+          if (item.id === action.newItem.id) {
+            // Calculate price difference
+            priceDifference = action.newItem.priceTotal - item.priceTotal;
+
+            return action.newItem;
+          } else {
+            return item;
+          }
+        }),
+        bill: cartState.bill + priceDifference,
+      };
+    }
+    case "remove_from_cart": {
+      return {
+        ...cartState,
+        items: cartState.items.filter((item) => item.id !== action.item.id),
+        bill: cartState.bill - action.item.priceTotal,
       };
     }
   }
