@@ -273,6 +273,8 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
                   );
                 })}
             </div>
+            <div className="spacerMedium"></div>
+            <div className="spacerXSmall"></div>
           </div>
           <MenuItemFooter
             item={{

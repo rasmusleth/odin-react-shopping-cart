@@ -147,6 +147,12 @@ h6 {
 .spacerMedium {
   padding-top: 2rem;
 }
+.spacerLarge {
+  padding: 3rem;
+}
+.spacerXLarge {
+  padding: 4rem;
+}
 
 .btn {
   text-decoration: none;

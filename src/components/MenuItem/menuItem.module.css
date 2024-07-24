@@ -5,9 +5,9 @@
 .itemDialog {
   height: 100%;
   position: fixed;
+  bottom: 0;
   margin: 0 auto;
   margin-top: auto;
-  z-index: 9999;
   width: 100%;
   max-width: 600px;
   border: none;
@@ -31,7 +31,6 @@
 }
 
 .itemDialog::backdrop {
-  z-index: 9998;
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 200ms ease-in-out;
 }
@@ -195,12 +194,12 @@
 }
 
 .menuItemFooterContainer {
-  position: sticky;
+  position: fixed;
   box-sizing: border-box;
   background-color: var(--color-neutral);
   background: linear-gradient(
     180deg,
-    rgb(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.5) 0%,
     rgba(255, 255, 255) 100%
   );
   left: 0;
@@ -211,7 +210,6 @@
 
 .menuItemFooter {
   display: flex;
-  width: 600px;
   padding: 0 1rem;
   justify-content: space-between;
 }

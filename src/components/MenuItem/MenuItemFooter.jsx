@@ -11,7 +11,6 @@ const MenuItemFooter = ({
   action,
   isItemChanged,
 }) => {
-  console.log(item);
   return (
     <>
       <div className={styles.menuItemFooterContainer}>
@@ -53,8 +52,6 @@ const MenuItemFooter = ({
 
 MenuItemFooter.propTypes = {
   item: PropTypes.object.isRequired,
-  // quantity: PropTypes.number.isRequired,
-  // priceFormatted: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   addToCart: PropTypes.func.isRequired,
   editCartItem: PropTypes.func.isRequired,
