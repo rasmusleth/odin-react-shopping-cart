@@ -1,31 +1,17 @@
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
-import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
-import MenuItemModal from "../MenuItem/MenuItemModal";
-import { handleBodyOnModalOpen } from "../../assets/javascript/itemModalHelpers";
 
 const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
   return (
     <div className={styles.cartItem} onClick={(e) => onClick(item, e)}>
       <div className={styles.cartItemLeft}>
-        {/* <ItemQuantityButton quantity={item.quantity} /> */}
         <div id="cartItemQuantity">
           <ItemQuantityButton item={item} onChange={onQuantityChange} />
         </div>
-        {/* <div className={styles.itemQuantityUpdateForm}>
-          <input
-            className={styles.cartItemQuantity}
-            data-item-id={item["_id"]}
-            type="number"
-            name="itemQuantity"
-            id="cartItemQuantity"
-            defaultValue={item.quantity}
-          />
-        </div> */}
       </div>
       <div className={styles.cartItemBody}>
         <h2 className={styles.cartItemTitle}>{item.title}</h2>
@@ -100,15 +86,8 @@ CartItem.propTypes = {
 };
 
 const Cart = () => {
-  const [cart, cartDispatch, cartLength, modalIsOpen, setModalIsOpen] =
+  const { cart, cartDispatch, cartLength, setModalIsOpen, setSelectedItem } =
     useOutletContext();
-
-  const [openItemOriginal, setOpenItemOriginal] = useState(null);
-
-  // Handle body overflow when modal is open
-  useEffect(() => {
-    handleBodyOnModalOpen(modalIsOpen);
-  }, [modalIsOpen]);
 
   const handleItemClick = (item, e) => {
     e.preventDefault();
@@ -127,19 +106,9 @@ const Cart = () => {
     )
       return;
 
-    setOpenItemOriginal(item);
+    setSelectedItem({ ...item });
     setModalIsOpen(true);
   };
-
-  const handleModalClose = () => {
-    setModalIsOpen(false);
-    setOpenItemOriginal(null);
-  };
-
-  // # To Do / todo:
-  // ### 1) COPY IN ALL handleIngredient...() functions (refactor later)
-  // ### 2) Make sure to setItemIsEdited = true on all handleIng... actions IF (cart[item][x] !== openItemOriginal)
-  // ### 3) Make sure that the item passed to the ItemModal is the updated item from the "cart" state variable ((2) might be bucky if this is not done )
 
   const handleRemoveFromCart = (item) => {
     cartDispatch({
@@ -183,8 +152,7 @@ const Cart = () => {
         </h2>
         <div className={`spacerMedium`}></div>
         <div className={styles.cartContainer}>
-          {cart &&
-            cart.items.length > 0 &&
+          {cart && cart.items.length > 0 ? (
             cart.items.map((item) => (
               <CartItem
                 key={item.id}
@@ -193,44 +161,37 @@ const Cart = () => {
                 onQuantityChange={handleQuantityChange}
                 onRemoveClick={handleRemoveFromCart}
               />
-            ))}
-
-          <div className={`spacerMedium`}></div>
-          <div className={styles.cartComment}>
-            <label htmlFor="orderComment">Any comments to your order?</label>
-            <textarea
-              className={styles.cartCommentInput}
-              id="orderComment"
-              name="orderComment"
-            ></textarea>
-          </div>
-          {!cart && (
+            ))
+          ) : (
             <div className={styles.cartEmptyContainer}>
               <p>Your cart is empty.</p>
-              <a className={`btn btnPrimary`} href="/menu">
-                Go to menu
-              </a>
             </div>
+          )}
+
+          {cartLength > 0 && (
+            <>
+              <div className={`spacerMedium`}></div>
+              <div className={styles.cartComment}>
+                <label htmlFor="orderComment">
+                  Any comments to your order?
+                </label>
+                <textarea
+                  className={styles.cartCommentInput}
+                  id="orderComment"
+                  name="orderComment"
+                ></textarea>
+              </div>
+            </>
           )}
         </div>
       </div>
-      {cart && (
+      {cartLength > 0 ? (
         <CartButton
           cart={cart}
           cartLength={cartLength}
           text="Proceed to Payment"
         />
-      )}
-      {openItemOriginal && (
-        <MenuItemModal
-          // item={cart.items.find((item) => item.id === openItemOriginal.id)}
-          item={openItemOriginal}
-          modalIsOpen={modalIsOpen}
-          onClose={handleModalClose}
-          cartDispatch={cartDispatch}
-          action="edit"
-        />
-      )}
+      ) : null}
     </>
   );
 };

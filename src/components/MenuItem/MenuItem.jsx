@@ -57,7 +57,8 @@ IngredientItem.propTypes = {
   ingredientsState: PropTypes.object,
 };
 
-const MenuItem = ({ item, onClose, cartDispatch, action }) => {
+const MenuItem = ({ item, onClose, cartDispatch, action, modalIsOpen }) => {
+  console.log("action: ", action);
   const [isItemChanged, setIsItemChanged] = useState(false);
 
   const [itemState, dispatch] = useReducer(
@@ -80,15 +81,15 @@ const MenuItem = ({ item, onClose, cartDispatch, action }) => {
   // INIT itemState ON modalOpen
   useEffect(() => {
     if (item) {
-      // if (modalIsOpen)
-      if (action !== "edit") {
-        dispatch({
-          type: "init_item",
-          item: item,
-        });
-      }
+      if (modalIsOpen)
+        if (action !== "edit") {
+          dispatch({
+            type: "init_item",
+            item: item,
+          });
+        }
     }
-  }, [item, action]);
+  }, [item, action, modalIsOpen]);
 
   const handleAddToCart = () => {
     const itemTotal = calculatePriceTotal(
@@ -287,6 +288,7 @@ MenuItem.propTypes = {
   onClose: PropTypes.func.isRequired,
   cartDispatch: PropTypes.func.isRequired,
   action: PropTypes.string.isRequired,
+  modalIsOpen: PropTypes.bool.isRequired,
 };
 
 export default MenuItem;

@@ -1,23 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
-import MenuItemModal from "../MenuItem/MenuItemModal";
 import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
 import { useOutletContext } from "react-router-dom";
-import { handleBodyOnModalOpen } from "../../assets/javascript/itemModalHelpers";
 import { convertDataToCategories } from "../../assets/javascript/dataHelpers";
 
 const Menu = () => {
-  const [
-    cart,
-    cartDispatch,
-    cartLength,
-    modalIsOpen,
-    setModalIsOpen,
-    selectedItem,
-    setSelectedItem,
-  ] = useOutletContext();
+  const { cart, cartLength, modalIsOpen, setModalIsOpen, setSelectedItem } =
+    useOutletContext();
+
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [isObserverActive, setIsObserverActive] = useState(true);
@@ -53,20 +45,12 @@ const Menu = () => {
     };
   }, [isObserverActive]);
 
-  // Handle body overflow when modal is open
-  useEffect(() => {
-    handleBodyOnModalOpen(modalIsOpen);
-  }, [modalIsOpen]);
-
   const handleItemClick = (item, e) => {
     e.preventDefault();
 
     setSelectedItem({ ...item });
+    console.log("(menu) item updated");
     setModalIsOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalIsOpen(false);
   };
 
   const handleCategoryClick = (category) => {
@@ -108,14 +92,6 @@ const Menu = () => {
               text="Items in your cart"
             />
           )}
-
-          <MenuItemModal
-            item={selectedItem}
-            modalIsOpen={modalIsOpen}
-            onClose={handleModalClose}
-            cartDispatch={cartDispatch}
-            action="add"
-          />
         </>
       ) : (
         <>
