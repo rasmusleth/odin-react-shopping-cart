@@ -6,7 +6,11 @@ import {
   calculatePriceTotal,
   formatPrice,
 } from "../../assets/javascript/calculationHelper";
-import { itemReducer } from "../../assets/javascript/itemReducer";
+import {
+  itemReducer,
+  initialItemState,
+} from "../../assets/javascript/itemReducer";
+import { checkDeepEquality } from "../../assets/javascript/itemModalHelpers";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -53,22 +57,7 @@ IngredientItem.propTypes = {
   ingredientsState: PropTypes.object,
 };
 
-const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
-  const initialItemState = {
-    quantity: 1,
-    ingredients: {
-      added: [],
-      removed: [],
-    },
-    price: 0,
-    priceTotal: 0,
-    customItemPrice: 0,
-    allIngredients: {
-      extra: [],
-      existing: [],
-    },
-  };
-
+const MenuItem = ({ item, onClose, cartDispatch, action }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
 
   const [itemState, dispatch] = useReducer(
@@ -76,9 +65,7 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
     action === "edit" ? item : initialItemState
   );
 
-  console.log("item: ", item);
-  console.log("itemState: ", itemState);
-  // Check if updated item is different from original on every update
+  // In edit mode, check IF updated item is !== from original on every update
   useEffect(() => {
     // ONLY check in edit mode
     if (action !== "edit") return;
@@ -90,13 +77,10 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
     }
   }, [itemState, item, action]);
 
-  // const quantity = itemState.quantity;
-  // const priceFormatted = formatPrice(itemState.priceTotal);
-  // const ingredients = itemState.ingredients;
-
-  // init itemState ON modalOpen
+  // INIT itemState ON modalOpen
   useEffect(() => {
-    if (modalIsOpen) {
+    if (item) {
+      // if (modalIsOpen)
       if (action !== "edit") {
         dispatch({
           type: "init_item",
@@ -104,7 +88,7 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
         });
       }
     }
-  }, [modalIsOpen, item, action]);
+  }, [item, action]);
 
   const handleAddToCart = () => {
     const itemTotal = calculatePriceTotal(
@@ -301,37 +285,8 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
 MenuItem.propTypes = {
   item: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-  modalIsOpen: PropTypes.bool.isRequired,
   cartDispatch: PropTypes.func.isRequired,
   action: PropTypes.string.isRequired,
 };
 
 export default MenuItem;
-
-function checkDeepEquality(obj1, obj2) {
-  if (obj1 === obj2) return true;
-
-  // Check that both are objects and not null
-  if (
-    typeof obj1 !== "object" ||
-    obj1 === null ||
-    typeof obj2 !== "object" ||
-    obj2 === null
-  )
-    return false;
-
-  let keys1 = Object.keys(obj1);
-  let keys2 = Object.keys(obj2);
-
-  // Check for equal number of properties
-  if (keys1.length !== keys2.length) return false;
-
-  // Check if properties are equal and then if corresponding values are equal
-  for (let key of keys1) {
-    if (!keys2.includes(key) || !checkDeepEquality(obj1[key], obj2[key])) {
-      return false;
-    }
-  }
-
-  return true;
-}

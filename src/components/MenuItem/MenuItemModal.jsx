@@ -36,7 +36,6 @@ const MenuItemModal = ({
             <MenuItem
               item={item}
               onClose={onClose}
-              modalIsOpen={modalIsOpen}
               cartDispatch={cartDispatch}
               action={action}
             />

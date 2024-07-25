@@ -1,10 +1,30 @@
 import { calculatePriceTotal } from "./calculationHelper";
 
+const initialItemState = {
+  quantity: 1,
+  ingredients: {
+    added: [],
+    removed: [],
+  },
+  price: 0,
+  priceTotal: 0,
+  customItemPrice: 0,
+  allIngredients: {
+    extra: [],
+    existing: [],
+  },
+};
+
 function itemReducer(itemState, action) {
   switch (action.type) {
     case "init_item": {
       return {
         ...itemState,
+        quantity: 1,
+        ingredients: {
+          added: [],
+          removed: [],
+        },
         price: action.item.price,
         priceTotal: action.item.price,
         customItemPrice: action.item.price,
@@ -130,4 +150,4 @@ function itemReducer(itemState, action) {
   }
 }
 
-export { itemReducer };
+export { itemReducer, initialItemState };
