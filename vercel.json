@@ -1,7 +1,13 @@
 {
   "redirects": [
     {
-      "source": "/(?!$|^api|^static|^_next|^favicon\\.ico|^robots\\.txt|^sitemap\\.xml).*",
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "yourdomain.com"
+        }
+      ],
       "destination": "/",
       "permanent": false
     }
