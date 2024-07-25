@@ -4,13 +4,13 @@ import styles from "./menu.module.css";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 
 const MenuItem = ({ item, cart, onItemClick }) => {
-  const isInCart = cart.items.some((cartItem) => cartItem.id === item["id"]);
+  const cartItem = cart.items.find((cartItem) => cartItem.itemId === item.id);
 
   return (
     <>
       <a
         className={`${
-          isInCart ? styles.menuItemWrapperAdded : styles.menuItemWrapper
+          cartItem ? styles.menuItemWrapperAdded : styles.menuItemWrapper
         }`}
         onClick={(e) => onItemClick(item, e)}
       >
@@ -25,14 +25,12 @@ const MenuItem = ({ item, cart, onItemClick }) => {
         </div>
         <img
           className={styles.menuItemImage}
-          src={item.image} // "/images/menu-items/smoerrebroed-aeg.jpeg"
+          src={item.image}
           alt={item.title}
         />
-        {isInCart && (
+        {cartItem && (
           <div className={styles.menuItemAddedQuantity}>
-            {cart.items
-              .filter((cartItem) => cartItem.id === item.id)
-              .reduce((acc, item) => acc + item.quantity, 0)}
+            {cartItem.quantity}
           </div>
         )}
       </a>
