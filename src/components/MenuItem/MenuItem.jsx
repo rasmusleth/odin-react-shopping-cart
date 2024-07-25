@@ -144,15 +144,19 @@ const MenuItem = ({ item, onClose, modalIsOpen, cartDispatch, action }) => {
     onClose();
   };
 
-  const handleQuantityChange = (e, method = "typed") => {
+  const handleQuantityChange = (e, method, item) => {
     switch (method) {
       case "increase": {
+        if (item.quantity === 999) return;
         return dispatch({ type: "quantity_increment" });
       }
       case "decrease": {
+        if (item.quantity === 1) return;
         return dispatch({ type: "quantity_decrement" });
       }
       default: {
+        const inputNumber = parseInt(e.target.value, 10);
+        if (isNaN(inputNumber) || inputNumber < 1 || inputNumber > 999) return;
         return dispatch({
           type: "quantity_input",
           quantityInput: parseInt(e.target.value, 10),

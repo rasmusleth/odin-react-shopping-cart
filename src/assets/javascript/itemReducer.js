@@ -30,7 +30,7 @@ function itemReducer(itemState, action) {
     case "quantity_decrement": {
       return {
         ...itemState,
-        quantity: itemState.quantity > 1 ? itemState.quantity - 1 : 1,
+        quantity: itemState.quantity - 1,
         priceTotal: calculatePriceTotal(
           itemState.price,
           itemState.quantity - 1,

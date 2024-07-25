@@ -15,7 +15,7 @@ const MenuItemFooter = ({
     <>
       <div className={styles.menuItemFooterContainer}>
         <div className={styles.menuItemFooter}>
-          <ItemQuantityButton quantity={item.quantity} onChange={onChange} />
+          <ItemQuantityButton item={item} onChange={onChange} />
           {action === "edit" && !isItemChanged ? (
             <button
               type="button"

@@ -1,27 +1,23 @@
 import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 
-const ItemQuantityButton = ({ item, quantity, onChange }) => {
+const ItemQuantityButton = ({ item, onChange }) => {
   return (
     <div className={styles.menuItemQuantityButton} id="cartItemQuantity">
       <button
         className={styles.quantityDecrease}
         type="button"
         onClick={(e) => {
-          if (item) {
-            onChange(e, "decrease", item);
-          } else {
-            onChange(e, "decrease");
-          }
+          onChange(e, "decrease", item);
         }}
       >
-        {/* <span>-</span> */}-
+        -
       </button>
       <input
         className={styles.quantityValue}
         type="number"
         name="itemQuantity"
-        value={quantity}
+        value={item.quantity}
         onChange={(e) => {
           onChange(e, "input", item);
         }}
@@ -35,7 +31,7 @@ const ItemQuantityButton = ({ item, quantity, onChange }) => {
           onChange(e, "increase", item);
         }}
       >
-        {/* <span>+</span> */}+
+        +
       </button>
     </div>
   );
@@ -43,7 +39,6 @@ const ItemQuantityButton = ({ item, quantity, onChange }) => {
 
 ItemQuantityButton.propTypes = {
   item: PropTypes.object,
-  quantity: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

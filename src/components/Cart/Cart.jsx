@@ -14,11 +14,7 @@ const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
       <div className={styles.cartItemLeft}>
         {/* <ItemQuantityButton quantity={item.quantity} /> */}
         <div id="cartItemQuantity">
-          <ItemQuantityButton
-            item={item}
-            quantity={item.quantity}
-            onChange={onQuantityChange}
-          />
+          <ItemQuantityButton item={item} onChange={onQuantityChange} />
         </div>
         {/* <div className={styles.itemQuantityUpdateForm}>
           <input
