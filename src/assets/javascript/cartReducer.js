@@ -1,4 +1,5 @@
 import { calculatePriceTotal } from "./calculationHelper";
+import { checkIdenticalItemInCart } from "./cartHelpers.js";
 
 const initialCartState = {
   customerInfo: {
@@ -14,17 +15,43 @@ const initialCartState = {
 function cartReducer(cartState, action) {
   switch (action.type) {
     case "add_to_cart": {
-      return {
-        ...cartState,
-        items: [...cartState.items, action.item],
-        bill:
-          cartState.bill +
-          calculatePriceTotal(
-            action.item.price,
-            action.item.quantity,
-            action.item.ingredients.added
-          ),
-      };
+      let existsAlready = checkIdenticalItemInCart(cartState, action.item);
+
+      if (existsAlready) {
+        const priceToAdd = calculatePriceTotal(
+          action.item.price,
+          action.item.quantity,
+          action.item.ingredients.added
+        );
+
+        return {
+          ...cartState,
+          items: cartState.items.map((item) => {
+            if (item.itemId === action.item.itemId) {
+              return {
+                ...item,
+                quantity: item.quantity + action.item.quantity,
+                priceTotal: item.priceTotal + priceToAdd,
+              };
+            } else {
+              return item;
+            }
+          }),
+          bill: cartState.bill + priceToAdd,
+        };
+      } else {
+        return {
+          ...cartState,
+          items: [...cartState.items, action.item],
+          bill:
+            cartState.bill +
+            calculatePriceTotal(
+              action.item.price,
+              action.item.quantity,
+              action.item.ingredients.added
+            ),
+        };
+      }
     }
     case "item_quantity_increment": {
       return {
