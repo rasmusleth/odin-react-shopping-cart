@@ -14,9 +14,9 @@ const MenuItemModal = ({
 
   useEffect(() => {
     if (modalIsOpen) {
-      modalRef.current?.showModal();
+      modalRef.current.showModal();
     } else {
-      modalRef.current?.close();
+      modalRef.current.close();
     }
   }, [modalIsOpen]);
 
