@@ -218,11 +218,13 @@ const Cart = () => {
         </div>
       </div>
       {cartLength > 0 ? (
-        <CartButton
-          cart={cart}
-          cartLength={cartLength}
-          text="Færdiggør bestilling"
-        />
+        <div id="cartSection">
+          <CartButton
+            cart={cart}
+            cartLength={cartLength}
+            text="Færdiggør bestilling"
+          />
+        </div>
       ) : null}
     </div>
   );

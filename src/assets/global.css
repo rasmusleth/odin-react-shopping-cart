@@ -36,9 +36,6 @@
   margin: 0 auto;
 }
 
-main {
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -157,6 +154,10 @@ h6 {
   padding: 4rem;
 }
 
+.paddingGlobal {
+  padding: 0 1rem;
+}
+
 .btn {
   text-decoration: none;
   padding: 0.5rem 1.5rem;
@@ -200,6 +201,10 @@ h6 {
 
 @media only screen and (min-width: 768px) {
   main {
+    padding: 0 2rem;
+  }
+
+  .paddingGlobal {
     padding: 0 2rem;
   }
 }
