@@ -12,16 +12,6 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.style.colorScheme = darkMode ? "dark" : "light";
-  }, [darkMode]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   const isMenu = useMatch("/menu");
   const isCart = useMatch("/cart");
 
@@ -46,13 +36,11 @@ function App() {
     handleBodyOnModalOpen(modalIsOpen);
   }, [modalIsOpen]);
 
+  console.log("Selected item: ", selectedItem);
+
   return (
     <>
-      <Navigation
-        cartLength={cartLength}
-        onColorChange={toggleDarkMode}
-        darkMode={darkMode}
-      />
+      <Navigation cartLength={cartLength} />
       <main>
         <Outlet
           context={{
