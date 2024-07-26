@@ -34,6 +34,7 @@ const MenuItemModal = ({
           cartDispatch={cartDispatch}
           action={action}
           modalIsOpen={modalIsOpen}
+          modalRef={modalRef}
         />
       </dialog>
     </div>
