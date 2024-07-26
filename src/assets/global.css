@@ -4,7 +4,7 @@
   font-family: Helvetica, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,18 +28,6 @@
   --color-danger: rgb(214, 24, 24);
   --color-danger-600: hsl(0, 80%, 30%);
   --color-danger-05: rgb(214, 24, 24, 0.5);
-}
-
-@media (perfers-color-scheme: dark) {
-  :root {
-    --color-neutral: #000000;
-    --color-neutral-08: rgba(0, 0, 0, 0.816);
-    --color-neutral-200: hsl(0, 0%, 05%);
-    --color-neutral-600: hsl(0, 0%, 70%);
-    --color-neutral-900: #ffffff;
-    --color-primary: red;
-    font-weight: bold;
-  }
 }
 
 #root {
