@@ -40,7 +40,7 @@ function App() {
 
   return (
     <>
-      <Navigation cartLength={cartLength} />
+      <Navigation cartLength={cartLength} isCart={isCart} />
       <main>
         <Outlet
           context={{
