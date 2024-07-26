@@ -23,6 +23,7 @@
   --color-neutral: #ffffff;
   --color-neutral-08: #ffffffd0;
   --color-neutral-200: #f5f5f5;
+  --color-neutral-300: hsl(0, 0%, 90%);
   --color-neutral-600: hsl(0, 0%, 30%);
   --color-neutral-900: #000000;
   --color-danger: rgb(214, 24, 24);
@@ -36,7 +37,6 @@
 }
 
 main {
-  padding: 0 1rem;
 }
 
 * {

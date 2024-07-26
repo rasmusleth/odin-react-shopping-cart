@@ -61,12 +61,12 @@ const Menu = () => {
   return (
     <>
       {categories.length > 0 ? (
-        <>
+        <div className={styles.menuPageWrapper}>
           <h1 className="heading-style-h2">Menu</h1>
           <div className="spacerXSmall"></div>
           <p>Se og bestil din mad lige her.</p>
           <div className={`spacerXSmall`}></div>
-          <div className={`${styles.menuPageWrapper}`}>
+          <div className={`${styles.menuSectionWrapper}`}>
             <MenuCategorySlider
               categories={categories}
               activeCategory={activeCategory}
@@ -91,7 +91,7 @@ const Menu = () => {
               text="Items in your cart"
             />
           )}
-        </>
+        </div>
       ) : (
         <>
           <p>Loading..</p>

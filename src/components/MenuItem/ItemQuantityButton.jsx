@@ -1,29 +1,30 @@
 import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const ItemQuantityButton = ({ item, onChange, version, onClick }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleQuantityButtonClick = () => {
-    setIsClicked(true);
-  };
-
+const ItemQuantityButton = ({
+  item,
+  onChange,
+  version,
+  isClicked,
+  onClick,
+  setIsClicked,
+}) => {
   useEffect(() => {
     if (isClicked) {
       setTimeout(() => {
         setIsClicked(false);
       }, 2000);
     }
-  }, [isClicked]);
+  }, [isClicked, setIsClicked]);
 
   return (
     <>
-      {version ? (
+      {version && isClicked ? (
         <div
-          className={styles.menuItemQuantityButton}
+          className={`${styles.menuItemQuantityButton} ${styles.cartQuantityButtonClicked}`}
           id="cartItemQuantity"
-          onClick={handleQuantityButtonClick}
+          onClick={onClick}
         >
           {isClicked && (
             <button
@@ -31,7 +32,7 @@ const ItemQuantityButton = ({ item, onChange, version, onClick }) => {
               type="button"
               onClick={(e) => {
                 onChange(e, "decrease", item);
-                handleQuantityButtonClick();
+                onClick();
               }}
             >
               -
@@ -44,7 +45,39 @@ const ItemQuantityButton = ({ item, onChange, version, onClick }) => {
               type="button"
               onClick={(e) => {
                 onChange(e, "increase", item);
-                handleQuantityButtonClick();
+                onClick();
+              }}
+            >
+              +
+            </button>
+          )}
+        </div>
+      ) : version ? (
+        <div
+          className={`${styles.menuItemQuantityButton} ${styles.cartQuantityButton}`}
+          id="cartItemQuantity"
+          onClick={onClick}
+        >
+          {isClicked && (
+            <button
+              className={styles.quantityDecrease}
+              type="button"
+              onClick={(e) => {
+                onChange(e, "decrease", item);
+                onClick();
+              }}
+            >
+              -
+            </button>
+          )}
+          <p className={styles.quantityValue}>{item.quantity}</p>
+          {isClicked && (
+            <button
+              className={styles.quantityIncrease}
+              type="button"
+              onClick={(e) => {
+                onChange(e, "increase", item);
+                onClick();
               }}
             >
               +
@@ -92,7 +125,9 @@ ItemQuantityButton.propTypes = {
   item: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   version: PropTypes.string,
+  isClicked: PropTypes.bool,
   onClick: PropTypes.func,
+  setIsClicked: PropTypes.func,
 };
 
 export default ItemQuantityButton;

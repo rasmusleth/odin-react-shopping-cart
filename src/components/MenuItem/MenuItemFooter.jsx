@@ -40,7 +40,7 @@ const MenuItemFooter = ({
               className={`btnPrimary ${styles.menuItemBuyButton}`}
               onClick={addToCart}
             >
-              <p className="textWeightBold">Tilføj til bestilling</p>
+              <span className="textWeightBold">Tilføj til bestilling</span>
               <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
             </button>
           )}

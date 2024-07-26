@@ -35,7 +35,7 @@ const MenuItem = ({ item, cart, onItemClick }) => {
           </div>
         )}
       </a>
-      <hr />
+      <hr className={styles.menuItemSeparator} />
     </>
   );
 };

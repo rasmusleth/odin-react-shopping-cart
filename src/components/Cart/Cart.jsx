@@ -4,10 +4,17 @@ import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
 import { formatPrice } from "../../assets/javascript/calculationHelper";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
+import { useState } from "react";
 
-const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
-  const handleQuantityButtonClick = () => {};
-
+const CartItem = ({
+  item,
+  onClick,
+  onQuantityChange,
+  onRemoveClick,
+  quantityButtonClicked,
+  onQuantityButtonClick,
+  setQuantityButtonClicked,
+}) => {
   return (
     <div className={styles.cartItem} onClick={(e) => onClick(item, e)}>
       <div className={styles.cartItemLeft}>
@@ -16,7 +23,9 @@ const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
             item={item}
             onChange={onQuantityChange}
             version="cart"
-            onClick={handleQuantityButtonClick}
+            onClick={onQuantityButtonClick}
+            isClicked={quantityButtonClicked}
+            setIsClicked={setQuantityButtonClicked}
           />
         </div>
       </div>
@@ -50,7 +59,7 @@ const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
         )}
 
         <div className={styles.cartItemPrice}>
-          {formatPrice(item.customItemPrice)}
+          {formatPrice(item.priceTotal)}
         </div>
       </div>
       <div className={styles.cartItemRight}>
@@ -90,12 +99,23 @@ CartItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   onQuantityChange: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
+  quantityButtonClicked: PropTypes.bool.isRequired,
+  onQuantityButtonClick: PropTypes.func.isRequired,
+  setQuantityButtonClicked: PropTypes.func.isRequired,
 };
 
 const Cart = () => {
   const { cart, cartDispatch, cartLength, setModalIsOpen, setSelectedItem } =
     useOutletContext();
 
+  // # Quantity button
+  const [quantityButtonClicked, setQuantityButtonClicked] = useState(false);
+
+  const handleQuantityButtonClick = () => {
+    setQuantityButtonClicked(true);
+  };
+
+  // # Item
   const handleItemClick = (item, e) => {
     e.preventDefault();
 
@@ -149,14 +169,16 @@ const Cart = () => {
   return (
     <>
       <div id="cartSection">
-        <div className={styles.progressIndicator}>
-          <div className={styles.stepIndicator} id="step2"></div>
-          <div className={styles.stepIndicator} id="step3"></div>
-          <div className={styles.stepIndicator} id="step3"></div>
+        <div className={styles.cartHeader}>
+          <div className={styles.progressIndicator}>
+            <div className={styles.stepIndicator} id="step2"></div>
+            <div className={styles.stepIndicator} id="step3"></div>
+            <div className={styles.stepIndicator} id="step3"></div>
+          </div>
+          <h2>
+            <span>Your</span> <span className={`textColorPrimary`}>orders</span>
+          </h2>
         </div>
-        <h2>
-          <span>Your</span> <span className={`textColorPrimary`}>orders</span>
-        </h2>
         <div className={`spacerMedium`}></div>
         <div className={styles.cartContainer}>
           {cart && cart.items.length > 0 ? (
@@ -167,6 +189,9 @@ const Cart = () => {
                 onClick={handleItemClick}
                 onQuantityChange={handleQuantityChange}
                 onRemoveClick={handleRemoveFromCart}
+                quantityButtonClicked={quantityButtonClicked}
+                onQuantityButtonClick={handleQuantityButtonClick}
+                setQuantityButtonClicked={setQuantityButtonClicked}
               />
             ))
           ) : (
@@ -176,7 +201,7 @@ const Cart = () => {
           )}
 
           {cartLength > 0 && (
-            <>
+            <div className={styles.cartCommentSection}>
               <div className={`spacerMedium`}></div>
               <div className={styles.cartComment}>
                 <label htmlFor="orderComment">
@@ -188,7 +213,7 @@ const Cart = () => {
                   name="orderComment"
                 ></textarea>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

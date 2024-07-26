@@ -12,12 +12,15 @@
   background-color: #d3d3d3; /* default color for upcoming step */
 }
 
+.cartHeader {
+  padding: 0 1rem;
+}
+
 .cartContainer {
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  gap: 2rem;
 }
 
 .cartContainer * p {
@@ -33,6 +36,7 @@
   overflow: hidden;
   transition: all 200ms ease-out;
   cursor: pointer;
+  padding: 1rem 1rem;
 }
 
 .cartItem:hover {
@@ -143,8 +147,8 @@
 
 .cartPaymentBtn {
   position: sticky;
-  left: 2rem;
-  right: 2rem;
+  left: 3rem;
+  right: 3rem;
   bottom: 1rem;
   display: flex;
   gap: 1rem;
@@ -190,6 +194,10 @@
   font-weight: bold;
   border-radius: 100%;
   transition: opacity 200ms ease-out;
+}
+
+.cartCommentSection {
+  padding: 0 1rem;
 }
 
 .cartComment {
@@ -251,6 +259,7 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+  padding: 0 1rem;
 }
 
 .cartEmptyContainer p {

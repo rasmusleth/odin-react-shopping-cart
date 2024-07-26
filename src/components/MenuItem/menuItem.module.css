@@ -167,6 +167,7 @@
 
 .menuItemFooter {
   display: flex;
+  gap: 1rem;
   padding: 0 1rem;
   justify-content: space-between;
 }
@@ -230,4 +231,15 @@
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  text-wrap: wrap;
+}
+
+.cartQuantityButton {
+  padding: 0.5rem 0.5rem;
+  background-color: var(--color-neutral);
+  border: 1px solid var(--color-primary);
+}
+
+.cartQuantityButtonClicked {
+  padding: 0.5rem 0.5rem;
 }
