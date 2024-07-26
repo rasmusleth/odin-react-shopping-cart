@@ -1,3 +1,11 @@
+.cartPageWrapper {
+  position: relative;
+}
+
+.cartSection {
+  flex-grow: 1;
+}
+
 .progressIndicator {
   display: flex;
   justify-content: center;
@@ -146,9 +154,9 @@
 }
 
 .cartPaymentBtn {
-  position: sticky;
-  left: 3rem;
-  right: 3rem;
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
   bottom: 1rem;
   display: flex;
   gap: 1rem;

@@ -167,7 +167,7 @@ const Cart = () => {
   };
 
   return (
-    <>
+    <div className={styles.cartPageWrapper}>
       <div id="cartSection">
         <div className={styles.cartHeader}>
           <div className={styles.progressIndicator}>
@@ -224,7 +224,7 @@ const Cart = () => {
           text="Proceed to Payment"
         />
       ) : null}
-    </>
+    </div>
   );
 };
 
