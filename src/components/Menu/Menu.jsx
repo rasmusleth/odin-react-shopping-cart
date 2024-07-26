@@ -88,7 +88,7 @@ const Menu = () => {
             <CartButton
               cart={cart}
               cartLength={cartLength}
-              text="Items in your cart"
+              text="Se bestilling"
             />
           )}
         </div>

@@ -221,7 +221,7 @@ const Cart = () => {
         <CartButton
           cart={cart}
           cartLength={cartLength}
-          text="Proceed to Payment"
+          text="Færdiggør bestilling"
         />
       ) : null}
     </div>
