@@ -21,6 +21,7 @@ const MenuItem = ({ item, cart, onItemClick }) => {
           <p className={`${styles.menuItemDescription} textStyle2Lines`}>
             {item.description}
           </p>
+          <div className="spacerXXSmall"></div>
           <p className={styles.menuItemPrice}>{formatPrice(item.price)}</p>
         </div>
         <img

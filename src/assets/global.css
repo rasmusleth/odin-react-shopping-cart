@@ -138,6 +138,9 @@ h6 {
   background-color: var(--color-neutral-200);
 }
 
+.spacerXXSmall {
+  padding-top: 0.25rem;
+}
 .spacerXSmall {
   padding-top: 0.5rem;
 }

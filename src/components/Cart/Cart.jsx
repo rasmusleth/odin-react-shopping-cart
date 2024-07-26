@@ -6,11 +6,18 @@ import { formatPrice } from "../../assets/javascript/calculationHelper";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
 
 const CartItem = ({ item, onClick, onQuantityChange, onRemoveClick }) => {
+  const handleQuantityButtonClick = () => {};
+
   return (
     <div className={styles.cartItem} onClick={(e) => onClick(item, e)}>
       <div className={styles.cartItemLeft}>
         <div id="cartItemQuantity">
-          <ItemQuantityButton item={item} onChange={onQuantityChange} />
+          <ItemQuantityButton
+            item={item}
+            onChange={onQuantityChange}
+            version="cart"
+            onClick={handleQuantityButtonClick}
+          />
         </div>
       </div>
       <div className={styles.cartItemBody}>

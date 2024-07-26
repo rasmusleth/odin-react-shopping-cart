@@ -58,7 +58,6 @@ IngredientItem.propTypes = {
 };
 
 const MenuItem = ({ item, onClose, cartDispatch, action, modalIsOpen }) => {
-  console.log("action: ", action);
   const [isItemChanged, setIsItemChanged] = useState(false);
 
   const [itemState, dispatch] = useReducer(

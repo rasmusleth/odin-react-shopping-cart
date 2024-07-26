@@ -62,7 +62,7 @@ const Navigation = ({ cartLength, isCart }) => {
 
 Navigation.propTypes = {
   cartLength: PropTypes.number.isRequired,
-  isCart: PropTypes.bool.isRequired,
+  isCart: PropTypes.object,
 };
 
 export default Navigation;

@@ -49,7 +49,6 @@ const Menu = () => {
     e.preventDefault();
 
     setSelectedItem({ ...item });
-    console.log("(menu) item updated");
     setModalIsOpen(true);
   };
 
@@ -63,16 +62,16 @@ const Menu = () => {
     <>
       {categories.length > 0 ? (
         <>
-          <h1>Menu</h1>
-          <p>Browse our collection of delicious meals</p>
+          <h1 className="heading-style-h2">Menu</h1>
+          <div className="spacerXSmall"></div>
+          <p>Se og bestil din mad lige her.</p>
+          <div className={`spacerXSmall`}></div>
           <div className={`${styles.menuPageWrapper}`}>
-            <div className={`spacerSmall`}></div>
             <MenuCategorySlider
               categories={categories}
               activeCategory={activeCategory}
               onCategoryClick={handleCategoryClick}
             />
-            <div className={`spacerSmall`}></div>
 
             {categories.map((category, index) => (
               <MenuCategorySection

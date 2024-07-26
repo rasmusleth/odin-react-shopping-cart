@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .cartContainer * p {
@@ -29,7 +29,6 @@
   position: relative;
   display: flex;
   gap: 1rem;
-  padding: 1rem;
   border-radius: 0.5rem;
   overflow: hidden;
   transition: all 200ms ease-out;
@@ -93,7 +92,8 @@
 }
 
 .cartItemRight {
-  max-width: 30%;
+  width: 10%;
+  aspect-ratio: 1/1;
   height: clamp(2rem, 10vh, 3rem);
   display: flex;
   justify-content: end;

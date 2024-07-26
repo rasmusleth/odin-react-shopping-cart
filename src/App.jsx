@@ -36,8 +36,6 @@ function App() {
     handleBodyOnModalOpen(modalIsOpen);
   }, [modalIsOpen]);
 
-  console.log("Selected item: ", selectedItem);
-
   return (
     <>
       <Navigation cartLength={cartLength} isCart={isCart} />
