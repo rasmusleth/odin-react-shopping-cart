@@ -19,7 +19,7 @@ html {
   gap: 1rem;
   overflow-y: scroll;
   padding: 0.75rem 0;
-  background-color: var(--color-neutral);
+  background-color: var(--color-white);
   z-index: 1000;
   margin-bottom: -30px;
 }
@@ -27,17 +27,17 @@ html {
 .menuCategoriesSliderItem {
   text-decoration: none;
   text-wrap: nowrap;
-  color: var(--color-neutral-900);
+  color: var(--color-black);
   font-size: 0.875rem;
   padding: 0.5rem 0.675rem;
-  border: 1px solid var(--color-primary-100);
+  border: 1px solid var(--color-primary-400);
   border-radius: 3rem;
   cursor: pointer;
 }
 
 .menuCategoriesSliderItem.selected {
-  background-color: var(--color-primary-100);
-  color: var(--color-neutral-900);
+  background-color: var(--color-primary-400);
+  color: var(--color-black);
 }
 
 .menuCategorySection {
@@ -49,7 +49,7 @@ html {
   position: sticky;
   z-index: 100;
   top: 55px;
-  background-color: var(--color-neutral);
+  background-color: var(--color-white);
 }
 
 .menuCategoryTitleWrapper {
@@ -57,9 +57,9 @@ html {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: var(--color-primary-01);
+  background-color: var(--color-neutral-100);
   border-radius: 0.5rem;
-  color: var(--color-neutral-900);
+  color: var(--color-black);
   text-decoration: none;
 }
 
@@ -88,7 +88,7 @@ html {
   justify-content: space-between;
   gap: 1rem;
   text-decoration: none;
-  color: var(--color-neutral-900);
+  color: var(--color-black);
   transition: opacity 100ms ease-out;
   padding: 0.5rem;
   cursor: pointer;
@@ -120,7 +120,7 @@ html {
 
 .menuItemAddedQuantity {
   font-size: 0.75rem;
-  color: var(--color-neutral);
+  color: var(--color-white);
   font-weight: bold;
 }
 
@@ -153,7 +153,7 @@ html {
 }
 
 .menuItemSeparator {
-  background-color: var(--color-neutral-300);
+  background-color: var(--color-neutral-200);
   height: 1px;
   border: none;
 }

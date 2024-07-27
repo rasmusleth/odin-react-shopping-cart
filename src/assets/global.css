@@ -11,28 +11,47 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --color-primary: #9e5330;
-  --color-primary-100: hsl(19, 53%, 90%);
-  --color-primary-200: hsl(19, 53%, 85%);
-  --color-primary-300: hsl(19, 53%, 70%);
-  --color-primary-600: hsl(19, 53%, 30%);
+  --color-primary: hsl(19, 53%, 40%);
+  --color-primary-50: hsl(19, 53%, 98%);
+  --color-primary-100: hsl(19, 53%, 96%);
+  --color-primary-200: hsl(19, 53%, 90%);
+  --color-primary-300: hsl(19, 53%, 83%);
+  --color-primary-400: hsl(19, 53%, 64%);
+  --color-primary-500: hsl(19, 53%, 45%);
+  --color-primary-600: hsl(19, 53%, 32%);
   --color-primary-700: hsl(19, 53%, 25%);
-  --color-primary-800: hsl(19, 53%, 20%);
+  --color-primary-800: hsl(19, 53%, 15%);
+  --color-primary-900: hsl(19, 53%, 9%);
+  --color-primary-950: hsl(19, 53%, 4%);
+
+
   --color-primary-light: rgb(171, 103, 72);
   --color-primary-01: rgba(158, 83, 48, 0.1);
-  --color-neutral: #ffffff;
-  --color-neutral-08: #ffffffd0;
-  --color-neutral-200: #f5f5f5;
-  --color-neutral-300: hsl(0, 0%, 90%);
-  --color-neutral-400: hsl(0, 0%, 80%);
-  --color-neutral-500: hsl(0, 0%, 70%);
-  --color-neutral-600: hsl(0, 0%, 30%);
-  --color-neutral-700: hsl(0, 0%, 20%);
-  --color-neutral-800: hsl(0, 0%, 10%);
-  --color-neutral-900: #000000;
+
+  --color-black: hsl(0, 0%, 0%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-white-05: hsla(0, 0%, 100%, 0.5);
+  --color-white-08: hsla(0, 0%, 100%, 0.8);
+  --color-neutral-50: hsl(0, 0%, 98%)
+  --color-neutral-100: hsl(0, 0%, 96%);
+  --color-neutral-200: hsl(0, 0%, 90%);
+  --color-neutral-300: hsl(0, 0%, 83%);
+  --color-neutral-400: hsl(0, 0%, 64%);
+  --color-neutral-500: hsl(0, 0%, 45%);
+  --color-neutral-600: hsl(0, 0%, 32%);
+  --color-neutral-700: hsl(0, 0%, 25%);
+  --color-neutral-800: hsl(0, 0%, 15%);
+  --color-neutral-900: hsl(0, 0%, 9%);
+  --color-neutral-950: hsl(0, 0%, 4%);
+  
   --color-danger: rgb(214, 24, 24);
   --color-danger-600: hsl(0, 80%, 30%);
   --color-danger-05: rgb(214, 24, 24, 0.5);
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 #root {
@@ -118,25 +137,25 @@ h6 {
   color: var(--color-primary);
 }
 .textColorBlack {
-  color: var(--color-neutral-900);
+  color: var(--color-black);
 }
 .textColorWhite {
-  color: var(--color-neutral);
+  color: var(--color-white);
 }
 .textColorNeutral200 {
-  color: var(--color-neutral-200);
+  color: var(--color-neutral-100);
 }
 .backgroundColorPrimary {
   background-color: var(--color-primary);
 }
 .backgroundColorBlack {
-  background-color: var(--color-neutral-900);
+  background-color: var(--color-black);
 }
 .backgroundColorWhite {
-  background-color: var(--color-neutral);
+  background-color: var(--color-white);
 }
 .backgroundColorNeutral200 {
-  background-color: var(--color-neutral-200);
+  background-color: var(--color-neutral-100);
 }
 
 .spacerXXSmall {
@@ -179,12 +198,12 @@ h6 {
 
 .btnPrimary {
   background-color: var(--color-primary); /* Orange background */
-  color: var(--color-neutral); /* White text */
+  color: var(--color-primary-50); /* White text */
 }
 
 .btnDanger {
   background-color: var(--color-danger);
-  color: var(--color-neutral);
+  color: var(--color-white);
 }
 
 .btnDanger:hover {

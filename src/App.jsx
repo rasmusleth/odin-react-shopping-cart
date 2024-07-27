@@ -5,15 +5,45 @@ import { cartReducer, initialCartState } from "./assets/javascript/cartReducer";
 import "./assets/global.css";
 import ItemDialog from "./components/ItemDialog/ItemDialog";
 import { handleBodyOnModalOpen } from "./assets/javascript/itemModalHelpers";
+import {
+  lightModeColors,
+  darkModeColors,
+} from "./assets/javascript/colorTheme";
 
 function App() {
   const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
   const [cartLength, setCartLength] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const isMenu = useMatch("/menu");
   const isCart = useMatch("/cart");
+
+  // # Color Theme
+  const toggleColorTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      for (let colorKey in darkModeColors) {
+        console.log("Key: ", colorKey);
+        console.log("Value: ", darkModeColors[colorKey]);
+        document.documentElement.style.setProperty(
+          colorKey,
+          darkModeColors[colorKey]
+        );
+      }
+    } else {
+      for (let colorKey in lightModeColors) {
+        document.documentElement.style.setProperty(
+          colorKey,
+          lightModeColors[colorKey]
+        );
+      }
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     if (!cart) return;
@@ -31,14 +61,19 @@ function App() {
     setModalIsOpen(false);
   };
 
-  // Handle body overflow when modal is open
+  // # Body overflow when modal is open
   useEffect(() => {
     handleBodyOnModalOpen(modalIsOpen);
   }, [modalIsOpen]);
 
   return (
-    <>
-      <Navigation cartLength={cartLength} isCart={isCart} />
+    <div className="pageWrapper">
+      <Navigation
+        cartLength={cartLength}
+        isCart={isCart}
+        isDarkMode={isDarkMode}
+        onColorThemeClick={toggleColorTheme}
+      />
       <main>
         <Outlet
           context={{
@@ -61,7 +96,7 @@ function App() {
           action={isMenu ? "add" : isCart ? "edit" : null}
         />
       )}
-    </>
+    </div>
   );
 }
 

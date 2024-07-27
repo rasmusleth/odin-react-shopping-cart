@@ -11,7 +11,8 @@
   width: 100%;
   max-width: 600px;
   border: none;
-  background-color: var(--color-neutral);
+  background-color: var(--color-white);
+  color: var(--color-black);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   transform: translateY(100%);

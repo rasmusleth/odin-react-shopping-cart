@@ -20,7 +20,7 @@ header {
   transition: opacity 200ms ease-out;
   cursor: pointer;
   padding: 0.5rem;
-  background-color: var(--color-neutral-200);
+  background-color: var(--color-neutral-100);
   border-radius: 100%;
   font-size: 1.25rem;
 }
@@ -47,7 +47,7 @@ header {
 .menuIconBar {
   width: 100%;
   height: 0.25rem;
-  background-color: var(--color-neutral-900);
+  background-color: var(--color-black);
 } */
 
 .logo {
@@ -89,7 +89,7 @@ header {
   border-radius: 100%;
   font-size: 0.75rem;
   font-weight: bold;
-  color: var(--color-neutral);
+  color: var(--color-white);
 }
 
 .cartItemCountLow {
@@ -107,7 +107,7 @@ header {
   border-radius: 100%;
   font-size: 0.75rem;
   font-weight: bold;
-  color: var(--color-neutral);
+  color: var(--color-white);
   aspect-ratio: 1/1;
 }
 
@@ -123,24 +123,24 @@ header {
   transform: translateY(-50%);
   width: 100%;
   height: 1px;
-  background-color: var(--color-neutral-900);
+  background-color: var(--color-black);
 }
 
 .textBox {
-  background-color: var(--color-neutral-900);
-  color: var(--color-neutral);
+  background-color: var(--color-black);
+  color: var(--color-white);
   border-radius: 2rem;
   padding: 0.3rem 0.6rem;
   z-index: 100;
 }
 
 .infoBar {
-  background-color: var(--color-neutral-200);
+  background-color: var(--color-neutral-100);
   border-radius: 0.25rem;
 }
 
 @media only screen and (min-width: 768px) {
   .navBar {
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 3rem;
   }
 }
