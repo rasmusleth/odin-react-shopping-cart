@@ -28,8 +28,6 @@ function App() {
   useEffect(() => {
     if (isDarkMode) {
       for (let colorKey in darkModeColors) {
-        console.log("Key: ", colorKey);
-        console.log("Value: ", darkModeColors[colorKey]);
         document.documentElement.style.setProperty(
           colorKey,
           darkModeColors[colorKey]
@@ -87,15 +85,13 @@ function App() {
           }}
         />
       </main>
-      {selectedItem && (
-        <ItemDialog
-          item={selectedItem}
-          modalIsOpen={modalIsOpen}
-          onClose={handleModalClose}
-          cartDispatch={cartDispatch}
-          action={isMenu ? "add" : isCart ? "edit" : null}
-        />
-      )}
+      <ItemDialog
+        item={selectedItem}
+        modalIsOpen={modalIsOpen}
+        onClose={handleModalClose}
+        cartDispatch={cartDispatch}
+        action={isMenu ? "add" : isCart ? "edit" : null}
+      />
     </div>
   );
 }

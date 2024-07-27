@@ -1,10 +1,9 @@
-.itemDialog[open] {
-  transform: translateY(0);
+:root {
+  --dialog-position-y: 100%;
 }
 
 .itemDialog {
-  height: 100%;
-  position: fixed;
+  height: 95%;
   bottom: 0;
   margin: 0 auto;
   margin-top: auto;
@@ -15,20 +14,24 @@
   color: var(--color-black);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  transform: translateY(100%);
+  transform: translateY(var(--dialog-position-y));
   transition: transform 200ms ease-in-out,
     overlay 200ms ease-in-out allow-discrete,
     display 200ms ease-in-out allow-discrete;
 }
 
+.itemDialog[open] {
+  transform: translateY(0);
+}
+
 @starting-style {
   .itemDialog[open] {
-    transform: translateY(100%);
+    transform: translateY(var(--dialog-position-y));
   }
 }
 
 .itemDialog[open]::backdrop {
-  background-color: rgba(0, 0, 0, 0.39);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .itemDialog::backdrop {

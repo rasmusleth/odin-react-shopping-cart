@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 import MenuItemFooter from "./MenuItemFooter";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import {
   calculatePriceTotal,
   formatPrice,
@@ -66,7 +66,6 @@ const MenuItem = ({
   modalRef,
 }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
-  const dialogHeaderRef = useRef();
 
   const [itemState, dispatch] = useReducer(
     itemReducer,
@@ -81,7 +80,9 @@ const MenuItem = ({
   };
 
   const handleTouchMove = (e) => {
-    if (modalRef.current.getBoundingClientRect().y < initialDialogY) {
+    const dialogPositionY = modalRef.current.getBoundingClientRect().y;
+
+    if (dialogPositionY < initialDialogY) {
       modalRef.current.style.transform = `translateY(0px)`;
     } else {
       const pixelsToMoveY = e.changedTouches[0].clientY - initialTouchPoint;
@@ -94,6 +95,7 @@ const MenuItem = ({
 
     if (pixelsMoved > 400) {
       onClose();
+      modalRef.current.style.transform = "";
     } else {
       modalRef.current.style.transform = `translateY(0px)`;
     }
@@ -216,13 +218,7 @@ const MenuItem = ({
     <>
       {item && (
         <div className={styles.menuItemContainer}>
-          <div
-            ref={dialogHeaderRef}
-            className={styles.menuItemHeader}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className={styles.menuItemHeader}>
             <button
               onClick={onClose}
               type="button"
@@ -238,13 +234,20 @@ const MenuItem = ({
                 <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z" />
               </svg>
             </button>
-            <img
-              className={styles.menuItemCoverImage}
-              src={itemState.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
-              alt="Dish Image"
-            />
           </div>
           <div className={styles.menuItemContentWrapper}>
+            <div
+              className="menuItemHero"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <img
+                className={styles.menuItemCoverImage}
+                src={itemState.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
+                alt="Dish Image"
+              />
+            </div>
             <span className={styles.menuItemCategory}>
               {itemState.category}
             </span>

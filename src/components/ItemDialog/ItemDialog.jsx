@@ -17,6 +17,7 @@ const MenuItemModal = ({
       modalRef.current.showModal();
     } else {
       modalRef.current.close();
+      modalRef.current.style.transform = "";
     }
   }, [modalIsOpen]);
 
