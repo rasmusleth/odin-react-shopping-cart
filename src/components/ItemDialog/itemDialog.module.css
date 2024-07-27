@@ -15,8 +15,7 @@
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   transform: translateY(var(--dialog-position-y));
-  transition: transform 200ms ease-in-out,
-    overlay 200ms ease-in-out allow-discrete,
+  transition: overlay 200ms ease-in-out allow-discrete,
     display 200ms ease-in-out allow-discrete;
 }
 

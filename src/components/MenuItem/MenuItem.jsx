@@ -98,6 +98,7 @@ const MenuItem = ({
       modalRef.current.style.transform = "";
     } else {
       modalRef.current.style.transform = `translateY(0px)`;
+      // modalRef.current.style.transition = `transform 200ms ease-in-out, overlay 200ms ease-in-out allow-discrete, display 200ms ease-in-out allow-discrete;`;
     }
   };
 

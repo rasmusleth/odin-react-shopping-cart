@@ -18,6 +18,7 @@ const MenuItemModal = ({
     } else {
       modalRef.current.close();
       modalRef.current.style.transform = "";
+      modalRef.current.style.transition = "transform 200ms ease-out";
     }
   }, [modalIsOpen]);
 
