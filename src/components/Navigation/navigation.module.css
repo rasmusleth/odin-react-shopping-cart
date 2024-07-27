@@ -29,6 +29,11 @@ header {
   opacity: 0.7;
 }
 
+.darkModeButton {
+  font-size: 1.75rem;
+  padding-right: 0.5rem;
+}
+
 /* .menuIcon {
   display: flex;
   flex-direction: column;
