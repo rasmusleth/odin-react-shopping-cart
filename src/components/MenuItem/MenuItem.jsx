@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 import MenuItemFooter from "./MenuItemFooter";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import {
   calculatePriceTotal,
   formatPrice,
@@ -67,10 +67,37 @@ const MenuItem = ({
 }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
 
+  // # UI on content Scroll
+  const headerRef = useRef();
+
   const [itemState, dispatch] = useReducer(
     itemReducer,
     action === "edit" ? item : initialItemState
   );
+
+  useEffect(() => {
+    if (!headerRef.current) return;
+    headerRef.current.style.backgroundImage = `url(${item.image})`;
+    // headerRef.current.style.height = `40%`;
+  }, [item]);
+
+  const handleContentScroll = (e) => {
+    // Calculate scrolled from top percentage
+    let maxScrollAmount = 100;
+    const percentageScrolled = e.target.scrollTop / maxScrollAmount;
+    const totalScrollHeight =
+      e.target.scrollHeight - e.target.offsetHeight - e.target.scrollTop;
+
+    if (percentageScrolled < 1 && totalScrollHeight > 0) {
+      const initialHeaderSize = 300;
+      const newHeaderSize = Math.floor(
+        initialHeaderSize - initialHeaderSize * percentageScrolled
+      );
+
+      headerRef.current.style.maxHeight = `${newHeaderSize}px`;
+      headerRef.current.style.backgroundColor = `rgba(255, 255, 255, ${percentageScrolled})`;
+    }
+  };
 
   const [initialTouchPoint, setInitialTouchPoint] = useState(null);
   const initialDialogY = modalRef.current?.getBoundingClientRect().y;
@@ -219,7 +246,13 @@ const MenuItem = ({
     <>
       {item && (
         <div className={styles.menuItemContainer}>
-          <div className={styles.menuItemHeader}>
+          <div
+            ref={headerRef}
+            className={styles.menuItemHeader}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <button
               onClick={onClose}
               type="button"
@@ -236,19 +269,10 @@ const MenuItem = ({
               </svg>
             </button>
           </div>
-          <div className={styles.menuItemContentWrapper}>
-            <div
-              className="menuItemHero"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <img
-                className={styles.menuItemCoverImage}
-                src={itemState.image} // "/images/menu-categories/luksus-smoerrebroed-cover.jpeg"
-                alt="Dish Image"
-              />
-            </div>
+          <div
+            className={styles.menuItemContentWrapper}
+            onScroll={handleContentScroll}
+          >
             <span className={styles.menuItemCategory}>
               {itemState.category}
             </span>
