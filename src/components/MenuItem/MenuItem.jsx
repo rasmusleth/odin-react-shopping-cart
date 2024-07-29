@@ -83,19 +83,37 @@ const MenuItem = ({
 
   const handleContentScroll = (e) => {
     // Calculate scrolled from top percentage
-    let maxScrollAmount = 100;
+    const initialHeaderSize = 300;
+    let maxScrollAmount = initialHeaderSize * 0.5;
     const percentageScrolled = e.target.scrollTop / maxScrollAmount;
     const totalScrollHeight =
       e.target.scrollHeight - e.target.offsetHeight - e.target.scrollTop;
 
-    if (percentageScrolled < 1 && totalScrollHeight > 0) {
-      const initialHeaderSize = 300;
-      const newHeaderSize = Math.floor(
+    if (totalScrollHeight > 0) {
+      const newHeaderSize = Math.round(
         initialHeaderSize - initialHeaderSize * percentageScrolled
       );
 
+      // Handle size and color/overlay
       headerRef.current.style.maxHeight = `${newHeaderSize}px`;
       headerRef.current.style.backgroundColor = `rgba(255, 255, 255, ${percentageScrolled})`;
+
+      // Handle boxShadow & title
+      if (percentageScrolled < 0.5) {
+        headerRef.current.style.boxShadow = `0px 0px 0px rgba(0, 0, 0, 0.2)`;
+      } else {
+        headerRef.current.style.boxShadow = `0px 0px ${
+          (percentageScrolled * 100) / 10
+        }px rgba(0, 0, 0, 0.2)`;
+      }
+
+      // Handle title
+      if (percentageScrolled < 0.8) {
+        headerRef.current.firstElementChild.style.opacity = "0";
+      } else {
+        headerRef.current.firstElementChild.style.opacity =
+          percentageScrolled - 0.8;
+      }
     }
   };
 
@@ -253,6 +271,7 @@ const MenuItem = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
+            <div className={styles.menuItemHeaderTitle}>{itemState.title}</div>
             <button
               onClick={onClose}
               type="button"

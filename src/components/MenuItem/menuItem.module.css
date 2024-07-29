@@ -8,7 +8,8 @@
 .menuItemHeader {
   position: sticky;
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  align-items: center;
   padding: 1rem 1rem;
   top: 0;
   width: 100%;
@@ -23,6 +24,9 @@
 }
 
 .menuItemCloseButton {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,6 +36,11 @@
   background-color: var(--color-neutral-100);
   color: var(--color-black);
   cursor: pointer;
+}
+
+.menuItemHeaderTitle {
+  font-weight: bold;
+  opacity: 0;
 }
 
 .menuItemCloseButton:hover > svg {
