@@ -14,6 +14,7 @@ const lightModeColors = {
   "--color-neutral-800": "hsl(0, 0%, 15%)",
   "--color-neutral-900": "hsl(0, 0%, 9%)",
   "--color-neutral-950": "hsl(0, 0%, 4%)",
+  "--color-primary": "hsl(19, 53%, 40%)",
 };
 const darkModeColors = {
   "--color-black": "hsl(0, 0%, 100%)",
@@ -31,6 +32,7 @@ const darkModeColors = {
   "--color-neutral-800": "hsl(0, 0%, 90%)",
   "--color-neutral-900": "hsl(0, 0%, 96%)",
   "--color-neutral-950": "hsl(0, 0%, 98%)",
+  "--color-primary": "hsl(19, 53%, 60%)",
 };
 
 export { lightModeColors, darkModeColors };
