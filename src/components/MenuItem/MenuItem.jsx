@@ -69,6 +69,7 @@ const MenuItem = ({
 
   // # UI on content Scroll
   const headerRef = useRef();
+  const [itemHeaderRgbColor, setItemHeaderRgbColor] = useState(null);
 
   const [itemState, dispatch] = useReducer(
     itemReducer,
@@ -77,8 +78,15 @@ const MenuItem = ({
 
   useEffect(() => {
     if (!headerRef.current) return;
+    // Set header background to Item Image
     headerRef.current.style.backgroundImage = `url(${item.image})`;
-    // headerRef.current.style.height = `40%`;
+
+    // Get the background color
+    setItemHeaderRgbColor(
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--color-white")
+        .slice(0, -1)
+    );
   }, [item]);
 
   const handleContentScroll = (e) => {
@@ -96,7 +104,7 @@ const MenuItem = ({
 
       // Handle size and color/overlay
       headerRef.current.style.maxHeight = `${newHeaderSize}px`;
-      headerRef.current.style.backgroundColor = `rgba(255, 255, 255, ${percentageScrolled})`;
+      headerRef.current.style.backgroundColor = `${itemHeaderRgbColor}, ${percentageScrolled})`;
 
       // Handle boxShadow & title
       if (percentageScrolled < 0.5) {
