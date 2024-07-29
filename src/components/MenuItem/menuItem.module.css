@@ -41,6 +41,7 @@
 .menuItemHeaderTitle {
   font-weight: bold;
   opacity: 0;
+  padding: 0 2.5rem;
 }
 
 .menuItemCloseButton:hover > svg {

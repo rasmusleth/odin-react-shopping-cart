@@ -211,6 +211,13 @@ h6 {
 }
 
 /* Utility */
+.textStyle1Lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .textStyle2Lines {
   display: -webkit-box;
   overflow: hidden;

@@ -112,7 +112,7 @@ const MenuItem = ({
         headerRef.current.firstElementChild.style.opacity = "0";
       } else {
         headerRef.current.firstElementChild.style.opacity =
-          percentageScrolled - 0.8;
+          (percentageScrolled - 0.8) * 5;
       }
     }
   };
@@ -271,7 +271,9 @@ const MenuItem = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <div className={styles.menuItemHeaderTitle}>{itemState.title}</div>
+            <div className={`${styles.menuItemHeaderTitle} textStyle1Lines`}>
+              {itemState.title}
+            </div>
             <button
               onClick={onClose}
               type="button"
