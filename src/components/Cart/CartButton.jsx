@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
-import { formatPrice } from "../../assets/javascript/calculationHelper";
+import { formatPrice } from "./cartHelpers";
 
 const CartButton = ({ cart, cartLength, text }) => {
   return (

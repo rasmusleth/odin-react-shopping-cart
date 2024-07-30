@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./menu.module.css";
-import { formatPrice } from "../../assets/javascript/calculationHelper";
+import { formatPrice } from "../Cart/cartHelpers";
 
 const MenuItem = ({ item, cart, onItemClick }) => {
   const cartItem = cart.items.find((cartItem) => cartItem.itemId === item.id);

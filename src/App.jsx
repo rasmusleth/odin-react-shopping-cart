@@ -1,10 +1,10 @@
 import { Outlet, useMatch } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import { useEffect, useState, useReducer } from "react";
-import { cartReducer, initialCartState } from "./assets/javascript/cartReducer";
-import "./assets/global.css";
+import { cartReducer, initialCartState } from "./components/Cart/cartReducer";
+import "./assets/css/global.css";
 import ItemDialog from "./components/ItemDialog/ItemDialog";
-import { handleBodyOnModalOpen } from "./assets/javascript/itemModalHelpers";
+import { handleBodyOnModalOpen } from "./components/ItemDialog/itemDialogHelpers";
 import {
   lightModeColors,
   darkModeColors,

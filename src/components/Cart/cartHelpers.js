@@ -1,4 +1,23 @@
-import { checkDeepEquality } from "./itemModalHelpers";
+import { checkDeepEquality } from "../ItemDialog/itemDialogHelpers";
+
+const calculatePriceTotal = (price, quantity, ingredientsExtra) => {
+  const itemTotal = ingredientsExtra.reduce((accumulator, ingredient) => {
+    return accumulator + ingredient.price;
+  }, price);
+
+  const totalPrice = itemTotal * quantity;
+
+  return totalPrice;
+};
+
+const formatPrice = (price) => {
+  let dkk = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
+  });
+
+  return dkk.format(price);
+};
 
 const checkIdenticalItemInCart = (cartState, newItemObj) => {
   // Check if item already exists in cart
@@ -22,4 +41,4 @@ const checkIdenticalItemInCart = (cartState, newItemObj) => {
   return checkDeepEquality(existingItem, newItem);
 };
 
-export { checkIdenticalItemInCart };
+export { calculatePriceTotal, formatPrice, checkIdenticalItemInCart };

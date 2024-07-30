@@ -1,4 +1,4 @@
-import { calculatePriceTotal } from "./calculationHelper";
+import { calculatePriceTotal } from "./cartHelpers.js";
 import { checkIdenticalItemInCart } from "./cartHelpers.js";
 
 const initialCartState = {

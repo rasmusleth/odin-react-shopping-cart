@@ -1,4 +1,4 @@
-import { calculatePriceTotal } from "./calculationHelper";
+import { calculatePriceTotal } from "../Cart/cartHelpers";
 
 const initialItemState = {
   quantity: 1,
@@ -15,7 +15,7 @@ const initialItemState = {
   },
 };
 
-function itemReducer(itemState, action) {
+function menuItemReducer(itemState, action) {
   switch (action.type) {
     case "init_item": {
       return {
@@ -150,4 +150,4 @@ function itemReducer(itemState, action) {
   }
 }
 
-export { itemReducer, initialItemState };
+export { menuItemReducer, initialItemState };

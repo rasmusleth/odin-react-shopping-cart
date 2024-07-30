@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
-import { formatPrice } from "../../assets/javascript/calculationHelper";
+import { formatPrice } from "./cartHelpers";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
 import { useState } from "react";
 

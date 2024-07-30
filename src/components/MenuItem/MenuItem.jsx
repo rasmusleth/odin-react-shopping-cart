@@ -2,15 +2,9 @@ import PropTypes from "prop-types";
 import styles from "./menuItem.module.css";
 import MenuItemFooter from "./MenuItemFooter";
 import { useEffect, useReducer, useRef, useState } from "react";
-import {
-  calculatePriceTotal,
-  formatPrice,
-} from "../../assets/javascript/calculationHelper";
-import {
-  itemReducer,
-  initialItemState,
-} from "../../assets/javascript/itemReducer";
-import { checkDeepEquality } from "../../assets/javascript/itemModalHelpers";
+import { calculatePriceTotal, formatPrice } from "../Cart/cartHelpers";
+import { menuItemReducer, initialItemState } from "./menuItemReducer";
+import { checkDeepEquality } from "../ItemDialog/itemDialogHelpers";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -72,7 +66,7 @@ const MenuItem = ({
   const [itemHeaderRgbColor, setItemHeaderRgbColor] = useState(null);
 
   const [itemState, dispatch] = useReducer(
-    itemReducer,
+    menuItemReducer,
     action === "edit" ? item : initialItemState
   );
 
