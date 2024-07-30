@@ -4,7 +4,7 @@ const handleContentScroll = (e, headerRef) => {
     .slice(0, -1);
   // Calculate scrolled from top percentage
   const initialHeaderSize = 300;
-  let maxScrollAmount = initialHeaderSize * 0.5;
+  let maxScrollAmount = initialHeaderSize * 0.75;
   const percentageScrolled = e.target.scrollTop / maxScrollAmount;
   const totalScrollHeight =
     e.target.scrollHeight - e.target.offsetHeight - e.target.scrollTop;
