@@ -5,6 +5,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { calculatePriceTotal, formatPrice } from "../Cart/cartHelpers";
 import { menuItemReducer, initialItemState } from "./menuItemReducer";
 import { checkDeepEquality } from "../ItemDialog/itemDialogHelpers";
+import { handleContentScroll } from "./menuItemHelper";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -60,64 +61,19 @@ const MenuItem = ({
   modalRef,
 }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
-
-  // # UI on content Scroll
-  const headerRef = useRef();
-  const [itemHeaderRgbColor, setItemHeaderRgbColor] = useState(null);
-
   const [itemState, dispatch] = useReducer(
     menuItemReducer,
     action === "edit" ? item : initialItemState
   );
 
+  // # UI on content Scroll
+  const headerRef = useRef();
+
   useEffect(() => {
     if (!headerRef.current) return;
     // Set header background to Item Image
     headerRef.current.style.backgroundImage = `url(${item.image})`;
-
-    // Get the background color
-    setItemHeaderRgbColor(
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--color-white")
-        .slice(0, -1)
-    );
   }, [item]);
-
-  const handleContentScroll = (e) => {
-    // Calculate scrolled from top percentage
-    const initialHeaderSize = 300;
-    let maxScrollAmount = initialHeaderSize * 0.5;
-    const percentageScrolled = e.target.scrollTop / maxScrollAmount;
-    const totalScrollHeight =
-      e.target.scrollHeight - e.target.offsetHeight - e.target.scrollTop;
-
-    if (totalScrollHeight > 0) {
-      const newHeaderSize = Math.round(
-        initialHeaderSize - initialHeaderSize * percentageScrolled
-      );
-
-      // Handle size and color/overlay
-      headerRef.current.style.maxHeight = `${newHeaderSize}px`;
-      headerRef.current.style.backgroundColor = `${itemHeaderRgbColor}, ${percentageScrolled})`;
-
-      // Handle boxShadow & title
-      if (percentageScrolled < 0.5) {
-        headerRef.current.style.boxShadow = `0px 0px 0px rgba(0, 0, 0, 0.2)`;
-      } else {
-        headerRef.current.style.boxShadow = `0px 0px ${
-          (percentageScrolled * 100) / 10
-        }px rgba(0, 0, 0, 0.2)`;
-      }
-
-      // Handle title
-      if (percentageScrolled < 0.8) {
-        headerRef.current.firstElementChild.style.opacity = "0";
-      } else {
-        headerRef.current.firstElementChild.style.opacity =
-          (percentageScrolled - 0.8) * 5;
-      }
-    }
-  };
 
   const [initialTouchPoint, setInitialTouchPoint] = useState(null);
   const initialDialogY = modalRef.current?.getBoundingClientRect().y;
@@ -294,7 +250,7 @@ const MenuItem = ({
           </div>
           <div
             className={styles.menuItemContentWrapper}
-            onScroll={handleContentScroll}
+            onScroll={(e) => handleContentScroll(e, headerRef)}
           >
             <span className={styles.menuItemCategory}>
               {itemState.category}
