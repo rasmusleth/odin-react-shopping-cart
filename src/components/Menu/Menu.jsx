@@ -5,10 +5,12 @@ import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
 import { useOutletContext } from "react-router-dom";
 import { convertDataToCategories } from "../../assets/javascript/dataHelpers";
+import { useCart } from "../Cart/CartContext";
 
 const Menu = () => {
-  const { cart, cartLength, modalIsOpen, setModalIsOpen, setSelectedItem } =
-    useOutletContext();
+  const cart = useCart();
+  console.log(cart);
+  const { modalIsOpen, setModalIsOpen, setSelectedItem } = useOutletContext();
 
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -77,7 +79,6 @@ const Menu = () => {
               <MenuCategorySection
                 key={`section-${category.id}`}
                 category={category}
-                cart={cart}
                 onItemClick={handleItemClick}
                 ref={(el) => (categorySectionRefs.current[index] = el)}
               />
@@ -85,11 +86,7 @@ const Menu = () => {
           </div>
 
           {cart.items.length > 0 && !modalIsOpen && (
-            <CartButton
-              cart={cart}
-              cartLength={cartLength}
-              text="Se bestilling"
-            />
+            <CartButton text="Se bestilling" />
           )}
         </div>
       ) : (

@@ -1,16 +1,33 @@
-import { calculatePriceTotal } from "./cartHelpers.js";
-import { checkIdenticalItemInCart } from "./cartHelpers.js";
+import { useReducer, createContext, useContext } from "react";
+import PropTypes from "prop-types";
+import { checkIdenticalItemInCart, calculatePriceTotal } from "./cartHelpers";
 
-const initialCartState = {
-  customerInfo: {
-    name: "",
-    emailAddress: "",
-  },
-  items: [],
-  takeAway: false,
-  tableNumber: -1,
-  bill: 0,
+const CartContext = createContext(null);
+const CartDispatchContext = createContext(null);
+
+export function CartProvider({ children }) {
+  const [cart, dispatch] = useReducer(cartReducer, initialCart);
+
+  return (
+    <CartContext.Provider value={cart}>
+      <CartDispatchContext.Provider value={dispatch}>
+        {children}
+      </CartDispatchContext.Provider>
+    </CartContext.Provider>
+  );
+}
+
+CartProvider.propTypes = {
+  children: PropTypes.object.isRequired,
 };
+
+export function useCart() {
+  return useContext(CartContext);
+}
+
+export function useCartDispatch() {
+  return useContext(CartDispatchContext);
+}
 
 function cartReducer(cartState, action) {
   switch (action.type) {
@@ -133,4 +150,13 @@ function cartReducer(cartState, action) {
   }
 }
 
-export { cartReducer, initialCartState };
+const initialCart = {
+  customerInfo: {
+    name: "",
+    emailAddress: "",
+  },
+  items: [],
+  takeAway: false,
+  tableNumber: -1,
+  bill: 0,
+};

@@ -1,7 +1,6 @@
 import { Outlet, useMatch } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
-import { useEffect, useState, useReducer } from "react";
-import { cartReducer, initialCartState } from "./components/Cart/cartReducer";
+import { useEffect, useState } from "react";
 import "./assets/css/global.css";
 import ItemDialog from "./components/ItemDialog/ItemDialog";
 import { handleBodyOnModalOpen } from "./components/ItemDialog/itemDialogHelpers";
@@ -9,10 +8,10 @@ import {
   lightModeColors,
   darkModeColors,
 } from "./assets/javascript/colorTheme";
+import { CartProvider } from "./components/Cart/CartContext";
 
 function App() {
-  const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
-  const [cartLength, setCartLength] = useState(0);
+  // const [cartLength, setCartLength] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -43,15 +42,16 @@ function App() {
     }
   }, [isDarkMode]);
 
-  useEffect(() => {
-    if (!cart) return;
+  // ##### FIX #####
+  // useEffect(() => {
+  //   if (!cart) return;
 
-    const length = cart.items.reduce((accumulator, item) => {
-      return accumulator + item.quantity;
-    }, 0);
+  //   const length = cart.items.reduce((accumulator, item) => {
+  //     return accumulator + item.quantity;
+  //   }, 0);
 
-    setCartLength(length);
-  }, [cart]);
+  //   setCartLength(length);
+  // }, [cart]);
 
   // # ITEM DIALOG
   const handleModalClose = () => {
@@ -65,34 +65,33 @@ function App() {
   }, [modalIsOpen]);
 
   return (
-    <div className="pageWrapper">
-      <Navigation
-        cartLength={cartLength}
-        isCart={isCart}
-        isDarkMode={isDarkMode}
-        onColorThemeClick={toggleColorTheme}
-      />
-      <main>
-        <Outlet
-          context={{
-            cart,
-            cartDispatch,
-            cartLength,
-            modalIsOpen,
-            setModalIsOpen,
-            selectedItem,
-            setSelectedItem,
-          }}
+    <CartProvider>
+      <div className="pageWrapper">
+        <Navigation
+          // cartLength={cartLength}
+          isCart={isCart}
+          isDarkMode={isDarkMode}
+          onColorThemeClick={toggleColorTheme}
         />
-      </main>
-      <ItemDialog
-        item={selectedItem}
-        modalIsOpen={modalIsOpen}
-        onClose={handleModalClose}
-        cartDispatch={cartDispatch}
-        action={isMenu ? "add" : isCart ? "edit" : null}
-      />
-    </div>
+        <main>
+          <Outlet
+            context={{
+              // cartLength,
+              modalIsOpen,
+              setModalIsOpen,
+              selectedItem,
+              setSelectedItem,
+            }}
+          />
+        </main>
+        <ItemDialog
+          item={selectedItem}
+          modalIsOpen={modalIsOpen}
+          onClose={handleModalClose}
+          action={isMenu ? "add" : isCart ? "edit" : null}
+        />
+      </div>
+    </CartProvider>
   );
 }
 

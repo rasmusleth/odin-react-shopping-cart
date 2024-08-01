@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
-import { formatPrice } from "./cartHelpers";
+import { formatPrice, getCartLength } from "./cartHelpers";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
 import { useState } from "react";
+import { useCart, useCartDispatch } from "./CartContext";
 
 const CartItem = ({
   item,
@@ -105,8 +106,10 @@ CartItem.propTypes = {
 };
 
 const Cart = () => {
-  const { cart, cartDispatch, cartLength, setModalIsOpen, setSelectedItem } =
-    useOutletContext();
+  const { setModalIsOpen, setSelectedItem } = useOutletContext();
+  const cart = useCart();
+  const cartDispatch = useCartDispatch();
+  const cartLength = getCartLength(cart);
 
   // # Quantity button
   const [quantityButtonClicked, setQuantityButtonClicked] = useState(false);

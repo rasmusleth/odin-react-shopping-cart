@@ -41,4 +41,17 @@ const checkIdenticalItemInCart = (cartState, newItemObj) => {
   return checkDeepEquality(existingItem, newItem);
 };
 
-export { calculatePriceTotal, formatPrice, checkIdenticalItemInCart };
+const getCartLength = (cart) => {
+  const length = cart.items.reduce((accumulator, item) => {
+    return accumulator + item.quantity;
+  }, 0);
+
+  return length;
+};
+
+export {
+  calculatePriceTotal,
+  formatPrice,
+  checkIdenticalItemInCart,
+  getCartLength,
+};

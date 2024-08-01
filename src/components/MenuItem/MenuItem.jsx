@@ -6,6 +6,7 @@ import { calculatePriceTotal, formatPrice } from "../Cart/cartHelpers";
 import { menuItemReducer, initialItemState } from "./menuItemReducer";
 import { checkDeepEquality } from "../ItemDialog/itemDialogHelpers";
 import { handleContentScroll } from "./menuItemHelper";
+import { useCartDispatch } from "../Cart/CartContext";
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {
   const [ingredientSelected, setIngredientSelected] = useState(false);
@@ -52,19 +53,13 @@ IngredientItem.propTypes = {
   ingredientsState: PropTypes.object,
 };
 
-const MenuItem = ({
-  item,
-  onClose,
-  cartDispatch,
-  action,
-  modalIsOpen,
-  modalRef,
-}) => {
+const MenuItem = ({ item, onClose, action, modalIsOpen, modalRef }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
   const [itemState, dispatch] = useReducer(
     menuItemReducer,
     action === "edit" ? item : initialItemState
   );
+  const cartDispatch = useCartDispatch();
 
   // # UI on content Scroll
   const headerRef = useRef();
@@ -332,7 +327,6 @@ const MenuItem = ({
 MenuItem.propTypes = {
   item: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-  cartDispatch: PropTypes.func.isRequired,
   action: PropTypes.string,
   modalIsOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired,

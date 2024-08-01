@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./cart.module.css";
-import { formatPrice } from "./cartHelpers";
+import { formatPrice, getCartLength } from "./cartHelpers";
+import { useCart } from "./CartContext";
 
-const CartButton = ({ cart, cartLength, text }) => {
+const CartButton = ({ text }) => {
+  const cart = useCart();
+  const cartLength = getCartLength(cart);
+
   return (
     <Link to={"/cart"} className={`${styles.cartPaymentBtn}`}>
       <div className={styles.cartPaymentLeft}>
@@ -16,8 +20,6 @@ const CartButton = ({ cart, cartLength, text }) => {
 };
 
 CartButton.propTypes = {
-  cart: PropTypes.object.isRequired,
-  cartLength: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
 };
 

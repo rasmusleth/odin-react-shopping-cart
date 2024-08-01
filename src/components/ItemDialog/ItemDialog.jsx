@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MenuItem from "../MenuItem/MenuItem";
 import styles from "./itemDialog.module.css";
 
-const ItemDialog = ({ item, modalIsOpen, onClose, cartDispatch, action }) => {
+const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
   const modalRef = useRef();
 
   useEffect(() => {
@@ -27,7 +27,6 @@ const ItemDialog = ({ item, modalIsOpen, onClose, cartDispatch, action }) => {
         <MenuItem
           item={item}
           onClose={onClose}
-          cartDispatch={cartDispatch}
           action={action}
           modalIsOpen={modalIsOpen}
           modalRef={modalRef}
@@ -41,7 +40,6 @@ ItemDialog.propTypes = {
   item: PropTypes.object,
   modalIsOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  cartDispatch: PropTypes.func,
   action: PropTypes.string,
 };
 
