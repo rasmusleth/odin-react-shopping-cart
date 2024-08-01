@@ -9,10 +9,6 @@ header {
   align-items: center;
 }
 
-.placeholderButton {
-  min-width: 2.25rem;
-}
-
 .backButton {
   display: flex;
   justify-content: center;
@@ -33,27 +29,6 @@ header {
   font-size: 1.75rem;
   padding-right: 0.5rem;
 }
-
-/* .menuIcon {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  width: 1.75rem;
-  overflow: hidden;
-  transition: opacity 200ms ease-out;
-  cursor: pointer;
-  border-radius: 0.25rem;
-}
-
-.menuIcon:hover {
-  opacity: 0.5;
-}
-
-.menuIconBar {
-  width: 100%;
-  height: 0.25rem;
-  background-color: var(--color-black);
-} */
 
 .logo {
   font-size: 2rem;

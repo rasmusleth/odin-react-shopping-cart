@@ -45,15 +45,7 @@ const Navigation = ({ isCart, isDarkMode, onColorThemeClick }) => {
               </svg>
             )}
           </button>
-          // <div className={styles.placeholderButton}></div>
         )}
-        {/* <Link to={"/"}>
-          <button className={styles.menuIcon}>
-            <div className={styles.menuIconBar}></div>
-            <div className={styles.menuIconBar}></div>
-            <div className={styles.menuIconBar}></div>
-          </button>
-        </Link> */}
         <Link to={"/"}>
           <div className={styles.logo}>Logo</div>
         </Link>
