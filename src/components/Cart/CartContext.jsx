@@ -33,42 +33,35 @@ function cartReducer(cartState, action) {
   switch (action.type) {
     case "add_to_cart": {
       let existsAlready = checkIdenticalItemInCart(cartState, action.item);
+      let itemsUpdated;
+      const priceIncrease = calculatePriceTotal(
+        action.item.price,
+        action.item.quantity,
+        action.item.ingredients.added
+      );
 
       if (existsAlready) {
-        const priceToAdd = calculatePriceTotal(
-          action.item.price,
-          action.item.quantity,
-          action.item.ingredients.added
-        );
-
-        return {
-          ...cartState,
-          items: cartState.items.map((item) => {
-            if (item.itemId === action.item.itemId) {
-              return {
-                ...item,
-                quantity: item.quantity + action.item.quantity,
-                priceTotal: item.priceTotal + priceToAdd,
-              };
-            } else {
-              return item;
-            }
-          }),
-          bill: cartState.bill + priceToAdd,
-        };
+        itemsUpdated = cartState.items.map((item) => {
+          if (item.itemId === action.item.itemId) {
+            return {
+              ...item,
+              quantity: item.quantity + action.item.quantity,
+              priceTotal: item.priceTotal + priceIncrease,
+            };
+          } else {
+            return item;
+          }
+        });
       } else {
-        return {
-          ...cartState,
-          items: [...cartState.items, action.item],
-          bill:
-            cartState.bill +
-            calculatePriceTotal(
-              action.item.price,
-              action.item.quantity,
-              action.item.ingredients.added
-            ),
-        };
+        itemsUpdated = [...cartState.items, action.item];
       }
+
+      return {
+        ...cartState,
+        items: itemsUpdated,
+        itemTotal: cartState.itemTotal + action.item.quantity,
+        bill: cartState.bill + priceIncrease,
+      };
     }
     case "item_quantity_increment": {
       return {
@@ -84,6 +77,7 @@ function cartReducer(cartState, action) {
             return item;
           }
         }),
+        itemTotal: cartState.itemTotal + 1,
         bill: cartState.bill + action.item.customItemPrice,
       };
     }
@@ -101,29 +95,37 @@ function cartReducer(cartState, action) {
             return item;
           }
         }),
+        itemTotal: cartState.itemTotal - 1,
         bill: cartState.bill - action.item.customItemPrice,
       };
     }
     case "item_quantity_input": {
+      let quantityDifference;
+      let priceDifference;
+
       return {
         ...cartState,
         items: cartState.items.map((item) => {
           if (item.id === action.item.id) {
+            quantityDifference = action.quantityInput - item.quantity;
+            priceDifference = quantityDifference * item.customItemPrice;
+
             return {
               ...item,
               quantity: action.quantityInput,
-              priceTotal: item.customItemPrice * action.quantityInput,
+              priceTotal: item.priceTotal + priceDifference,
             };
           } else {
             return item;
           }
         }),
-        bill:
-          cartState.bill + action.item.customItemPrice * action.quantityInput,
+        itemTotal: cartState.itemTotal + quantityDifference,
+        bill: cartState.bill + priceDifference,
       };
     }
     case "edit_cart_item": {
-      let priceDifference = 0;
+      let priceDifference;
+      let quantityDifference;
 
       return {
         ...cartState,
@@ -131,12 +133,14 @@ function cartReducer(cartState, action) {
           if (item.id === action.newItem.id) {
             // Calculate price difference
             priceDifference = action.newItem.priceTotal - item.priceTotal;
+            quantityDifference = action.newItem.quantity - item.quantity;
 
             return action.newItem;
           } else {
             return item;
           }
         }),
+        itemTotal: cartState.itemTotal + quantityDifference,
         bill: cartState.bill + priceDifference,
       };
     }
@@ -144,6 +148,7 @@ function cartReducer(cartState, action) {
       return {
         ...cartState,
         items: cartState.items.filter((item) => item.id !== action.item.id),
+        itemTotal: cartState.itemTotal - action.item.quantity,
         bill: cartState.bill - action.item.priceTotal,
       };
     }
@@ -156,6 +161,7 @@ const initialCart = {
     emailAddress: "",
   },
   items: [],
+  itemTotal: 0,
   takeAway: false,
   tableNumber: -1,
   bill: 0,
