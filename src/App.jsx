@@ -11,7 +11,6 @@ import {
 import { CartProvider } from "./components/Cart/CartContext";
 
 function App() {
-  // const [cartLength, setCartLength] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -42,17 +41,6 @@ function App() {
     }
   }, [isDarkMode]);
 
-  // ##### FIX #####
-  // useEffect(() => {
-  //   if (!cart) return;
-
-  //   const length = cart.items.reduce((accumulator, item) => {
-  //     return accumulator + item.quantity;
-  //   }, 0);
-
-  //   setCartLength(length);
-  // }, [cart]);
-
   // # ITEM DIALOG
   const handleModalClose = () => {
     setSelectedItem(null);
@@ -68,7 +56,6 @@ function App() {
     <CartProvider>
       <div className="pageWrapper">
         <Navigation
-          // cartLength={cartLength}
           isCart={isCart}
           isDarkMode={isDarkMode}
           onColorThemeClick={toggleColorTheme}
@@ -76,7 +63,6 @@ function App() {
         <main>
           <Outlet
             context={{
-              // cartLength,
               modalIsOpen,
               setModalIsOpen,
               selectedItem,

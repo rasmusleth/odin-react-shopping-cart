@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./cart.module.css";
 import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
-import { formatPrice, getCartLength } from "./cartHelpers";
+import { formatPrice } from "./cartHelpers";
 import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
 import { useState } from "react";
 import { useCart, useCartDispatch } from "./CartContext";
@@ -109,7 +109,6 @@ const Cart = () => {
   const { setModalIsOpen, setSelectedItem } = useOutletContext();
   const cart = useCart();
   const cartDispatch = useCartDispatch();
-  const cartLength = getCartLength(cart);
 
   // # Quantity button
   const [quantityButtonClicked, setQuantityButtonClicked] = useState(false);
@@ -203,7 +202,7 @@ const Cart = () => {
             </div>
           )}
 
-          {cartLength > 0 && (
+          {cart.itemTotal > 0 && (
             <div className={styles.cartCommentSection}>
               <div className={`spacerMedium`}></div>
               <div className={styles.cartComment}>
@@ -220,13 +219,9 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {cartLength > 0 ? (
+      {cart.itemTotal > 0 ? (
         <div id="cartSection">
-          <CartButton
-            cart={cart}
-            cartLength={cartLength}
-            text="Færdiggør bestilling"
-          />
+          <CartButton cart={cart} text="Færdiggør bestilling" />
         </div>
       ) : null}
     </div>
