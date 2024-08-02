@@ -9,7 +9,6 @@ import { useCart } from "../Cart/CartContext";
 
 const Menu = () => {
   const cart = useCart();
-  console.log(cart);
   const { modalIsOpen, setModalIsOpen, setSelectedItem } = useOutletContext();
 
   const [categories, setCategories] = useState([]);

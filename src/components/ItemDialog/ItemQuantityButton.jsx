@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import styles from "./menuItem.module.css";
+import styles from "./itemDialog.module.css";
 import { useEffect } from "react";
 
 const ItemQuantityButton = ({

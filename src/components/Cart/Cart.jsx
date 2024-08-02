@@ -3,7 +3,7 @@ import styles from "./cart.module.css";
 import CartButton from "./CartButton";
 import { useOutletContext } from "react-router-dom";
 import { formatPrice } from "./cartHelpers";
-import ItemQuantityButton from "../MenuItem/ItemQuantityButton";
+import ItemQuantityButton from "../ItemDialog/ItemQuantityButton";
 import { useState } from "react";
 import { useCart, useCartDispatch } from "./CartContext";
 

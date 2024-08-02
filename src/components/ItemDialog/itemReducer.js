@@ -15,7 +15,7 @@ const initialItemState = {
   },
 };
 
-function menuItemReducer(itemState, action) {
+function itemReducer(itemState, action) {
   switch (action.type) {
     case "init_item": {
       return {
@@ -150,4 +150,4 @@ function menuItemReducer(itemState, action) {
   }
 }
 
-export { menuItemReducer, initialItemState };
+export { itemReducer, initialItemState };
