@@ -7,7 +7,7 @@ import ItemDialogBody from "./ItemDialogBody";
 import ItemDialogFooter from "./ItemDialogFooter";
 import { useMatch } from "react-router-dom";
 
-const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
+const ItemDialog = ({ item, modalIsOpen, onClose }) => {
   const isCart = useMatch("/cart");
   const isMenu = useMatch("/");
   const [itemState, itemDispatch] = useReducer(itemReducer, initialItemState);
@@ -73,7 +73,7 @@ const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
               item={item}
               itemState={itemState}
               itemDispatch={itemDispatch}
-              action={action}
+              isCart={isCart}
               onClose={onClose}
             />
           </div>
@@ -87,7 +87,6 @@ ItemDialog.propTypes = {
   item: PropTypes.object,
   modalIsOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  action: PropTypes.string,
 };
 
 export default ItemDialog;

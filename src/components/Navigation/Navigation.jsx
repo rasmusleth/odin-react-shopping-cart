@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import styles from "./navigation.module.css";
 import { useCart } from "../Cart/CartContext";
 
-const Navigation = ({ isCart, isDarkMode, onColorThemeClick }) => {
+const Navigation = ({ isDarkMode, onColorThemeClick }) => {
   const cart = useCart();
+  const isCart = useMatch("/cart");
 
   return (
     <header>
@@ -82,7 +83,6 @@ const Navigation = ({ isCart, isDarkMode, onColorThemeClick }) => {
 };
 
 Navigation.propTypes = {
-  isCart: PropTypes.object,
   isDarkMode: PropTypes.bool.isRequired,
   onColorThemeClick: PropTypes.func.isRequired,
 };

@@ -10,7 +10,7 @@ const ItemDialogFooter = ({
   item,
   itemState,
   itemDispatch,
-  action,
+  isCart,
   onClose,
 }) => {
   const [isItemChanged, setIsItemChanged] = useState(false);
@@ -20,14 +20,14 @@ const ItemDialogFooter = ({
   // In edit mode, check IF updated item is !== from original on every update
   useEffect(() => {
     // ONLY check in edit mode
-    if (action !== "edit") return;
+    if (!isCart) return;
 
     if (checkDeepEquality(item, { ...itemState, id: item.id })) {
       setIsItemChanged(false);
     } else {
       setIsItemChanged(true);
     }
-  }, [itemState, item, action]);
+  }, [itemState, item, isCart]);
 
   const handleAddToCart = () => {
     const itemTotal = calculatePriceTotal(
@@ -96,7 +96,7 @@ const ItemDialogFooter = ({
             item={itemState}
             onChange={handleQuantityChange}
           />
-          {action === "edit" && !isItemChanged ? (
+          {isCart && !isItemChanged ? (
             <button
               type="button"
               className={`btnDanger ${styles.menuItemBuyButton}`}
@@ -107,7 +107,7 @@ const ItemDialogFooter = ({
                 {formatPrice(itemState.priceTotal)}
               </p>
             </button>
-          ) : action === "edit" ? (
+          ) : isCart ? (
             <button
               type="button"
               className={`btnPrimary ${styles.menuItemBuyButton}`}
@@ -140,7 +140,7 @@ ItemDialogFooter.propTypes = {
   item: PropTypes.object.isRequired,
   itemState: PropTypes.object.isRequired,
   itemDispatch: PropTypes.func.isRequired,
-  action: PropTypes.string,
+  isCart: PropTypes.object,
   onClose: PropTypes.func.isRequired,
 };
 

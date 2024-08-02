@@ -1,4 +1,4 @@
-import { Outlet, useMatch } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import { useEffect, useState } from "react";
 import "./assets/css/global.css";
@@ -14,9 +14,6 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const isMenu = useMatch("/menu");
-  const isCart = useMatch("/cart");
 
   // # Color Theme
   const toggleColorTheme = () => {
@@ -56,7 +53,6 @@ function App() {
     <CartProvider>
       <div className="pageWrapper">
         <Navigation
-          isCart={isCart}
           isDarkMode={isDarkMode}
           onColorThemeClick={toggleColorTheme}
         />
@@ -74,7 +70,6 @@ function App() {
           item={selectedItem}
           modalIsOpen={modalIsOpen}
           onClose={handleModalClose}
-          action={isMenu ? "add" : isCart ? "edit" : null}
         />
       </div>
     </CartProvider>
