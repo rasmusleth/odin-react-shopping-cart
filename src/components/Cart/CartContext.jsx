@@ -124,8 +124,8 @@ function cartReducer(cartState, action) {
       };
     }
     case "edit_cart_item": {
-      let priceDifference;
-      let quantityDifference;
+      let priceDifference = 0;
+      let quantityDifference = 0;
 
       return {
         ...cartState,

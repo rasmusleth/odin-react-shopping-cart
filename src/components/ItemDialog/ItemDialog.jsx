@@ -5,12 +5,12 @@ import { itemReducer, initialItemState } from "./itemReducer";
 import ItemDialogHeader from "./ItemDialogHeader";
 import ItemDialogBody from "./ItemDialogBody";
 import ItemDialogFooter from "./ItemDialogFooter";
+import { useMatch } from "react-router-dom";
 
 const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
-  const [itemState, itemDispatch] = useReducer(
-    itemReducer,
-    action === "edit" ? item : initialItemState
-  );
+  const isCart = useMatch("/cart");
+  const isMenu = useMatch("/");
+  const [itemState, itemDispatch] = useReducer(itemReducer, initialItemState);
 
   const modalRef = useRef();
   const headerRef = useRef();
@@ -18,33 +18,34 @@ const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
   // # Handle dialog
   useEffect(() => {
     if (item) {
-      if (modalIsOpen) {
-        modalRef.current.showModal();
-
-        if (action !== "edit") {
-          itemDispatch({
-            type: "init_item",
-            item: item,
-          });
-        }
-      } else {
-        modalRef.current.close();
-        modalRef.current.style.transform = "";
-        modalRef.current.style.transition = "transform 200ms ease-out";
-      }
+      handleDialog();
+      initializeItem(item);
     }
-  }, [modalIsOpen, action, item]);
+  }, [item]);
 
-  // useEffect(() => {
-  //   if (modalIsOpen) {
-  //     if (action !== "edit") {
-  //       itemDispatch({
-  //         type: "init_item",
-  //         item: item,
-  //       });
-  //     }
-  //   }
-  // }, [modalIsOpen, action, item]);
+  const handleDialog = () => {
+    if (modalIsOpen) {
+      modalRef.current.showModal();
+    } else {
+      modalRef.current.close();
+      modalRef.current.style.transform = "";
+      modalRef.current.style.transition = "transform 200ms ease-out";
+    }
+  };
+
+  const initializeItem = (item) => {
+    if (modalIsOpen && isMenu) {
+      itemDispatch({
+        type: "init_item",
+        item: item,
+      });
+    } else if (modalIsOpen && isCart) {
+      itemDispatch({
+        type: "init_cart_item",
+        cartItem: item,
+      });
+    }
+  };
 
   return (
     <>

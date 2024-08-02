@@ -15,6 +15,29 @@ const initialItemState = {
   },
 };
 
+// function createInitialState(item) {
+//   console.log("Creating initial state....");
+//   if (item) {
+//     console.log("Is item..:", item);
+//     return item;
+//   } else {
+//     return {
+//       quantity: 1,
+//       ingredients: {
+//         added: [],
+//         removed: [],
+//       },
+//       price: 0,
+//       priceTotal: 0,
+//       customItemPrice: 0,
+//       allIngredients: {
+//         extra: [],
+//         existing: [],
+//       },
+//     };
+//   }
+// }
+
 function itemReducer(itemState, action) {
   switch (action.type) {
     case "init_item": {
@@ -34,6 +57,11 @@ function itemReducer(itemState, action) {
         description: action.item.description,
         category: action.item.category,
         image: action.item.image,
+      };
+    }
+    case "init_cart_item": {
+      return {
+        ...action.cartItem,
       };
     }
     case "quantity_increment": {

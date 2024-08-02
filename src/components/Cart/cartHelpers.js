@@ -25,7 +25,6 @@ const checkIdenticalItemInCart = (cartState, newItemObj) => {
     (item) => item.itemId === newItemObj.itemId
   );
 
-  // If existing, check if they are equal (except quantity and id)
   if (!similarCartItem) return false;
 
   const { itemId: idExisting, ingredients: ingredientsExisting } =

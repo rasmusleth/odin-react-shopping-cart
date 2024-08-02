@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { checkDeepEquality } from "./itemDialogHelpers";
-import { calculatePriceTotal } from "../Cart/cartHelpers";
+import { calculatePriceTotal, formatPrice } from "../Cart/cartHelpers";
 import PropTypes from "prop-types";
 import styles from "./itemDialog.module.css";
 import ItemQuantityButton from "./ItemQuantityButton";
@@ -22,7 +22,7 @@ const ItemDialogFooter = ({
     // ONLY check in edit mode
     if (action !== "edit") return;
 
-    if (checkDeepEquality(item, itemState)) {
+    if (checkDeepEquality(item, { ...itemState, id: item.id })) {
       setIsItemChanged(false);
     } else {
       setIsItemChanged(true);
@@ -52,7 +52,7 @@ const ItemDialogFooter = ({
   const handleEditCartItem = () => {
     cartDispatch({
       type: "edit_cart_item",
-      newItem: itemState,
+      newItem: { ...itemState },
     });
 
     onClose();
@@ -92,7 +92,10 @@ const ItemDialogFooter = ({
     <>
       <div className={styles.menuItemFooterContainer}>
         <div className={styles.menuItemFooter}>
-          <ItemQuantityButton item={item} onChange={handleQuantityChange} />
+          <ItemQuantityButton
+            item={itemState}
+            onChange={handleQuantityChange}
+          />
           {action === "edit" && !isItemChanged ? (
             <button
               type="button"
@@ -100,7 +103,9 @@ const ItemDialogFooter = ({
               onClick={handleRemoveFromCart}
             >
               <p className={`textWeightBold`}>Fjern</p>
-              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+              <p className={styles.menuItemPriceTotal}>
+                {formatPrice(itemState.priceTotal)}
+              </p>
             </button>
           ) : action === "edit" ? (
             <button
@@ -109,7 +114,9 @@ const ItemDialogFooter = ({
               onClick={handleEditCartItem}
             >
               <p className="textWeightBold">Opdater bestillingen</p>
-              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+              <p className={styles.menuItemPriceTotal}>
+                {formatPrice(itemState.priceTotal)}
+              </p>
             </button>
           ) : (
             <button
@@ -118,7 +125,9 @@ const ItemDialogFooter = ({
               onClick={handleAddToCart}
             >
               <span className="textWeightBold">Tilføj til bestilling</span>
-              <p className={styles.menuItemPriceTotal}>{item.priceFormatted}</p>
+              <p className={styles.menuItemPriceTotal}>
+                {formatPrice(itemState.priceTotal)}
+              </p>
             </button>
           )}
         </div>

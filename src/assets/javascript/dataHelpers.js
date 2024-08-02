@@ -16,9 +16,17 @@ function convertDataToCategories(data) {
     }
 
     categories[categoryId]["items"].push({
-      ...data[i],
+      id: data[i].id,
+      title: data[i].title,
+      description: data[i].description,
+      image: data[i].image,
+      price: data[i].price,
+      customItemPrice: data[i].price,
+      priceTotal: data[i].price,
+      ingredients: {},
+      itemId: data[i].id,
+      quantity: 1,
       category: `Category ${categoryId}`,
-      priceFormatted: "85,00 DKK",
       allIngredients: {
         extra: [
           {

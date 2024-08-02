@@ -134,8 +134,7 @@ const Cart = () => {
       e.target.parentElement.id === "cartItemDeleteCard"
     )
       return;
-
-    setSelectedItem({ ...item });
+    setSelectedItem(item);
     setModalIsOpen(true);
   };
 
