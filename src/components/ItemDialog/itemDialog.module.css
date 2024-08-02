@@ -16,7 +16,7 @@
   border-top-right-radius: 1rem;
   transform: translateY(var(--dialog-position-y));
   transition: overlay 200ms ease-in-out allow-discrete,
-    display 200ms ease-in-out allow-discrete;
+    display 200ms ease-in-out allow-discrete, transform 200ms ease-in-out;
 }
 
 .itemDialog[open] {
