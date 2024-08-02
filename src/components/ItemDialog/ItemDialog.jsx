@@ -54,6 +54,7 @@ const ItemDialog = ({ item, modalIsOpen, onClose, action }) => {
           ref={modalRef}
           className={styles.itemDialog}
           onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
+          onKeyDown={(e) => (e.key === "Escape" ? onClose() : null)}
         >
           <div className={styles.menuItemContainer}>
             <ItemDialogHeader
