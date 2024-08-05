@@ -3,29 +3,24 @@ import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
 import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useLoaderData } from "react-router-dom";
 import { convertDataToCategories } from "../../assets/javascript/dataHelpers";
 import { useCart } from "../Cart/CartContext";
+
+export async function loader() {
+  const res = await fetch("https://fakestoreapi.com/products");
+  const data = await res.json();
+  const categories = convertDataToCategories(data);
+  return { categories };
+}
 
 const Menu = () => {
   const cart = useCart();
   const { modalIsOpen, setModalIsOpen, setSelectedItem } = useOutletContext();
-
-  const [categories, setCategories] = useState([]);
+  const { categories } = useLoaderData();
   const [activeCategory, setActiveCategory] = useState(null);
   const [isObserverActive, setIsObserverActive] = useState(true);
   const categorySectionRefs = useRef([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("https://fakestoreapi.com/products");
-      const data = await res.json();
-      const convertedData = convertDataToCategories(data);
-      setCategories(convertedData);
-    }
-
-    fetchData();
-  }, []);
 
   // Slider color-change implementation
   useEffect(() => {
