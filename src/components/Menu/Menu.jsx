@@ -3,7 +3,11 @@ import MenuCategorySlider from "./MenuCategorySlider";
 import MenuCategorySection from "./MenuCategorySection";
 import styles from "./menu.module.css";
 import CartButton from "../Cart/CartButton";
-import { useOutletContext, useLoaderData } from "react-router-dom";
+import {
+  useOutletContext,
+  useLoaderData,
+  useNavigation,
+} from "react-router-dom";
 import { convertDataToCategories } from "../../assets/javascript/dataHelpers";
 import { useCart } from "../Cart/CartContext";
 
@@ -15,6 +19,8 @@ export async function loader() {
 }
 
 const Menu = () => {
+  const navigation = useNavigation();
+
   const cart = useCart();
   const { modalIsOpen, setModalIsOpen, setSelectedItem } = useOutletContext();
   const { categories } = useLoaderData();
@@ -56,38 +62,33 @@ const Menu = () => {
 
   return (
     <>
-      {categories.length > 0 ? (
-        <div className={styles.menuPageWrapper}>
-          <h1 className="heading-style-h2">Menu</h1>
-          <div className="spacerXSmall"></div>
-          <p>Se og bestil din mad lige her.</p>
-          <div className={`spacerXSmall`}></div>
-          <div className={`${styles.menuSectionWrapper}`}>
-            <MenuCategorySlider
-              categories={categories}
-              activeCategory={activeCategory}
-              onCategoryClick={handleCategoryClick}
+      {navigation.state === "loading" && <p>Loading...</p>}
+      <div className={styles.menuPageWrapper}>
+        <h1 className="heading-style-h2">Menu</h1>
+        <div className="spacerXSmall"></div>
+        <p>Se og bestil din mad lige her.</p>
+        <div className={`spacerXSmall`}></div>
+        <div className={`${styles.menuSectionWrapper}`}>
+          <MenuCategorySlider
+            categories={categories}
+            activeCategory={activeCategory}
+            onCategoryClick={handleCategoryClick}
+          />
+
+          {categories.map((category, index) => (
+            <MenuCategorySection
+              key={`section-${category.id}`}
+              category={category}
+              onItemClick={handleItemClick}
+              ref={(el) => (categorySectionRefs.current[index] = el)}
             />
-
-            {categories.map((category, index) => (
-              <MenuCategorySection
-                key={`section-${category.id}`}
-                category={category}
-                onItemClick={handleItemClick}
-                ref={(el) => (categorySectionRefs.current[index] = el)}
-              />
-            ))}
-          </div>
-
-          {cart.items.length > 0 && !modalIsOpen && (
-            <CartButton text="Se bestilling" />
-          )}
+          ))}
         </div>
-      ) : (
-        <>
-          <p>Loading..</p>
-        </>
-      )}
+
+        {cart.items.length > 0 && !modalIsOpen && (
+          <CartButton text="Se bestilling" />
+        )}
+      </div>
     </>
   );
 };
