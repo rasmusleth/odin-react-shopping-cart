@@ -34,8 +34,8 @@ const ErrorPage = () => {
   }, [isDarkMode]);
 
   return (
-    <>
-      <CartProvider>
+    <CartProvider>
+      <>
         <Navigation
           isDarkMode={isDarkMode}
           onColorThemeClick={toggleColorTheme}
@@ -49,12 +49,12 @@ const ErrorPage = () => {
             <p>Looking for the menu? Click the button below</p>
           </div>
           <div className="spacerSmall"></div>
-          <Link to="/shop" className="btn btnPrimary">
+          <Link to="/" className="btn btnPrimary">
             Go to menu
           </Link>
         </div>
-      </CartProvider>
-    </>
+      </>
+    </CartProvider>
   );
 };
 
