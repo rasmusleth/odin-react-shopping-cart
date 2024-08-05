@@ -10,12 +10,17 @@ const routes = [
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
-        element: <Menu />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <Menu />,
+          },
+          {
+            path: "/cart",
+            element: <Cart />,
+          },
+        ],
       },
     ],
   },
