@@ -40,9 +40,18 @@ const ErrorPage = () => {
           isDarkMode={isDarkMode}
           onColorThemeClick={toggleColorTheme}
         />
-        <div>
-          <h1>Sorry, we cannot find the page you're looking for..</h1>
-          <Link to="/shop">Go to shop</Link>
+        <div className="errorPageWrapper">
+          <div>
+            <h1 className="heading-style-h3">Sorry, page not found</h1>
+            <div className="spacerSmall"></div>
+            <p>We cannot find the page you are looking for..</p>
+            <div className="spacerXSmall"></div>
+            <p>Looking for the menu? Click the button below</p>
+          </div>
+          <div className="spacerSmall"></div>
+          <Link to="/shop" className="btn btnPrimary">
+            Go to menu
+          </Link>
         </div>
       </CartProvider>
     </>

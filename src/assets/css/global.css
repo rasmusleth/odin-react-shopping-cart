@@ -61,6 +61,15 @@ body {
   box-sizing: border-box;
 }
 
+.errorPageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
 /* GLOBAL CLASSES */
 
 /* # Text */
