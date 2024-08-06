@@ -14,6 +14,7 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
   const [animationPercentage, setAnimationPercentage] = useState(0);
   const [bodyScrollFromTop, setBodyScrollFromTop] = useState(0);
   const [initialHeaderSize, setInitialHeaderSize] = useState(0);
+  const [dialogTranslateY, setDialogTranslateY] = useState(null);
 
   const modalRef = useRef();
   const headerRef = useRef();
@@ -40,10 +41,12 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
       modalRef.current.showModal();
     } else {
       modalRef.current.close();
-      modalRef.current.style.transform = "";
-      modalRef.current.style.transition = "transform 200ms ease-out";
     }
   };
+
+  useEffect(() => {
+    if (!modalIsOpen) setDialogTranslateY(null);
+  }, [modalIsOpen]);
 
   const initializeItem = (item) => {
     if (modalIsOpen && isMenu) {
@@ -88,6 +91,9 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
           className={styles.itemDialog}
           onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
           onKeyDown={(e) => (e.key === "Escape" ? onClose() : null)}
+          style={{
+            transform: `translateY(${dialogTranslateY}px)`,
+          }}
         >
           <div
             className={styles.menuItemContainer}
@@ -101,6 +107,7 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
               modalRef={modalRef}
               animationPercentage={animationPercentage}
               bodyScrollFromTop={bodyScrollFromTop}
+              setDialogTranslateY={setDialogTranslateY}
             />
             <ItemDialogBody
               item={item}

@@ -3,7 +3,14 @@ import styles from "./itemDialog.module.css";
 import PropTypes from "prop-types";
 
 const ItemDialogHeader = forwardRef(function ItemDialogHeader(
-  { item, onClose, modalRef, animationPercentage, bodyScrollFromTop },
+  {
+    item,
+    onClose,
+    modalRef,
+    animationPercentage,
+    bodyScrollFromTop,
+    setDialogTranslateY,
+  },
   headerRef
 ) {
   const [initialTouchPoint, setInitialTouchPoint] = useState(null);
@@ -17,22 +24,22 @@ const ItemDialogHeader = forwardRef(function ItemDialogHeader(
   const handleTouchMove = (e) => {
     const dialogPositionY = modalRef.current.getBoundingClientRect().y;
 
-    if (dialogPositionY < initialDialogY) {
-      modalRef.current.style.transform = `translateY(0px)`;
-    } else {
-      const pixelsToMoveY = e.changedTouches[0].clientY - initialTouchPoint;
-      modalRef.current.style.transform = `translateY(${pixelsToMoveY}px)`;
-    }
+    if (dialogPositionY < initialDialogY) return;
+
+    const pixelsMoved = e.changedTouches[0].clientY - initialTouchPoint;
+
+    console.log("Dialog translate y: ", pixelsMoved);
+    setDialogTranslateY(pixelsMoved);
   };
 
   const handleTouchEnd = (e) => {
     const pixelsMoved = e.changedTouches[0].clientY - initialTouchPoint;
 
-    if (pixelsMoved > 400) {
+    if (pixelsMoved > 100) {
       onClose();
-      modalRef.current.style.transform = "";
+      setDialogTranslateY(null);
     } else {
-      modalRef.current.style.transform = `translateY(0px)`;
+      setDialogTranslateY(0);
       // modalRef.current.style.transition = `transform 200ms ease-in-out, overlay 200ms ease-in-out allow-discrete, display 200ms ease-in-out allow-discrete;`;
     }
   };
@@ -97,6 +104,7 @@ ItemDialogHeader.propTypes = {
   modalRef: PropTypes.object.isRequired,
   animationPercentage: PropTypes.number.isRequired,
   bodyScrollFromTop: PropTypes.number.isRequired,
+  setDialogTranslateY: PropTypes.func.isRequired,
 };
 
 export default ItemDialogHeader;
