@@ -1,5 +1,6 @@
 const lightModeColors = {
   "--color-black": "rgba(0, 0, 0)",
+  "--color-black-02": "rgba(0, 0, 0, 0.2)",
   "--color-white": "rgba(255, 255, 255)",
   "--color-white-05": "hsla(0, 0%, 100%, 0.5)",
   "--color-white-08": "hsla(0, 0%, 100%, 0.8)",
@@ -18,6 +19,7 @@ const lightModeColors = {
 };
 const darkModeColors = {
   "--color-black": "rgba(255, 255, 255)",
+  "--color-black-02": "rgba(255, 255, 255, 0.2)",
   "--color-white": "rgba(0, 0, 0)",
   "--color-white-05": "hsla(0, 0%, 0%, 0.5)",
   "--color-white-08": "hsla(0, 0%, 0%, 0.8)",

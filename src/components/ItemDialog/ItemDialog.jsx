@@ -1,4 +1,4 @@
-import { useRef, useEffect, useReducer } from "react";
+import { useRef, useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./itemDialog.module.css";
 import { itemReducer, initialItemState } from "./itemReducer";
@@ -11,6 +11,9 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
   const isCart = useMatch("/cart");
   const isMenu = useMatch("/");
   const [itemState, itemDispatch] = useReducer(itemReducer, initialItemState);
+  const [animationPercentage, setAnimationPercentage] = useState(0);
+  const [bodyScrollFromTop, setBodyScrollFromTop] = useState(0);
+  const [initialHeaderSize, setInitialHeaderSize] = useState(0);
 
   const modalRef = useRef();
   const headerRef = useRef();
@@ -20,6 +23,15 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
     if (item) {
       handleDialog();
       initializeItem(item);
+    }
+  }, [item]);
+
+  // Handle header/scroll
+  useEffect(() => {
+    if (item) {
+      setInitialHeaderSize(headerRef.current?.offsetHeight);
+      setBodyScrollFromTop(0);
+      setAnimationPercentage(0);
     }
   }, [item]);
 
@@ -47,6 +59,27 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
     }
   };
 
+  const handleContentScroll = (e) => {
+    // Calculate scrolled from top percentage
+    const viewHeight = e.target.offsetHeight;
+    const totalHeight = e.target.scrollHeight;
+    const scrollableHeight = totalHeight - viewHeight;
+    const scrollTop = e.target.scrollTop;
+
+    // Calc animationLengthPx
+    const headerMinHeightPx = 64;
+    const animationLengthPx = initialHeaderSize - headerMinHeightPx;
+
+    if (animationLengthPx <= 0) return;
+    if (scrollableHeight <= 0) return;
+
+    const animationPercentage = Math.round(
+      (scrollTop / animationLengthPx) * 100
+    );
+    setAnimationPercentage(Math.min(100, animationPercentage));
+    setBodyScrollFromTop(scrollTop);
+  };
+
   return (
     <>
       {item && (
@@ -56,18 +89,23 @@ const ItemDialog = ({ item, modalIsOpen, onClose }) => {
           onClick={(e) => (e.target === modalRef.current ? onClose() : null)}
           onKeyDown={(e) => (e.key === "Escape" ? onClose() : null)}
         >
-          <div className={styles.menuItemContainer}>
+          <div
+            className={styles.menuItemContainer}
+            onScroll={handleContentScroll}
+            style={{ paddingTop: `${initialHeaderSize}px` }}
+          >
             <ItemDialogHeader
               ref={headerRef}
               item={item}
               onClose={onClose}
               modalRef={modalRef}
+              animationPercentage={animationPercentage}
+              bodyScrollFromTop={bodyScrollFromTop}
             />
             <ItemDialogBody
               item={item}
               itemState={itemState}
               itemDispatch={itemDispatch}
-              headerRef={headerRef}
             />
             <ItemDialogFooter
               item={item}

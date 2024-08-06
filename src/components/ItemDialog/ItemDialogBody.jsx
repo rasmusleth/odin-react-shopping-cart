@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import styles from "./itemDialog.module.css";
 import { useEffect, useState } from "react";
-import { handleContentScroll } from "./itemDialogHelpers";
 import { formatPrice } from "../Cart/cartHelpers";
 
-const ItemDialogBody = ({ item, itemState, itemDispatch, headerRef }) => {
+const ItemDialogBody = ({ item, itemState, itemDispatch }) => {
   const handleIngredientsExtraAdd = (e) => {
     itemDispatch({
       type: "extraIngredient_add",
@@ -37,10 +36,7 @@ const ItemDialogBody = ({ item, itemState, itemDispatch, headerRef }) => {
   return (
     <>
       {item && (
-        <div
-          className={styles.menuItemContentWrapper}
-          onScroll={(e) => handleContentScroll(e, headerRef)}
-        >
+        <div className={styles.menuItemContentWrapper}>
           <span className={styles.menuItemCategory}>{itemState.category}</span>
           <h2 className={`heading-style-h4`}>{itemState.title}</h2>
           <p className={styles.menuItemPrice}>{formatPrice(itemState.price)}</p>
@@ -103,7 +99,6 @@ ItemDialogBody.propTypes = {
   item: PropTypes.object.isRequired,
   itemState: PropTypes.object.isRequired,
   itemDispatch: PropTypes.func.isRequired,
-  headerRef: PropTypes.object.isRequired,
 };
 
 const IngredientItem = ({ ingredient, isExtra, onClick, ingredientsState }) => {

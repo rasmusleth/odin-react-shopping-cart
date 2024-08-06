@@ -45,28 +45,24 @@
 }
 
 .menuItemContainer {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   overflow: scroll;
 }
 
 .menuItemHeader {
-  position: sticky;
+  position: absolute;
+  top: 0;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem 1rem;
-  top: 0;
   width: 100%;
-  background-color: hsla(var(--color-white), 0);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-blend-mode: overlay;
-  max-height: 300px;
   min-height: 4rem;
-  height: 100%;
+  height: 200px;
+  max-height: 30%;
+  overflow: hidden;
+  background-color: var(--color-white);
+  color: var(--color-black-02);
 }
 
 .menuItemCloseButton {
@@ -85,9 +81,11 @@
 }
 
 .menuItemHeaderTitle {
+  position: absolute;
   font-weight: bold;
   opacity: 0;
   padding: 0 2.5rem;
+  color: var(--color-black);
 }
 
 .menuItemCloseButton:hover > svg {
@@ -95,7 +93,6 @@
 }
 
 .menuItemContentWrapper {
-  flex-grow: 1;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;

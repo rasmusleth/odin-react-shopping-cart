@@ -1,23 +1,18 @@
-import { useState, useEffect, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import styles from "./itemDialog.module.css";
 import PropTypes from "prop-types";
 
 const ItemDialogHeader = forwardRef(function ItemDialogHeader(
-  { item, onClose, modalRef },
+  { item, onClose, modalRef, animationPercentage, bodyScrollFromTop },
   headerRef
 ) {
   const [initialTouchPoint, setInitialTouchPoint] = useState(null);
   const initialDialogY = modalRef.current?.getBoundingClientRect().y;
+  const [imageHeight, setImageHeight] = useState(0);
 
   useEffect(() => {
-    if (!headerRef.current) return;
-    // Set header background to Item Image
-    headerRef.current.style.backgroundImage = `url(${item.image})`;
-  }, [item, headerRef]);
-
-  const handleTouchStart = (e) => {
-    setInitialTouchPoint(e.changedTouches[0].clientY);
-  };
+    setImageHeight(headerRef.current.offsetHeight);
+  }, [headerRef]);
 
   const handleTouchMove = (e) => {
     const dialogPositionY = modalRef.current.getBoundingClientRect().y;
@@ -45,12 +40,36 @@ const ItemDialogHeader = forwardRef(function ItemDialogHeader(
   return (
     <div
       ref={headerRef}
+      style={
+        bodyScrollFromTop > 0
+          ? {
+              height: `${imageHeight - bodyScrollFromTop}px`,
+              boxShadow: `0px 0px ${animationPercentage / 5}px`,
+            }
+          : {}
+      }
       className={styles.menuItemHeader}
-      onTouchStart={handleTouchStart}
+      onTouchStart={(e) => setInitialTouchPoint(e.changedTouches[0].clientY)}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className={`${styles.menuItemHeaderTitle} textStyle1Lines`}>
+      <img
+        style={{
+          height: imageHeight,
+          opacity: `${100 - animationPercentage}%`,
+        }}
+        src={item.image}
+        alt=""
+      />
+      <div
+        style={{
+          opacity:
+            animationPercentage < 50
+              ? "0%"
+              : `${(animationPercentage - 50) * 2}%`,
+        }}
+        className={`${styles.menuItemHeaderTitle} textStyle1Lines`}
+      >
         {item.title}
       </div>
       <button
@@ -76,6 +95,8 @@ ItemDialogHeader.propTypes = {
   item: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   modalRef: PropTypes.object.isRequired,
+  animationPercentage: PropTypes.number.isRequired,
+  bodyScrollFromTop: PropTypes.number.isRequired,
 };
 
 export default ItemDialogHeader;
