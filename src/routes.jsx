@@ -1,7 +1,9 @@
-import Menu, { loader as menuLoader } from "./components/Menu/Menu.jsx";
-import App from "./App.jsx";
-import Cart from "./components/Cart/Cart.jsx";
-import ErrorPage from "./ErrorPage.jsx";
+import App from "./App";
+import Home from "./pages/Home";
+import Menu from "./pages/Menu";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import ErrorPage from "./pages/ErrorPage";
 
 const routes = [
   {
@@ -10,18 +12,20 @@ const routes = [
     errorElement: <ErrorPage />,
     children: [
       {
-        errorElement: <ErrorPage />,
-        children: [
-          {
-            index: true,
-            element: <Menu />,
-            loader: menuLoader,
-          },
-          {
-            path: "/cart",
-            element: <Cart />,
-          },
-        ],
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/menu",
+        element: <Menu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },
